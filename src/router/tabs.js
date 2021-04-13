@@ -3,15 +3,16 @@
  * created by lijianpo on 2021/04/12
  */
 import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Mall } from '@pages/mall'
 import { Game } from '@pages/game'
-import { Community } from '@pages/community'
 import { Cart } from '@pages/cart'
 import { Mine } from '@pages/mine'
-import { ThemeColors } from 'ui/theme'
 import { Image } from 'react-native'
+import { ThemeColors } from 'ui/theme'
+import { Community } from '@pages/community'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { tabSatcks } from '@pages/'
+
 // 选项卡页签tab navigator 实例
 const Tab = createBottomTabNavigator()
 
@@ -57,7 +58,10 @@ function TabScreen() {
         inactiveTintColor: '#85858C',
       }}
     >
-      <Tab.Screen
+      {tabSatcks.map(({ name, component, options }) => (
+        <Tab.Screen name={name} component={component} options={options} />
+      ))}
+      {/* <Tab.Screen
         name="Mall"
         component={Mall}
         options={{ tabBarLabel: '首页' }}
@@ -81,7 +85,7 @@ function TabScreen() {
         name="Mine"
         component={Mine}
         options={{ tabBarLabel: '我的' }}
-      />
+      /> */}
     </Tab.Navigator>
   )
 }

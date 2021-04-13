@@ -1,13 +1,17 @@
 /**
  * 应用主入口
- * created by lijianpo on 2021/0412
+ * changed by lijianpo on 2021/04/12
  */
-import { SafeAreaProvider } from '@ui'
 import React, { useEffect } from 'react'
-import { Provider } from 'react-redux'
 import store from './store'
 import Navigator from './router'
+import { SafeAreaProvider } from '@ui'
+import { Provider } from 'react-redux'
+import { ThemeProvider } from '@contexts/theme'
+import { NetinfoProvider } from '@contexts/netinfo'
+import { LoadingProvider } from '@contexts/loading'
 import { RootSiblingParent } from 'react-native-root-siblings'
+import { LocaleContext, LocaleProvider } from '@contexts/locale'
 
 // 在正式环境中清空console.log()
 if (!__DEV__) {
@@ -27,11 +31,23 @@ const SonkwoAppPractice = () => {
   // }, [])
   return (
     <SafeAreaProvider>
-      <Provider store={store}>
-        <RootSiblingParent>
-          <Navigator />
-        </RootSiblingParent>
-      </Provider>
+      <ThemeProvider>
+        <LocaleProvider>
+          <NetinfoProvider>
+            <Provider store={store}>
+              <LoadingProvider>
+                <LocaleContext.Consumer>
+                  {(value) => (
+                    <RootSiblingParent>
+                      <Navigator />
+                    </RootSiblingParent>
+                  )}
+                </LocaleContext.Consumer>
+              </LoadingProvider>
+            </Provider>
+          </NetinfoProvider>
+        </LocaleProvider>
+      </ThemeProvider>
     </SafeAreaProvider>
   )
 }
