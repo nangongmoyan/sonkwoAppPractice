@@ -1,23 +1,28 @@
 /**
- *
- * created by lijianpo on 2021/04/13
+ * 平台、设备相关的数据
+ * changed by lijianpo on 2021/04/14
  */
-import { StatusBar, Platform, Dimensions } from 'react-native'
+import { StatusBar, Platform } from '@ui'
+import { deviceHeight, deviceWidth } from './scale'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
-// iPhone X、iPhone XS
+
+const D_WIDTH = deviceWidth
+const D_HEIGHT = deviceHeight
+/**iPhone X、iPhone XS */
 const X_WIDTH = 375
 const X_HEIGHT = 812
 
-//iPhone XR、iPhone XS Max
+/**iPhone XR、iPhone XS Max */
 const XSMAX_WIDTH = 414
 const XSMAX_HEIGHT = 896
-const { D_WIDTH, D_HEIGHT } = Dimensions.get('window')
 
-const isiOS = () => Platform.OS === 'ios'
+/**判断当前设备是否为ios */
+const isiOS = Platform.OS === 'ios'
 
+/**判断是否为iPhoneX */
 const isiPhoneX = () => {
   return (
-    (isiOS() &&
+    (isiOS &&
       ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) ||
         (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT))) ||
     (D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH) ||
@@ -25,16 +30,11 @@ const isiPhoneX = () => {
   )
 }
 
-// function getStatusBarHeight() {
-//   if (Platform.OS === 'android') return StatusBar.currentHeight
-//   if (isiPhoneX()) return getStatusBarHeight()
-//   return 20
-// }
+/**状态栏高度 */
+const statusBarHeight =
+  (isiOS ? getStatusBarHeight() : StatusBar.currentHeight) ?? 20
 
-const statusBarHeight = isiOS() ? getStatusBarHeight() : StatusBar.currentHeight
+/**标题栏高度 */
+const titleHeight = statusBarHeight + (isiOS ? 44 : 33)
 
-//标题栏高度
-const titleHeight =
-  Platform.OS === 'android' ? 33 + statusBarHeight : 44 + statusBarHeight
-
-export { isiOS, isiPhoneX, getStatusBarHeight, statusBarHeight, titleHeight }
+export { isiOS, isiPhoneX, statusBarHeight, titleHeight }

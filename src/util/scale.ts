@@ -3,10 +3,10 @@
  * created by lijianpo on 2021/04/13
  */
 import { Dimensions, PixelRatio } from '@ui'
-import ExtraDimensions from 'react-native-extra-dimensions-android'
 import { isiOS } from './fullscreen'
+import ExtraDimensions from 'react-native-extra-dimensions-android'
 
-const { width: deviceWidth, height: deviceHeight } = isiOS()
+const { width: deviceWidth, height: deviceHeight } = isiOS
   ? Dimensions.get('window')
   : {
       width: ExtraDimensions.get('REAL_WINDOW_WIDTH'),

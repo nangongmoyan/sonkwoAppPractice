@@ -7,35 +7,37 @@ import { TabScreen } from 'router/tabs'
 import { Cart } from './cart'
 import { Community } from './community'
 import { Game } from './game'
+import { Guide } from './guide'
 import { Mall } from './mall'
 import { Mine } from './mine'
+import { SignIn } from './sign'
 
 const tabSatcks = [
-  /**首页 */
+  /** 首页 */
   {
     name: 'Mall',
     component: Mall,
     options: { tabBarLabel: '首页' },
   },
-  /**游戏 */
+  /** 游戏 */
   {
     name: 'Game',
     component: Game,
     options: { tabBarLabel: '游戏' },
   },
-  /**社区 */
+  /** 社区 */
   {
     name: 'Community',
     component: Community,
     options: { tabBarLabel: '社区' },
   },
-  /**购物车 */
+  /** 购物车 */
   {
     name: 'Cart',
     component: Cart,
     options: { tabBarLabel: '购物车' },
   },
-  /**我的 */
+  /** 我的 */
   {
     name: 'Mine',
     component: Mine,
@@ -43,13 +45,28 @@ const tabSatcks = [
   },
 ]
 
-const loggedStacks = [
-  /**TabScreen */
+const unLoginStacks = [
+  /** 登录引导页 */
   {
-    name: 'TabScreen',
-    component: TabScreen,
-    options: { headerShow: false },
+    name: 'Guide',
+    component: Guide,
+    options: { headerShown: false },
+  },
+  /** 登录 */
+  {
+    name: 'SignIn',
+    component: SignIn,
+    options: { headerShown: false },
   },
 ]
 
-export { tabSatcks, loggedStacks }
+const loggedStacks = [
+  /** TabScreen */
+  {
+    name: 'TabScreen',
+    component: TabScreen,
+    options: { headerShown: false },
+  },
+]
+
+export { unLoginStacks, tabSatcks, loggedStacks }

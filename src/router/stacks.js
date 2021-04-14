@@ -1,32 +1,29 @@
 /**
- *
- * created by lijianpo on 2021/04/12
+ * 堆栈stack
+ * changed by lijianpo on 2021/04/14
  */
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { loggedStacks } from '@pages/'
+import { unLoginStacks } from '@pages/'
 
 // 堆栈stack 实例
 const RootStack = createStackNavigator()
 
-// const SignInRouteScreen = () => {
-//   return (
-//     <RootStack.Navigator
-//       mode="modal"
-//       initialRouteName={'Guide'}
-//       screenOptions={{ headerShown: false }}
-//     >
-//       {unLoggedStacks.map(({ name, component, options }) => (
-//         <RootStack.Screen
-//           key={name}
-//           name={name}
-//           options={options}
-//           component={component}
-//         />
-//       ))}
-//     </RootStack.Navigator>
-//   )
-// }
+const UnLoginRouteScreen = () => {
+  return (
+    <RootStack.Navigator>
+      {unLoginStacks.map(({ name, component, options }) => (
+        <RootStack.Screen
+          key={name}
+          name={name}
+          options={options}
+          component={component}
+        />
+      ))}
+    </RootStack.Navigator>
+  )
+}
 
 const RootRouteScreen = () => {
   return (
@@ -47,4 +44,4 @@ const RootRouteScreen = () => {
   )
 }
 
-export { RootRouteScreen }
+export { UnLoginRouteScreen, RootRouteScreen }

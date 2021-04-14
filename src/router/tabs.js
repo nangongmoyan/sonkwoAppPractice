@@ -3,13 +3,8 @@
  * created by lijianpo on 2021/04/12
  */
 import React from 'react'
-import { Mall } from '@pages/mall'
-import { Game } from '@pages/game'
-import { Cart } from '@pages/cart'
-import { Mine } from '@pages/mine'
 import { Image } from 'react-native'
 import { ThemeColors } from 'ui/theme'
-import { Community } from '@pages/community'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { tabSatcks } from '@pages/'
 
@@ -59,33 +54,13 @@ function TabScreen() {
       }}
     >
       {tabSatcks.map(({ name, component, options }) => (
-        <Tab.Screen name={name} component={component} options={options} />
+        <Tab.Screen
+          key={name}
+          name={name}
+          component={component}
+          options={options}
+        />
       ))}
-      {/* <Tab.Screen
-        name="Mall"
-        component={Mall}
-        options={{ tabBarLabel: '首页' }}
-      />
-      <Tab.Screen
-        name="Game"
-        component={Game}
-        options={{ tabBarLabel: '游戏' }}
-      />
-      <Tab.Screen
-        name="Community"
-        component={Community}
-        options={{ tabBarLabel: '社区' }}
-      />
-      <Tab.Screen
-        name="Cart"
-        component={Cart}
-        options={{ tabBarLabel: '购物车' }}
-      />
-      <Tab.Screen
-        name="Mine"
-        component={Mine}
-        options={{ tabBarLabel: '我的' }}
-      /> */}
     </Tab.Navigator>
   )
 }

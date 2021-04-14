@@ -10,6 +10,7 @@ import { Provider } from 'react-redux'
 import { ThemeProvider } from '@contexts/theme'
 import { NetinfoProvider } from '@contexts/netinfo'
 import { LoadingProvider } from '@contexts/loading'
+import { initPermissions } from '@util/permissions'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { LocaleContext, LocaleProvider } from '@contexts/locale'
 
@@ -24,11 +25,12 @@ if (!__DEV__) {
 }
 
 const SonkwoAppPractice = () => {
-  // async function initApp() {}
+  async function initApp() {}
 
-  // useEffect(() => {
-  //   initApp()
-  // }, [])
+  useEffect(() => {
+    initApp()
+    initPermissions()
+  }, [])
   return (
     <SafeAreaProvider>
       <ThemeProvider>

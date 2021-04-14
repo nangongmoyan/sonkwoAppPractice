@@ -6,9 +6,10 @@
 import React, { useRef, createRef, useState, useEffect } from 'react'
 import { ThemeColors } from 'ui/theme'
 // import { DrawerScreen } from './drawer'
-import { RootRouteScreen } from './stacks'
+import { RootRouteScreen, UnLoginRouteScreen } from './stacks'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer, InitialState } from '@react-navigation/native'
+import { useSelector } from '@hooks'
 
 const Drawer = createDrawerNavigator() //  抽屉drawer实例
 
@@ -35,6 +36,7 @@ export default function App() {
     routeNameRef.current = getActiveRouteName(state)
   }, [navigationRef])
 
+  const userInfo = useSelector((state) => state.UserReducer.userInfo)
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -53,25 +55,30 @@ export default function App() {
         routeNameRef.current = currentRouteName
       }}
     >
-      <Drawer.Navigator
-        // drawerStyle={{
-        //   width: vw(75),
-        //   backgroundColor: ThemeColors.WhiteSmoke,
-        // }}
-        drawerType="slide"
-        initialRouteName="Home"
-        overlayColor="transparent"
-        keyboardDismissMode={'none'}
-        // drawerContent={(props) => (
-        //   <DrawerScreen {...props} userInfo={userInfo} />
-        // )}
-      >
-        <Drawer.Screen
-          name="Root"
-          component={RootRouteScreen}
-          options={{ swipeEnabled: false }}
-        />
-      </Drawer.Navigator>
+      {userInfo.id ? (
+        <Drawer.Navigator
+          // drawerStyle={{
+          //   width: vw(75),
+          //   backgroundColor: ThemeColors.WhiteSmoke,
+          // }}
+          drawerType="slide"
+          initialRouteName="Home"
+          overlayColor="transparent"
+          keyboardDismissMode={'none'}
+          // drawerContent={(props) => (
+          //   <DrawerScreen {...props} userInfo={userInfo} />
+          // )}
+        >
+          <Drawer.Screen
+            name="Root"
+            component={RootRouteScreen}
+            options={{ swipeEnabled: false }}
+          />
+        </Drawer.Navigator>
+      ) : (
+        <UnLoginRouteScreen />
+      )}
+
       {/* {userInfo.id !== '' ? (
         <Drawer.Navigator
           drawerStyle={{

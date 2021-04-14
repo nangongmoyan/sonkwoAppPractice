@@ -52,7 +52,7 @@ const initPermissions = async () => {
               }
               Alert.alert(
                 '提示',
-                `你${errorMsg}没有用打开，可能会导致应用闪退，去"设置>应用>豆米家>权限"设置一下吧`,
+                `你${errorMsg}没有用打开，可能会导致应用闪退，去"设置>应用>杉果>权限"设置一下吧`,
                 [
                   { text: '关闭', onPress: () => {} },
                   {
