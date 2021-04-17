@@ -17,7 +17,6 @@ import { useLocale } from '@contexts/locale'
 
 // 登录页
 const SignIn = (data) => {
-  console.log({ data })
   const { route, navigation } = data
   const { t } = useLocale()
   const [smsMethod, toggleMethod] = useState(true)

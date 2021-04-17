@@ -8,49 +8,115 @@ import { toastShort } from '@util'
 import { ThemeColors } from 'ui/theme'
 import TokenButton from './TokenButton'
 import { Row, TextInput, StyleSheet } from '@ui'
-import useForm, { FormContext, useFormContext } from 'react-hook-form'
+import {
+  useForm,
+  FormProvider,
+  useFormContext,
+  Controller,
+  useController,
+} from 'react-hook-form'
 import { useLocale } from '@contexts/locale'
 
 const Provider = ({ children }) => {
   const methods = useForm()
-  return <FormContext {...methods}>{children}</FormContext>
+  return <FormProvider {...methods}>{children}</FormProvider>
 }
+// const BasicInput = ({
+//   name,
+//   validation,
+//   renderLeft,
+//   renderRight,
+//   textinputStyle,
+//   defaultValue,
+//   ...restProps
+// }) => {
+//   const { register, setValue, getValues } = useFormContext()
+//   const defaultValidation = { required: true }
+//   const ref = register(name, { ...defaultValidation, ...validation })
+
+//   useEffect(() => {
+//     setValue(name, defaultValue, true)
+//   }, [setValue, name, defaultValue])
+
+//   return (
+//     <Row>
+//       {renderLeft && renderLeft()}
+//       <TextInput
+//         clearButtonMode="always"
+//         ref={ref}
+//         style={[styles.textinput, textinputStyle]}
+//         placeholderTextColor={'#c2c2c5'}
+//         defaultValue={defaultValue}
+//         onChangeText={(text) => setValue(name, text, true)}
+//         underlineColorAndroid="transparent"
+//         selectionColor="black"
+//         {...restProps}
+//       />
+//       {renderRight && renderRight(getValues())}
+//     </Row>
+//   )
+// }
+
 const BasicInput = ({
   name,
-  validation,
+  control,
   renderLeft,
   renderRight,
   textinputStyle,
+  validation,
   defaultValue,
   ...restProps
 }) => {
-  const { register, setValue, getValues } = useFormContext()
+  // const { register, getValues } = useFormContext()
+  const { register } = useForm()
   const defaultValidation = { required: true }
-  const ref = register({ name }, { ...defaultValidation, ...validation })
-
+  const ref = register(name, { ...defaultValidation, ...validation })
+  const { field } = useController({ control, name, defaultValue: '' })
+  console.log({ field })
+  const { value, onBlur, onChange } = field
+  // console.log({ ref })
   useEffect(() => {
-    setValue(name, defaultValue, true)
-  }, [setValue, name, defaultValue])
-
+    onChange(defaultValue)
+  }, [defaultValue])
   return (
-    <Row>
+    <Row style={{ width: '80%' }}>
       {renderLeft && renderLeft()}
       <TextInput
-        clearButtonMode="always"
         ref={ref}
-        style={[styles.textinput, textinputStyle]}
-        placeholderTextColor={'#c2c2c5'}
-        defaultValue={defaultValue}
-        onChangeText={(text) => setValue(name, text, true)}
-        underlineColorAndroid="transparent"
-        selectionColor="black"
+        value={value}
         {...restProps}
+        // onBlur={onBlur}
+        selectionColor="black"
+        clearButtonMode="always"
+        placeholderTextColor={'#c2c2c5'}
+        underlineColorAndroid="transparent"
+        onChangeText={(value) => onChange(value)}
+        style={[styles.textinput, textinputStyle]}
       />
-      {renderRight && renderRight(getValues())}
+      {/* <Controller
+        name={name}
+        defaultValue=""
+        control={control}
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            ref={ref}
+            value={value}
+            {...restProps}
+            onBlur={onBlur}
+            selectionColor="black"
+            clearButtonMode="always"
+            placeholderTextColor={'#c2c2c5'}
+            underlineColorAndroid="transparent"
+            onChangeText={(value) => onChange(value)}
+            style={[styles.textinput, textinputStyle]}
+          />
+        )}
+      /> */}
+      {renderRight && renderRight()}
     </Row>
   )
 }
-
 // create special input here
 const phonePattern = /^1[3-9]\d{9}$/i
 const phoneValidation = {
@@ -76,18 +142,25 @@ const PhoneInput = ({ ...props }) => {
   )
 }
 
-const TokenInput = ({ sendToken }) => {
+const TokenInput = ({ sendToken, ...props }) => {
   const { t } = useLocale()
-  const { getValues, errors } = useFormContext()
 
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  console.log({ errors })
   const onPress = (setStart) => {
-    const data = getValues()
-    if (errors.phone) {
-      toastShort(errors.phone?.message || '请输入手机号')
-    } else {
-      setStart(true)
-      sendToken(data.phone)
-    }
+    // console.log({ field })
+    // console.log({ errors })
+    // const data = getValues()
+    // if (errors.phone) {
+    //   toastShort(errors.phone?.message || '请输入手机号')
+    // } else {
+    //   setStart(true)
+    //   sendToken(data.phone)
+    // }
   }
   return (
     <BasicInput
@@ -95,6 +168,7 @@ const TokenInput = ({ sendToken }) => {
       placeholder={t('LANG16')}
       keyboardType="number-pad"
       renderRight={() => <TokenButton onPress={onPress} />}
+      {...props}
     />
   )
 }
@@ -120,21 +194,23 @@ const PasswordInput = () => {
 }
 
 const SubmitButton = ({ onSubmit, ...restProps }) => {
+  const { handleSubmit } = useForm()
   const { getValues, errors, watch } = useFormContext()
 
+  console.log({ errors })
   const onPress = () => {
     const data = getValues()
-    onSubmit(data)
+    console.log({ data })
+    handleSubmit(onSubmit(data))
   }
 
   const allField = watch()
 
   const disabled = useMemo(() => {
     const fields = Object.keys(allField)
-    return (
-      Object.keys(errors).length > 0 || fields.some((field) => !allField[field])
-    )
-  }, [errors, allField])
+    return fields.some((field) => !allField[field])
+  }, [allField])
+
   return (
     <Button
       style={{ borderRadius: 30 }}

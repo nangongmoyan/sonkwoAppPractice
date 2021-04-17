@@ -37,11 +37,11 @@ const TokenButton = (props) => {
       <Row>
         {isCounting ? (
           <MyText size={14}>
-            {t('LANG13')}（{count}s）
+            {t('LANG19')}（{count}s）
           </MyText>
         ) : (
           <MyText size={14} color={ThemeColors.Default}>
-            {t('LANG12')}
+            {t('LANG18')}
           </MyText>
         )}
       </Row>
