@@ -5,11 +5,12 @@
 
 import React, { useRef, createRef, useState, useEffect } from 'react'
 import { ThemeColors } from 'ui/theme'
-// import { DrawerScreen } from './drawer'
 import { RootRouteScreen, UnLoginRouteScreen } from './stacks'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer, InitialState } from '@react-navigation/native'
 import { useSelector } from '@hooks'
+import { vw } from '@util'
+import { DrawerScreen } from './drawer'
 
 const Drawer = createDrawerNavigator() //  抽屉drawer实例
 
@@ -37,10 +38,11 @@ export default function App() {
   }, [navigationRef])
 
   const userInfo = useSelector((state) => state.UserReducer.userInfo)
+  console.log({ userInfo })
   return (
     <NavigationContainer
       ref={navigationRef}
-      initialState={initialState}
+      initialState={InitialState}
       onStateChange={(state) => {
         const previousRouteName = routeNameRef.current
         const currentRouteName = getActiveRouteName(state)
@@ -55,38 +57,14 @@ export default function App() {
         routeNameRef.current = currentRouteName
       }}
     >
-      {userInfo.id ? (
-        <Drawer.Navigator
-          // drawerStyle={{
-          //   width: vw(75),
-          //   backgroundColor: ThemeColors.WhiteSmoke,
-          // }}
-          drawerType="slide"
-          initialRouteName="Home"
-          overlayColor="transparent"
-          keyboardDismissMode={'none'}
-          // drawerContent={(props) => (
-          //   <DrawerScreen {...props} userInfo={userInfo} />
-          // )}
-        >
-          <Drawer.Screen
-            name="Root"
-            component={RootRouteScreen}
-            options={{ swipeEnabled: false }}
-          />
-        </Drawer.Navigator>
-      ) : (
-        <UnLoginRouteScreen />
-      )}
-
-      {/* {userInfo.id !== '' ? (
+      {userInfo.id !== '' ? (
         <Drawer.Navigator
           drawerStyle={{
             width: vw(75),
             backgroundColor: ThemeColors.WhiteSmoke,
           }}
           drawerType="slide"
-          initialRouteName="Home"
+          initialRouteName="Mall"
           overlayColor="transparent"
           keyboardDismissMode={'none'}
           drawerContent={(props) => (
@@ -100,8 +78,8 @@ export default function App() {
           />
         </Drawer.Navigator>
       ) : (
-        <SignInRouteScreen />
-      )} */}
+        <UnLoginRouteScreen />
+      )}
     </NavigationContainer>
   )
 }

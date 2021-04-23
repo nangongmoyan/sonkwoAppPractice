@@ -13,7 +13,9 @@ import { LoadingProvider } from '@contexts/loading'
 import { initPermissions } from '@util/permissions'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { LocaleContext, LocaleProvider } from '@contexts/locale'
-
+import { deviceStorage } from '@util'
+import { setUserInfo } from '@actions/user_action'
+import { config } from '@sonkwo/sonkwo-api'
 // 在正式环境中清空console.log()
 if (!__DEV__) {
   global.console = {
@@ -25,7 +27,23 @@ if (!__DEV__) {
 }
 
 const SonkwoAppPractice = () => {
-  async function initApp() {}
+  async function initApp() {
+    const userInfo = await deviceStorage.get('userInfo')
+    console.log({ userInfo })
+    if (userInfo !== null) {
+      if (userInfo.data.access_token) {
+        userInfo.data.accessToken = userInfo.data.access_token
+      }
+      if (userInfo.data.accessToken) {
+        // fetch.setToken(userInfo.data.accessToken, store.dispatch)
+        // client.jwt(userInfo.data.accessToken)
+        config.setToken(userInfo.data.accessToken)
+      }
+      store.dispatch(setUserInfo(userInfo.data))
+    } else {
+      deviceStorage.save('userInfo', '')
+    }
+  }
 
   useEffect(() => {
     initApp()

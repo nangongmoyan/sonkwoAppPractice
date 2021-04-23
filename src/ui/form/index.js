@@ -59,38 +59,48 @@ const Provider = ({ children }) => {
 
 const BasicInput = ({
   name,
-  control,
+  validation,
   renderLeft,
   renderRight,
   textinputStyle,
-  validation,
   defaultValue,
   ...restProps
 }) => {
   // const { register, getValues } = useFormContext()
-  const { register } = useForm()
+  const { register, setValue, getValues } = useFormContext()
   const defaultValidation = { required: true }
   const ref = register(name, { ...defaultValidation, ...validation })
-  const { field } = useController({ control, name, defaultValue: '' })
-  console.log({ field })
-  const { value, onBlur, onChange } = field
+  // const { field } = useController({ control, name, defaultValue: '' })
+  // console.log({ field })
+  // const { value, onBlur, onChange } = field
   // console.log({ ref })
   useEffect(() => {
-    onChange(defaultValue)
+    setValue(name, defaultValue, {
+      shouldValidate: true,
+      shouldDirty: true,
+    })
   }, [defaultValue])
   return (
     <Row style={{ width: '80%' }}>
       {renderLeft && renderLeft()}
       <TextInput
-        ref={ref}
-        value={value}
+        {...register(name, { ...validation })}
+        // ref={ref}
+        // {...ref}
+        // value={value}
         {...restProps}
+        defaultValue={defaultValue}
         // onBlur={onBlur}
         selectionColor="black"
         clearButtonMode="always"
         placeholderTextColor={'#c2c2c5'}
         underlineColorAndroid="transparent"
-        onChangeText={(value) => onChange(value)}
+        onChangeText={(value) =>
+          setValue(name, value, {
+            shouldValidate: true,
+            shouldDirty: true,
+          })
+        }
         style={[styles.textinput, textinputStyle]}
       />
       {/* <Controller
@@ -113,7 +123,7 @@ const BasicInput = ({
           />
         )}
       /> */}
-      {renderRight && renderRight()}
+      {renderRight && renderRight(getValues())}
     </Row>
   )
 }
@@ -134,6 +144,7 @@ const PhoneInput = ({ ...props }) => {
   return (
     <BasicInput
       name="phone"
+      maxLength={11}
       validation={phoneValidation}
       placeholder={t('LANG15')}
       keyboardType="phone-pad"
@@ -144,23 +155,20 @@ const PhoneInput = ({ ...props }) => {
 
 const TokenInput = ({ sendToken, ...props }) => {
   const { t } = useLocale()
-
   const {
-    handleSubmit,
+    getValues,
     formState: { errors },
-  } = useForm()
+  } = useFormContext()
 
-  console.log({ errors })
   const onPress = (setStart) => {
-    // console.log({ field })
-    // console.log({ errors })
-    // const data = getValues()
-    // if (errors.phone) {
-    //   toastShort(errors.phone?.message || '请输入手机号')
-    // } else {
-    //   setStart(true)
-    //   sendToken(data.phone)
-    // }
+    const data = getValues()
+    // console.log({ data, errors })
+    if (errors.phone) {
+      toastShort(errors.phone?.message || '请输入手机号')
+    } else {
+      setStart(true)
+      sendToken(data.phone)
+    }
   }
   return (
     <BasicInput
@@ -194,22 +202,26 @@ const PasswordInput = () => {
 }
 
 const SubmitButton = ({ onSubmit, ...restProps }) => {
-  const { handleSubmit } = useForm()
-  const { getValues, errors, watch } = useFormContext()
+  const {
+    watch,
+    getValues,
+    formState: { errors },
+  } = useFormContext()
 
-  console.log({ errors })
   const onPress = () => {
     const data = getValues()
-    console.log({ data })
-    handleSubmit(onSubmit(data))
+    onSubmit(data)
   }
 
   const allField = watch()
 
   const disabled = useMemo(() => {
+    // console.log({ errors })
     const fields = Object.keys(allField)
-    return fields.some((field) => !allField[field])
-  }, [allField])
+    return (
+      Object.keys(errors).length > 0 || fields.some((field) => !allField[field])
+    )
+  }, [errors, allField])
 
   return (
     <Button
