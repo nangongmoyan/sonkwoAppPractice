@@ -33,7 +33,7 @@ const en_US = {
   LANG33: 'Messages',
   LANG34: 'Dress Up',
   LANG35: 'System',
-  LANG36: 'Sonkwo Currency',
+  LANG36: 'Help',
   LANG37: 'Share Sonkwo',
   LANG38: 'About Sonkwo',
   LANG39: 'Sign Out',

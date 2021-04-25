@@ -1,6 +1,6 @@
 /**
  * 导出UI组件
- * created by lijianpo on 2021/04/13
+ * changed by lijianpo on 2021/04/25
  */
 export {
   View,
@@ -32,10 +32,12 @@ export {
   TouchableWithoutFeedback as GHWithoutFeedback,
 } from 'react-native-gesture-handler'
 
+export SvgIcon from 'react-native-svg-iconfont'
 export LinearGradient from 'react-native-linear-gradient'
 export { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
 export { default as Icon } from './icon'
 export { default as Form } from './form'
+export { default as Avatar } from './avatar'
 export { default as Button} from './button'
 export { default as Divider } from './divider'
 export { default as NavItem } from './navItem'
