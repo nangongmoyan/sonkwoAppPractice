@@ -43,4 +43,4 @@ export { default as MyStatusBar } from './statusBar'
 export { default as Flex, Row, Column } from './flex'
 export { default as MyText, weights as fontWeights } from './text'
 export { default as CustomStackHeader} from './header/customStackHeader'
-
+export { default as ShadowBox } from './shadowBox'

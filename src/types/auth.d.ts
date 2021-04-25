@@ -8,6 +8,10 @@ declare interface SignInSmsParam {
   token: string
 }
 
+declare interface SignInPasswordParam {
+  account: string
+  password: string
+}
 declare interface SignParams {
   route: string
   group: SimpleGroup

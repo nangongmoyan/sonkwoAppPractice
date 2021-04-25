@@ -8,10 +8,23 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer'
 import { useLocale } from '@contexts/locale'
-import { Column, Row, MyText, StatusBar } from '@ui'
+import {
+  Column,
+  Row,
+  MyText,
+  StatusBar,
+  ShadowBox,
+  GHWithoutFeedback,
+} from '@ui'
+import { vw } from '@util'
+import { routerStyles } from './css'
+import { ThemeColors } from 'ui/theme'
+import { useDispatch } from '@hooks'
+import { signOut } from '@actions/user_action'
 
 function DrawerScreen(props) {
   const { t } = useLocale()
+  const dispatch = useDispatch()
   const isDrawerOpen = useIsDrawerOpen()
   const { userInfo, navigation } = props
 
@@ -43,11 +56,23 @@ function DrawerScreen(props) {
     navigation,
   ])
 
+  const onSignOut = () => {
+    dispatch(signOut())
+  }
   return (
     <DrawerContentScrollView contentContainerStyle={{ paddingBottom: 30 }}>
       <Row>
         <MyText size={20}>{nickname}</MyText>
       </Row>
+      <ShadowBox boxWidth={vw(64)} boxStyle={{ marginTop: 30 }}>
+        <GHWithoutFeedback onPress={() => onSignOut()}>
+          <Column style={routerStyles.signOutContainer}>
+            <MyText size={16} color={ThemeColors.Red}>
+              {t('LANG21')}
+            </MyText>
+          </Column>
+        </GHWithoutFeedback>
+      </ShadowBox>
     </DrawerContentScrollView>
   )
 }

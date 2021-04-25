@@ -9,13 +9,15 @@ import { ThemeColors, ThemeStyle } from 'ui/theme'
 const Button = (props) => {
   const {
     title,
-    color,
-    style,
-    disabled = false,
+    icon,
     type = 'solid', // value: solid | outline
     size = 'large', // value: small | large
-    numberOfLines = 1,
+    disabled = false,
+    color,
+    style,
     textStyle: customTextStyle,
+    iconStyle,
+    numberOfLines = 1,
     onPress,
     ...restProps
   } = props

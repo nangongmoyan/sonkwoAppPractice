@@ -7,28 +7,30 @@ import { Form, Column, Divider } from '@ui'
 import { FormProvider } from '@contexts/form'
 import AgreementPolicy from './AgreementPolicy'
 import { useLocale } from '@contexts/locale'
+import { useDispatch } from '@hooks'
+import { signInWithPass } from '@actions/user_action'
 
-const PasswordVerification = () => {
+interface Props {
+  signParams: SignParams
+}
+
+const PasswordVerification: React.FC<Props> = ({ signParams }) => {
   const { t } = useLocale()
-  const onSubmit = (data: SignInSmsParam) => {
-    // console.log({ data })
+  const dispatch = useDispatch()
+  const onSubmit = (data: SignInPasswordParam) => {
+    dispatch(signInWithPass(data))
   }
   return (
     <FormProvider>
-      <Column>
-        <Form.PhoneInput
-          name="phone"
-          textinputStyle={{
-            fontSize: 20,
-          }}
-        />
-        <Divider height={1} color="#DEDEE3" />
-        <Divider height={15} />
+      <>
+        {/* <Form.Ba name="phone" /> */}
+        <Form.BasicInput name="account" placeholder="输入邮箱或手机号" />
+        <Divider height={20} />
         <Form.PasswordInput name="password" />
-        <Divider height={1} color="#DEDEE3" />
+        <Divider height={20} />
         <AgreementPolicy style={{ marginTop: 20, marginBottom: 36 }} />
         <Form.SubmitButton onSubmit={onSubmit} title={t('LANG20')} />
-      </Column>
+      </>
     </FormProvider>
   )
 }
