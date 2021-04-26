@@ -4,6 +4,7 @@
  */
 import { vw } from '@util'
 import { StyleSheet } from '@ui'
+import { ThemeColors } from 'ui/theme'
 
 const routerStyles = StyleSheet.create({
   headItemTitleStyle: {
@@ -15,9 +16,12 @@ const routerStyles = StyleSheet.create({
     width: vw(68),
     paddingHorizontal: 10,
   },
+  brancheTitleStyle: {
+    marginLeft: 10,
+    color: ThemeColors.DarkGray,
+  },
   itemTitleStyle: {
     fontSize: 14,
-    color: '#222',
   },
   itemStyle: {
     width: vw(60),

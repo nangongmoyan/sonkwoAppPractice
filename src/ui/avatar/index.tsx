@@ -37,7 +37,7 @@ const Avatar: React.FC<AvatarProps> = ({
   const inner =
     avatar === defaultAvatar || avatar === '' ? (
       <Image
-        source={{ uri: 'avatar' }}
+        source={require('@source/images/avatar.png')}
         style={[imageStyle, { width: size, height: size }]}
       />
     ) : (

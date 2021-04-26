@@ -1,6 +1,6 @@
 /**
  *
- * created by lijianpo on 2021/04/23
+ * changed by lijianpo on 2021/04/26
  */
 import React, { useEffect, useMemo, useCallback } from 'react'
 import {
@@ -17,13 +17,15 @@ import {
   GHWithoutFeedback,
   NavItem,
   Avatar,
+  Icon,
+  SvgIcon,
 } from '@ui'
-import { vw } from '@util'
+import { statusBarHeight, vw } from '@util'
 import { routerStyles } from './css'
 import { ThemeColors } from 'ui/theme'
 import { useDispatch } from '@hooks'
 import { signOut } from '@actions/user_action'
-
+import * as iconPath from '@source/svg'
 const firstItem = [
   { route: 'Wallet', label: 'LANG22' },
   { route: 'Order', label: 'LANG23' },
@@ -41,7 +43,7 @@ const secondItem = [
 const thirdItem = [
   { route: 'Setting', label: 'LANG32' },
   { route: 'Messages', label: 'LANG33' },
-  { route: 'DressUp', label: 'LANG34' },
+  { route: 'Skin', label: 'LANG34' },
 ]
 
 const fourthItem = [
@@ -51,14 +53,15 @@ const fourthItem = [
 ]
 
 const allItem = [firstItem, secondItem, thirdItem, fourthItem]
+
 function DrawerScreen(props) {
   const { t } = useLocale()
   const dispatch = useDispatch()
   const isDrawerOpen = useIsDrawerOpen()
   const { userInfo, navigation } = props
 
-  const { nickname } = userInfo
-  console.log({ userInfo })
+  const { nickname, avatar } = userInfo
+  console.log({ avatar })
 
   useEffect(() => {
     const barStyle = isDrawerOpen ? 'dark-content' : 'light-content'
@@ -77,7 +80,12 @@ function DrawerScreen(props) {
     return allItem.map((branche) => {
       return branche.map((item) => {
         const { route, label } = item
-        Object.assign(item, { title: t(label) })
+        const path = iconPath[route.toLowerCase()]
+        Object.assign(item, {
+          title: t(label),
+          icon: <SvgIcon fill={['#333']} path={path} size={20} />,
+        })
+
         switch (route) {
           case 'Wallet':
             return { ...item, parent: t('LANG21') }
@@ -99,7 +107,7 @@ function DrawerScreen(props) {
             return { ...item, parent: t('LANG31') }
           case 'Messages':
             return { ...item }
-          case 'DressUp':
+          case 'Skin':
             return { ...item }
           case 'Help':
             return { ...item, parent: t('LANG35') }
@@ -111,12 +119,17 @@ function DrawerScreen(props) {
       })
     })
   }, [t])
+
   const leftIcon = useCallback((item) => {
     return (
-      <Column align="center" justify="center" style={{ marginRight: 30 }}>
+      <Column align="center" justify="center" style={{ marginRight: 15 }}>
         {item.icon}
       </Column>
     )
+  }, [])
+
+  const rightExtraTitle = useCallback((item) => {
+    return <MyText>200000</MyText>
   }, [])
 
   const onPress = useCallback((route) => navigation.navigate(route), [
@@ -127,45 +140,62 @@ function DrawerScreen(props) {
     dispatch(signOut())
   }
   return (
-    <DrawerContentScrollView contentContainerStyle={{ paddingBottom: 30 }}>
-      <Row>
-        {/* <Avatar avatar={{uri:}}/> */}
-        <MyText size={20}>{nickname}</MyText>
+    <Column style={{ flex: 1, paddingTop: statusBarHeight }}>
+      <Row
+        style={{
+          width: vw(64),
+          alignSelf: 'center',
+          height: 40,
+          marginTop: 20,
+        }}
+      >
+        <Avatar avatar={avatar} size={24} />
+        <MyText size={16} style={{ marginLeft: 10 }}>
+          {nickname}
+        </MyText>
+        <Icon name="chevron-right" size={20} color={'#222'} />
       </Row>
-      {allRoutes.map((all, index) => {
-        return (
-          <ShadowBox key={index} boxWidth={vw(64)} boxStyle={{ marginTop: 30 }}>
-            <NavItem
-              itemType="hidden"
-              showItemSeparator={true}
-              itemTitle={all[0].parent}
-              itemStyle={routerStyles.headItemStyle}
-              itemTitleStyle={routerStyles.itemTitleStyle}
-            />
-            {all.map((item, i) => (
+      <DrawerContentScrollView showsVerticalScrollIndicator={false}>
+        {allRoutes.map((all, index) => {
+          return (
+            <ShadowBox
+              key={index}
+              boxWidth={vw(64)}
+              boxStyle={{ marginTop: index !== 0 ? 30 : -30 }}
+            >
               <NavItem
-                key={i}
-                itemTitle={item.title}
-                leftIcon={leftIcon(item)}
-                itemStyle={routerStyles.itemStyle}
-                onPress={() => onPress(item.route)}
-                itemTitleStyle={routerStyles.itemTitleStyle}
-                showItemSeparator={i !== all.length - 1 ? true : false}
+                itemType="hidden"
+                showItemSeparator={true}
+                itemTitle={all[0].parent}
+                itemStyle={routerStyles.headItemStyle}
+                itemTitleStyle={routerStyles.brancheTitleStyle}
               />
-            ))}
-          </ShadowBox>
-        )
-      })}
-      <ShadowBox boxWidth={vw(64)} boxStyle={{ marginTop: 30 }}>
-        <GHWithoutFeedback onPress={() => onSignOut()}>
-          <Column style={routerStyles.signOutContainer}>
-            <MyText size={16} color={ThemeColors.Red}>
-              {t('LANG39')}
-            </MyText>
-          </Column>
-        </GHWithoutFeedback>
-      </ShadowBox>
-    </DrawerContentScrollView>
+              {all.map((item, i) => (
+                <NavItem
+                  key={i}
+                  itemTitle={item.title}
+                  leftIcon={leftIcon(item)}
+                  rightExtraTitle={rightExtraTitle(item)}
+                  itemStyle={routerStyles.itemStyle}
+                  onPress={() => onPress(item.route)}
+                  itemTitleStyle={routerStyles.itemTitleStyle}
+                  showItemSeparator={i !== all.length - 1 ? true : false}
+                />
+              ))}
+            </ShadowBox>
+          )
+        })}
+        <ShadowBox boxWidth={vw(64)} boxStyle={{ marginVertical: 30 }}>
+          <GHWithoutFeedback onPress={() => onSignOut()}>
+            <Column style={routerStyles.signOutContainer}>
+              <MyText size={16} color={ThemeColors.Red}>
+                {t('LANG39')}
+              </MyText>
+            </Column>
+          </GHWithoutFeedback>
+        </ShadowBox>
+      </DrawerContentScrollView>
+    </Column>
   )
 }
 
