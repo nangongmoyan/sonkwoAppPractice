@@ -9,7 +9,7 @@ import { Community } from './community'
 import { Game } from './game'
 import { Guide } from './guide'
 import { Mall } from './mall'
-import { Mine } from './mine'
+import { UserHome } from './userHome'
 import { SignIn } from './sign'
 
 const tabSatcks = [
@@ -39,8 +39,8 @@ const tabSatcks = [
   },
   /** 我的 */
   {
-    name: 'Mine',
-    component: Mine,
+    name: 'UserHome',
+    component: UserHome,
     options: { tabBarLabel: '我的' },
   },
 ]

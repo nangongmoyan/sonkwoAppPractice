@@ -39,7 +39,7 @@ function TabScreen() {
                 ? require('@source/images/cartFocus.png')
                 : require('@source/images/cart.png')
               break
-            case 'Mine':
+            case 'UserHome':
               iconSource = focused
                 ? require('@source/images/mineFocus.png')
                 : require('@source/images/mine.png')
