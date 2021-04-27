@@ -80,10 +80,10 @@ const UserHome = ({ navigation }) => {
   }
 
   const [routes] = useState([
-    { key: 'Subject', title: '果贴' },
-    { key: 'Comment', title: '评论' },
-    { key: 'Reply', title: '回复' },
-    { key: 'Collection', title: '收藏' },
+    { key: 'Subject', title: t('LANG55') },
+    { key: 'Comment', title: t('LANG56') },
+    { key: 'Reply', title: t('LANG57') },
+    { key: 'Collection', title: t('LANG58') },
   ])
 
   const renderScrollHeader = () => <UserHeader />

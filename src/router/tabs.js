@@ -7,11 +7,13 @@ import { Image } from 'react-native'
 import { ThemeColors } from 'ui/theme'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { tabSatcks } from '@pages/'
+import { useLocale } from '@contexts/locale'
 
 // 选项卡页签tab navigator 实例
 const Tab = createBottomTabNavigator()
 
 function TabScreen() {
+  const { t } = useLocale()
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -53,14 +55,17 @@ function TabScreen() {
         inactiveTintColor: '#85858C',
       }}
     >
-      {tabSatcks.map(({ name, component, options }) => (
-        <Tab.Screen
-          key={name}
-          name={name}
-          component={component}
-          options={options}
-        />
-      ))}
+      {tabSatcks.map(({ name, component, options }) => {
+        Object.assign(options, { tabBarLabel: t(options.tabBarLabel) })
+        return (
+          <Tab.Screen
+            key={name}
+            name={name}
+            component={component}
+            options={options}
+          />
+        )
+      })}
     </Tab.Navigator>
   )
 }

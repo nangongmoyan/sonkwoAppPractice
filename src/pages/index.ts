@@ -12,37 +12,38 @@ import { Mall } from './mall'
 import { UserHome } from './userHome'
 import { SignIn } from './sign'
 import { EditInfo } from './editInfo'
+import { NickName } from './nickName'
 
 const tabSatcks = [
   /** 首页 */
   {
     name: 'Mall',
     component: Mall,
-    options: { tabBarLabel: '首页' },
+    options: { tabBarLabel: 'LANG1' },
   },
   /** 游戏 */
   {
     name: 'Game',
     component: Game,
-    options: { tabBarLabel: '游戏' },
+    options: { tabBarLabel: 'LANG2' },
   },
   /** 社区 */
   {
     name: 'Community',
     component: Community,
-    options: { tabBarLabel: '社区' },
+    options: { tabBarLabel: 'LANG3' },
   },
   /** 购物车 */
   {
     name: 'Cart',
     component: Cart,
-    options: { tabBarLabel: '购物车' },
+    options: { tabBarLabel: 'LANG4' },
   },
   /** 我的 */
   {
     name: 'UserHome',
     component: UserHome,
-    options: { tabBarLabel: '我的' },
+    options: { tabBarLabel: 'LANG5' },
   },
 ]
 
@@ -72,6 +73,12 @@ const loggedStacks = [
   {
     name: 'EditInfo',
     component: EditInfo,
+    options: { headerShown: false },
+  },
+  /**编辑资料 */
+  {
+    name: 'NickName',
+    component: NickName,
     options: { headerShown: false },
   },
 ]

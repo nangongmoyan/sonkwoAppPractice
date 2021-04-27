@@ -26,10 +26,10 @@ import { useUserInfo } from '@features/user/hooks/useIsSelf'
 import { UserFollowFans } from './UserFollowFans'
 
 const ITEMS = [
-  { label: '小组', route: 'UserGroup' },
-  { label: '点评', route: 'UserReviews' },
-  { label: '心愿单', route: 'WishList' },
-  { label: '积分', route: 'PointStore' },
+  { label: 'LANG45', route: 'UserGroup' },
+  { label: 'LANG46', route: 'UserReviews' },
+  { label: 'LANG47', route: 'WishList' },
+  { label: 'LANG48', route: 'PointStore' },
 ]
 
 interface UserHeaderProps {}
@@ -43,6 +43,7 @@ const UserHeader: React.FC<UserHeaderProps> = memo(({}) => {
   const routes = useMemo(() => {
     return ITEMS.map((item) => {
       const { route, label } = item
+      Object.assign(item, { label: t(label) })
       switch (route) {
         case 'UserGroup':
           return { ...item, counts: 10 }

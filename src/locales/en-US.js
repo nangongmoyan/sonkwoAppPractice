@@ -3,6 +3,11 @@
  * created by lijianpo on 2021/04/13
  */
 const en_US = {
+  LANG1: 'Home',
+  LANG2: 'Game',
+  LANG3: 'Community',
+  LANG4: 'Cart',
+  LANG5: 'Mine',
   LANG6: 'WeChat Login',
   LANG7: 'Phone Login',
   LANG8: 'Sign in and register representatives agree to',
@@ -39,5 +44,28 @@ const en_US = {
   LANG39: 'Share Sonkwo',
   LANG40: 'About Sonkwo',
   LANG41: 'Sign Out',
+  // LANG42: '玩家',
+  // LANG43: '签到',
+  // LANG44: '已签到',
+  LANG45: 'Group',
+  LANG46: 'Reviews',
+  LANG47: 'WishList',
+  LANG48: 'Point',
+  LANG49: 'Follow',
+  LANG50: 'Fans',
+  LANG51: 'Steam Account Bind',
+  LANG52: 'Game',
+  LANG53: 'Time',
+  LANG54: 'Achievement',
+  LANG55: 'Subject',
+  LANG56: 'Comment',
+  LANG57: 'Reply',
+  LANG58: 'Collection',
+  LANG59: 'Cancel',
+  LANG60: 'Save',
+  LANG61: 'Change NickName',
+  LANG62: 'Add a nickname',
+  LANG63:
+    'Please set 2-24 characters, you cannot use @《 / and other characters',
 }
 export default en_US
