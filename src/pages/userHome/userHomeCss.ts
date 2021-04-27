@@ -41,7 +41,7 @@ const userHomeStyles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   followFansContainer: {
-    height: 150,
+    height: 100,
     marginTop: 15,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

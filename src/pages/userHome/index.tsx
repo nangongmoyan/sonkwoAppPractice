@@ -28,6 +28,7 @@ const UserHome = ({ navigation }) => {
   const frozeTop = top + 44
   const { width } = useDimensions()
   const [scrollTrans, setScrollTrans] = useState(useSharedValue(0))
+
   const transYValue = useDerivedValue(() => {
     return interpolate(
       scrollTrans.value,
@@ -85,15 +86,15 @@ const UserHome = ({ navigation }) => {
     { key: 'Collection', title: '收藏' },
   ])
 
-  const renderHeader = () => <UserHeader />
+  const renderScrollHeader = () => <UserHeader />
 
   const makeScrollTrans = (scrollTrans: Animated.SharedValue<number>) => {
     setScrollTrans(scrollTrans)
   }
 
   const renderScene = (sceneProps: any) => {
-    const { item } = sceneProps
-    switch (item) {
+    const { route } = sceneProps
+    switch (route.key) {
       case 'Subject':
         return <UserSubjects indexNo={0} />
       case 'Comment':
@@ -102,11 +103,16 @@ const UserHome = ({ navigation }) => {
         return <UserReplies indexNo={2} />
       case 'Collection':
         return <UserCollections indexNo={3} />
-      default:
-        return null
     }
   }
 
+  const tabbarProps = {
+    tabWidth: width / routes.length,
+    style: {
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+    },
+  }
   return (
     <Column style={{ flex: 1 }}>
       <MyStatusBar isDarkStyle={false} />
@@ -115,8 +121,8 @@ const UserHome = ({ navigation }) => {
         frozeTop={frozeTop}
         renderScene={renderScene}
         makeScrollTrans={makeScrollTrans}
-        renderScrollHeader={renderHeader}
-        tabbarProps={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
+        renderScrollHeader={renderScrollHeader}
+        tabbarProps={tabbarProps}
       />
       {renderStackHeade()}
     </Column>

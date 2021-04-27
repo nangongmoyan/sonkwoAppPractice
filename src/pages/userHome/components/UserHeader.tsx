@@ -16,6 +16,7 @@ import {
   MyText,
   Row,
   SvgIcon,
+  TouchableOpacity,
 } from '@ui'
 import { userHomeStyles } from '../userHomeCss'
 import { ThemeColors } from 'ui/theme'
@@ -56,13 +57,13 @@ const UserHeader: React.FC<UserHeaderProps> = memo(({}) => {
   }, [])
   const renderHeaderLeft = useCallback(() => {
     return (
-      <GHOpacity onPress={() => navigation.toggleDrawer()}>
+      <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
         <SvgIcon
           fill={[ThemeColors.White]}
           path={iconPath.category}
           size={20}
         />
-      </GHOpacity>
+      </TouchableOpacity>
     )
   }, [])
 
@@ -115,7 +116,7 @@ const UserHeader: React.FC<UserHeaderProps> = memo(({}) => {
       </Row>
       <Row style={userHomeStyles.headerRouters}>
         {routes.map((item, index) => (
-          <GHWithoutFeedback>
+          <GHWithoutFeedback key={index}>
             <Column style={userHomeStyles.routesItem}>
               <MyText size={21} color={ThemeColors.White}>
                 {item?.counts}
