@@ -43,13 +43,15 @@ const secondItem = [
 const thirdItem = [
   { route: 'Setting', label: 'LANG32' },
   { route: 'Messages', label: 'LANG33' },
-  { route: 'Skin', label: 'LANG34' },
+  { route: 'EditInfo', label: 'LANG34' },
+  { route: 'AccountSecurity', label: 'LANG35' },
+  { route: 'Skin', label: 'LANG36' },
 ]
 
 const fourthItem = [
-  { route: 'Help', label: 'LANG36' },
-  { route: 'ShareSonkwo', label: 'LANG37' },
-  { route: 'AboutSonkwo', label: 'LANG38' },
+  { route: 'Help', label: 'LANG38' },
+  { route: 'ShareSonkwo', label: 'LANG39' },
+  { route: 'AboutSonkwo', label: 'LANG40' },
 ]
 
 const allItem = [firstItem, secondItem, thirdItem, fourthItem]
@@ -107,10 +109,14 @@ function DrawerScreen(props) {
             return { ...item, parent: t('LANG31') }
           case 'Messages':
             return { ...item }
+          case 'EditInfo':
+            return { ...item }
+          case 'AccountSecurity':
+            return { ...item }
           case 'Skin':
             return { ...item }
           case 'Help':
-            return { ...item, parent: t('LANG35') }
+            return { ...item, parent: t('LANG37') }
           case 'ShareSonkwo':
             return { ...item }
           case 'AboutSonkwo':
