@@ -45,6 +45,7 @@
     "react-native-screens": "^3.1.0",
     "react-native-svg": "^6.5.3",
     "react-native-svg-iconfont": "^1.0.4",
+    "react-native-syan-image-picker": "^0.4.11",
     "react-native-tab-view": "^3.0.0",
     "react-native-tab-view-collapsible-header": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",

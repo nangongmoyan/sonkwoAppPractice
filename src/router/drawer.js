@@ -195,7 +195,7 @@ function DrawerScreen(props) {
           <GHWithoutFeedback onPress={() => onSignOut()}>
             <Column style={routerStyles.signOutContainer}>
               <MyText size={16} color={ThemeColors.Red}>
-                {t('LANG39')}
+                {t('LANG41')}
               </MyText>
             </Column>
           </GHWithoutFeedback>

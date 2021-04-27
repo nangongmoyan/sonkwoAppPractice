@@ -11,6 +11,7 @@ import { Guide } from './guide'
 import { Mall } from './mall'
 import { UserHome } from './userHome'
 import { SignIn } from './sign'
+import { EditInfo } from './editInfo'
 
 const tabSatcks = [
   /** 首页 */
@@ -65,6 +66,12 @@ const loggedStacks = [
   {
     name: 'TabScreen',
     component: TabScreen,
+    options: { headerShown: false },
+  },
+  /**编辑资料 */
+  {
+    name: 'EditInfo',
+    component: EditInfo,
     options: { headerShown: false },
   },
 ]
