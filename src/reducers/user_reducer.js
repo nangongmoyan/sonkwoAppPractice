@@ -42,8 +42,30 @@ function userInfo(state = defaultUserInfo, action) {
   }
 }
 
+function avatarInfo(state = {}, action) {
+  switch (action.type) {
+    case USER.SET_TEMP_AVATAR:
+      return Object.assign({}, state, { image: action.data })
+    case USER.SET_AVATAR_TOKEN:
+      return Object.assign({}, { token: action.data, image: null })
+    default:
+      return state
+  }
+}
+
+function checkin(state = false, action) {
+  switch (action.type) {
+    case USER.SET_CHECKIN:
+      return action.data
+    default:
+      return state
+  }
+}
+
 const UserReducer = combineReducers({
+  checkin,
   userInfo,
+  avatarInfo,
 })
 
 export default UserReducer

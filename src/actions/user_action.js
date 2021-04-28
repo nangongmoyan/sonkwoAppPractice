@@ -3,13 +3,12 @@
  * created by lijianpo on 2021/04/14
  */
 
-import { authApi, config } from '@sonkwo/sonkwo-api'
+import { authApi, config, usersApi } from '@sonkwo/sonkwo-api'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { deviceStorage, toastShort } from '@util'
-import { NativeModules } from 'react-native'
 import store from '../store'
 import { USER } from '@util/action_types'
-import { useUserInfo } from '@features/user/hooks/useIsSelf'
+import { setWallet } from './wallet_action'
 export const setUserInfo = (data) => ({
   type: USER.SET_USER_INFO,
   data,
@@ -23,6 +22,18 @@ export const updateUserInfo = (data) => ({
 const clearUserInfo = () => ({
   type: USER.CLEAR_USER_INFO,
 })
+
+const setCheckin = (data) => ({
+  type: USER.SET_CHECKIN,
+  data,
+})
+const setAvatarToken = (data) => {
+  return { type: SET_AVATAR_TOKEN, data }
+}
+
+const setTempAvatar = (data) => {
+  return { type: USER.SET_TEMP_AVATAR, data }
+}
 
 const afterLogin = (res) => {
   const { id, region, accessToken } = res
@@ -106,48 +117,93 @@ export const refreshToken = (refresh_token) => async (dispatch) => {
   }
 }
 
+export const getImageToken = async (dispatch) => {
+  const result = await usersApi.getImageToken()
+  console.log({ result })
+  if (result) {
+    dispatch(setAvatarToken(result))
+  }
+}
+
+const defaultAuthQuery = {
+  gender: true,
+  birthday: true,
+  email_asterisks: true,
+  phone_number_asterisks: true,
+  show_steam_review: true,
+  credential_num_asterisks: true,
+  real_name_asterisks: true,
+  platforms: {
+    show_id: true,
+    kind: true,
+  },
+  point: {
+    score: true,
+    xp: true,
+    tasks: true,
+    history_score: true,
+  },
+  wallet: {
+    balance: true,
+    status: true,
+  },
+  configs: {
+    id: true,
+    kind: true,
+    key: true,
+    value: true,
+  },
+}
 export const getUserInfo = () => async (dispatch) => {
+  const res = await usersApi.queryAuthUserInfo(defaultAuthQuery)
+  console.log({ res })
   // const res = await queryAuthUserInfo()
-  // const {
-  //   avatar,
-  //   nickname,
-  //   emailAsterisks,
-  //   phoneNumberAsterisks,
-  //   credentialNumAsterisks,
-  //   realNameAsterisks,
-  //   gender,
-  //   showSteamReview,
-  //   platforms,
-  //   point = { tasks: {} },
-  //   wallet,
-  //   configs,
-  // } = res
-  // wallet && dispatch({ type: SET_WALLET, data: wallet })
-  // if (point.tasks.clockIn && +point.tasks.clockIn > 0) {
-  //   dispatch(setCheckin(true))
-  // }
-  // const platform =
-  //   platforms?.reduce((p, c) => {
-  //     p[c.kind] = c.showId
-  //     return p
-  //   }, {}) || {}
-  // deviceStorage.update('userInfo', {
-  //   phone_number: phoneNumberAsterisks,
-  //   credential_num: credentialNumAsterisks,
-  // })
-  // dispatch(
-  //   updateUserInfo({
-  //     nickname,
-  //     avatar,
-  //     email: emailAsterisks,
-  //     phone_number: phoneNumberAsterisks,
-  //     credential_num: credentialNumAsterisks,
-  //     real_name: realNameAsterisks,
-  //     gender,
-  //     showSteamReview,
-  //     point,
-  //     configs,
-  //     ...platform,
-  //   }),
-  // )
+  const {
+    avatar,
+    nickname,
+    birthday,
+    emailAsterisks,
+    phoneNumberAsterisks,
+    credentialNumAsterisks,
+    realNameAsterisks,
+    gender,
+    showSteamReview,
+    platforms,
+    point = { tasks: {} },
+    wallet,
+    configs,
+  } = res
+
+  wallet && dispatch(setWallet(wallet))
+
+  if (point.tasks.clockIn && +point.tasks.clockIn > 0) {
+    dispatch(setCheckin(true))
+  }
+
+  const platform =
+    platforms?.reduce((p, c) => {
+      p[c.kind] = c.showId
+      return p
+    }, {}) || {}
+
+  deviceStorage.update('userInfo', {
+    phone_number: phoneNumberAsterisks,
+    credential_num: credentialNumAsterisks,
+  })
+  dispatch(
+    updateUserInfo({
+      nickname,
+      avatar,
+      birthday,
+      email: emailAsterisks,
+      phone_number: phoneNumberAsterisks,
+      credential_num: credentialNumAsterisks,
+      real_name: realNameAsterisks,
+      gender,
+      showSteamReview,
+      point,
+      configs,
+      ...platform,
+    }),
+  )
 }

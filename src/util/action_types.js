@@ -2,11 +2,22 @@
  * reducer action type
  * created by lijianpo on 2021/04/12
  */
+const SET_CHECKIN = 'SET_CHECKIN'
 const SET_USER_INFO = 'SET_USER_INFO'
 const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
 const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
+const SET_TEMP_AVATAR = 'SET_TEMP_AVATAR'
+const SET_AVATAR_TOKEN = 'SET_AVATAR_TOKEN'
 export const USER = {
+  SET_CHECKIN,
   SET_USER_INFO,
   CLEAR_USER_INFO,
   UPDATE_USER_INFO,
+  SET_TEMP_AVATAR,
+  SET_AVATAR_TOKEN,
+}
+
+const SET_WALLET = 'SET_WALLET'
+export const WALLET = {
+  SET_WALLET,
 }

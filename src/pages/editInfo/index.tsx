@@ -3,9 +3,11 @@
  * created by lijianpo on 2021/04/27
  */
 
+import { getImageToken } from '@actions/user_action'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
+import { useDispatch } from '@hooks'
 import { Column, CustomStackHeader, MyStatusBar, NavItem, MyText } from '@ui'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { UserAvatar } from './components/UserAvatar'
 
 const ITEMS = [
@@ -17,7 +19,14 @@ const ITEMS = [
 ]
 const EditInfo = (props) => {
   const { navigation } = props
-  const { nickname } = useUserInfo()
+  const userInfo = useUserInfo()
+  console.log({ userInfo })
+  const { nickname, birthday } = useUserInfo()
+  const dispatch = useDispatch()
+  // getImageToken()
+  // useEffect(() => {
+  //   dispatch(getImageToken())
+  // })
   const routes = useMemo(() => {
     return ITEMS.map((item) => {
       const { route } = item
@@ -27,7 +36,7 @@ const EditInfo = (props) => {
         case 'Sex':
           return { ...item }
         case 'Birthday':
-          return { ...item }
+          return { ...item, rightTitle: birthday }
         case 'PersonalProfile':
           return { ...item }
         case 'ShippingAddress':

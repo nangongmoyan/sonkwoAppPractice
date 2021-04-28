@@ -6,9 +6,11 @@ import thunk from 'redux-thunk'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import UserReducer from './reducers/user_reducer'
+import WalletReducer from './reducers/wallet_reducer'
 
 const rootReducer = combineReducers({
   UserReducer,
+  WalletReducer,
 })
 const middleware = []
 middleware.push(thunk)

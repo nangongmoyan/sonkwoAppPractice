@@ -14,6 +14,8 @@ target 'sonkwoAppPractice' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNSyanImagePicker', :path => '../node_modules/react-native-syan-image-picker'
+
   target 'sonkwoAppPracticeTests' do
     inherit! :complete
     # Pods for testing
