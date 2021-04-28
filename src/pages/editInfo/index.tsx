@@ -20,7 +20,6 @@ const ITEMS = [
 const EditInfo = (props) => {
   const { navigation } = props
   const userInfo = useUserInfo()
-  console.log({ userInfo })
   const { nickname, birthday } = useUserInfo()
   const dispatch = useDispatch()
   // getImageToken()

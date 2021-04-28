@@ -72,9 +72,7 @@ export const sendEmail = sendToken('Email')
 export const signInWithSms = (params, cb) => async (dispatch) => {
   const { data, signParams } = params
   const { phone, token } = data
-  console.log({ data })
   const result = await authApi.signInBySms(phone, token)
-  console.log({ result })
   if ('status' in result) {
   } else {
     afterLogin(result)
@@ -82,7 +80,6 @@ export const signInWithSms = (params, cb) => async (dispatch) => {
 }
 
 export const signInWithPass = (params, cb) => async (dispatch) => {
-  console.log({ params })
   const { account, password } = params
   const data = {
     account: {
@@ -92,7 +89,6 @@ export const signInWithPass = (params, cb) => async (dispatch) => {
     },
   }
   const result = await authApi.signIn(data)
-  console.log({ result })
   if ('status' in result) {
   } else {
     afterLogin(result)
@@ -101,13 +97,11 @@ export const signInWithPass = (params, cb) => async (dispatch) => {
 
 export const signOut = () => async (dispatch) => {
   const result = await authApi.signOut()
-  console.log({ result })
   afterLogout()
 }
 
 export const refreshToken = (refresh_token) => async (dispatch) => {
   const result = await authApi.refreshToken(refresh_token)
-  console.log({ result })
   if (result && result.refreshToken) {
     deviceStorage.update('userInfo', result)
     store.dispatch(updateUserInfo(result))
@@ -119,7 +113,6 @@ export const refreshToken = (refresh_token) => async (dispatch) => {
 
 export const getImageToken = async (dispatch) => {
   const result = await usersApi.getImageToken()
-  console.log({ result })
   if (result) {
     dispatch(setAvatarToken(result))
   }
@@ -156,7 +149,6 @@ const defaultAuthQuery = {
 }
 export const getUserInfo = () => async (dispatch) => {
   const res = await usersApi.queryAuthUserInfo(defaultAuthQuery)
-  console.log({ res })
   // const res = await queryAuthUserInfo()
   const {
     avatar,

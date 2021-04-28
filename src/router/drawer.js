@@ -63,7 +63,6 @@ function DrawerScreen(props) {
   const { userInfo, navigation } = props
 
   const { nickname, avatar } = userInfo
-  console.log({ avatar })
 
   useEffect(() => {
     const barStyle = isDrawerOpen ? 'dark-content' : 'light-content'

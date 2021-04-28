@@ -30,7 +30,6 @@ const SonkwoAppPractice = () => {
   async function initApp() {
     const userInfo = await deviceStorage.get('userInfo')
     const { data } = userInfo
-    // console.log({ userInfo })
     if (userInfo !== null) {
       if (data.access_token) {
         data.accessToken = data.access_token

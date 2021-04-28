@@ -27,7 +27,6 @@ const PhoneVerification: React.FC<Props> = ({ signParams }) => {
 
   const onSubmit = (data: SignInSmsParam) => {
     const params = { data, signParams }
-    console.log({ params })
     dispatch(signInWithSms(params))
     // dispatch(signInWithSms(params))
     // ref.current.show('正在登录...')

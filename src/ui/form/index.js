@@ -91,7 +91,6 @@ const TokenInput = ({ sendToken, ...props }) => {
 
   const onPress = (setStart) => {
     const data = getValues()
-    // console.log({ data, errors })
     if (errors.phone) {
       toastShort(errors.phone?.message || '请输入手机号')
     } else {
@@ -143,10 +142,8 @@ const SubmitButton = ({ onSubmit, ...restProps }) => {
   }
 
   const allField = watch()
-  console.log({ allField })
 
   const disabled = useMemo(() => {
-    // console.log({ errors })
     const fields = Object.keys(allField)
     return (
       Object.keys(errors).length > 0 || fields.some((field) => !allField[field])

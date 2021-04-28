@@ -30,7 +30,6 @@ const DateWhell: React.FC<any> = () => {
     (year, month, day) => {
       date.setFullYear(year)
       const daysCount = DaysCount[isLeapYear(year) ? 1 : 0][month]
-      // console.log({ day, daysCount })
       if (day > daysCount) {
         day = daysCount
         date.setDate(day)
@@ -52,7 +51,6 @@ const DateWhell: React.FC<any> = () => {
     }
   }, [date])
 
-  console.log({ year, month, day })
   const { days } = useMemo(() => {
     const tmpDays = []
     const daysCount = DaysCount[isLeapYear(year) ? 1 : 0][month]
@@ -61,7 +59,6 @@ const DateWhell: React.FC<any> = () => {
     }
     return { days: tmpDays }
   }, [year, month, DaysCount])
-  console.log({ days })
   return (
     <Column style={{ flex: 1 }}>
       <Row
@@ -77,7 +74,6 @@ const DateWhell: React.FC<any> = () => {
           items={years}
           index={years.indexOf(year)}
           onChange={(index) => {
-            console.log({ index })
             onDateChange(years[index], month, day)
           }}
         />

@@ -23,10 +23,8 @@ const UserAvatar: React.FC<any> = (props) => {
   const { avatar } = userInfo
   const showImagePicker = useCallback(() => {
     SyanImagePicker.showImagePicker(options, (error, selectedPhotos) => {
-      console.log({ error, selectedPhotos })
       // //取消悬着
       // if (error) return
-      // console.log({ selectedPhotos })
     })
   }, [])
   return (
