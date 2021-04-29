@@ -19,10 +19,12 @@ const ITEMS = [
 ]
 const EditInfo: React.FC<any> = () => {
   const navigation = useNavigation()
-  const userInfo = useUserInfo()
-  const { nickname, birthday, gender } = useUserInfo()
+  const { gender, nickname, birthday } = useUserInfo()
+
   const { sex } = useMemo(() => {
-    return { sex: gender === 0 ? '男' : gender === 1 ? '女' : '保密' }
+    return {
+      sex: gender === 0 ? '男' : gender === 1 ? '女' : '保密',
+    }
   }, [gender])
   const dispatch = useDispatch()
   // useEffect(() => {
@@ -44,7 +46,7 @@ const EditInfo: React.FC<any> = () => {
           return { ...item }
       }
     })
-  }, [])
+  }, [nickname, sex, birthday])
 
   const rightExtraTitle = useCallback((rightTitle) => {
     if (!rightTitle) return null

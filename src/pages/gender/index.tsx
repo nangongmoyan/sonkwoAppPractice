@@ -3,7 +3,7 @@
  * created by lijianpo on 2021/04/27
  */
 import React, { useState, useCallback, useMemo } from 'react'
-import { useSelector } from '@hooks'
+import { useDispatch, useSelector } from '@hooks'
 import { useLocale } from '@contexts/locale'
 import {
   Column,
@@ -19,10 +19,10 @@ import {
   View,
 } from '@ui'
 import { EditStackHeader } from '@features/common/components'
-import { adaptiveHeight, adaptiveWidth } from '@util'
 import { ThemeColors } from 'ui/theme'
 import * as iconPath from '@source/svg'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
+import { changeUserInfo } from '@actions/user_action'
 
 const ITEMS = [
   { route: 'Male', label: 'LANG66', color: '#81d4fa', selected: true },
@@ -32,6 +32,7 @@ const ITEMS = [
 const Gender = ({ navigation }) => {
   const { t } = useLocale()
   const { gender } = useUserInfo()
+  const dispatch = useDispatch()
   const [sex, setSex] = useState(gender)
 
   const selections = useMemo(() => {
@@ -45,22 +46,16 @@ const Gender = ({ navigation }) => {
     })
   }, [sex])
 
-  // const userInfo = useSelector((state) => state.UserReducer.userInfo)
-  // const [value, onChangeText] = useState(userInfo.username)
-
   const { changeBgColor, changeTextColor } = useMemo(() => {
     const result = sex !== gender ? true : false
     return { changeBgColor: result, changeTextColor: result }
   }, [sex, gender])
 
   const onPress = useCallback(() => {
-    // Object.assign(userInfo, { username: value })
-    // changeUserInfo(userInfo, navigation.goBack())
-  }, [navigation])
+    dispatch(changeUserInfo({ gender: sex }, () => navigation.goBack()))
+  }, [sex, navigation])
 
-  const onSelect = useCallback((index) => {
-    setSex(index)
-  }, [])
+  const onSelect = useCallback((index) => setSex(index), [setSex])
   return (
     <Column style={{ flex: 1 }}>
       <MyStatusBar isDarkStyle={true} />
@@ -105,39 +100,6 @@ const Gender = ({ navigation }) => {
             </GHWithoutFeedback>
           )
         })}
-        {/* <GHWithoutFeedback onPress={() => setSex(0)}>
-          <Row style={{ height: 46 }}>
-            <SvgIcon fill={['#81d4fa']} path={iconPath.male} size={24} />
-            <MyText size={16} style={{ marginLeft: 10 }}>
-              男
-            </MyText>
-            <View style={{ flex: 1 }} />
-            {sex === 0 && (
-              <SvgIcon
-                fill={[ThemeColors.Default]}
-                path={iconPath.selected}
-                size={24}
-              />
-            )}
-          </Row>
-        </GHWithoutFeedback>
-        <Divider height={StyleSheet.hairlineWidth} color={'#ddd'} />
-        <GHWithoutFeedback onPress={() => setSex(1)}>
-          <Row style={{ height: 46 }}>
-            <SvgIcon fill={['#ffb3b3']} path={iconPath.female} size={24} />
-            <MyText size={16} style={{ marginLeft: 10 }}>
-              女
-            </MyText>
-            <View style={{ flex: 1 }} />
-            {sex === 1 && (
-              <SvgIcon
-                fill={[ThemeColors.Default]}
-                path={iconPath.selected}
-                size={24}
-              />
-            )}
-          </Row>
-        </GHWithoutFeedback> */}
       </ShadowBox>
       <MyText
         style={{

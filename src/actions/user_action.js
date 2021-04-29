@@ -10,6 +10,7 @@ import store from '../store'
 import { USER } from '@util/action_types'
 import { setWallet } from './wallet_action'
 import phoenix from '@util/phoenix'
+
 export const setUserInfo = (data) => ({
   type: USER.SET_USER_INFO,
   data,
@@ -121,6 +122,19 @@ export const getImageToken = async (dispatch) => {
   const result = await usersApi.getImageToken()
   if (result) {
     dispatch(setAvatarToken(result))
+  }
+}
+
+export const changeUserInfo = (user, cb) => async (dispatch) => {
+  const result = await usersApi.changeUserInfo(user)
+  if (checkNullObj(result)) {
+    if (user.nick_name) {
+      Object.assign(user, { nickname: user.nick_name })
+      delete user.nick_name
+    }
+    store.dispatch(updateUserInfo(user))
+    toastShort('修改成功')
+    cb & cb()
   }
 }
 

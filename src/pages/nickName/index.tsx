@@ -8,21 +8,23 @@ import { useUserInfo } from '@features/user/hooks/useIsSelf'
 import { Column, MyStatusBar, ShadowBox, TextInput, MyText } from '@ui'
 import { EditStackHeader } from '@features/common/components'
 import { adaptiveHeight, adaptiveWidth } from '@util'
+import { useDispatch } from '@hooks'
+import { changeUserInfo } from '@actions/user_action'
 
 const NickName = ({ navigation }) => {
   const { t } = useLocale()
-  const { nickname } = useUserInfo()
-  const [value, onChangeText] = useState(nickname)
+  const userInfo = useUserInfo()
+  const dispatch = useDispatch()
+  const [value, onChangeText] = useState(userInfo.nickname)
 
   const { changeBgColor, changeTextColor } = useMemo(() => {
-    const result = value !== nickname ? true : false
+    const result = value !== userInfo.nickname ? true : false
     return { changeBgColor: result, changeTextColor: result }
   }, [value])
 
   const onPress = useCallback(() => {
-    // Object.assign(userInfo, { username: value })
-    // changeUserInfo(userInfo, navigation.goBack())
-  }, [value, navigation])
+    dispatch(changeUserInfo({ nick_name: value }, () => navigation.goBack()))
+  }, [value])
   return (
     <Column style={{ flex: 1 }}>
       <MyStatusBar isDarkStyle={true} />
@@ -36,7 +38,7 @@ const NickName = ({ navigation }) => {
         <TextInput
           style={{ height: 44 }}
           value={value}
-          defaultValue={nickname}
+          defaultValue={userInfo.nickname}
           onChangeText={(text) => onChangeText(text)}
           clearButtonMode="always"
           maxLength={24}
