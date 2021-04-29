@@ -67,5 +67,11 @@ const en_US = {
   LANG62: 'Add a nickname',
   LANG63:
     'Please set 2-24 characters, you cannot use @《 / and other characters',
+  LANG64: 'Change Gender',
+  LANG65: 'choose gender',
+  LANG66: 'Male',
+  LANG67: 'Female',
+  LANG68: 'whether to show gender',
+  LANG69: 'Show Gender',
 }
 export default en_US

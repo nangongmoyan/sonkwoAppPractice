@@ -52,7 +52,7 @@ const EditStackHeader: React.FC<EditStackHeader> = ({
         </MyText>
       </GHWithoutFeedback>
     )
-  }, [])
+  }, [changeBgColor, changeTextColor])
   return (
     <CustomStackHeader
       showBack={false}

@@ -5,24 +5,26 @@
 
 import { getImageToken } from '@actions/user_action'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
-import { useDispatch } from '@hooks'
+import { useDispatch, useNavigation } from '@hooks'
 import { Column, CustomStackHeader, MyStatusBar, NavItem, MyText } from '@ui'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { UserAvatar } from './components/UserAvatar'
 
 const ITEMS = [
   { route: 'NickName', label: '昵称' },
-  { route: 'Sex', label: '性别' },
+  { route: 'Gender', label: '性别' },
   { route: 'Birthday', label: '生日' },
   { route: 'PersonalProfile', label: '个人简介' },
   { route: 'ShippingAddress', label: '收货地址' },
 ]
-const EditInfo = (props) => {
-  const { navigation } = props
+const EditInfo: React.FC<any> = () => {
+  const navigation = useNavigation()
   const userInfo = useUserInfo()
-  const { nickname, birthday } = useUserInfo()
+  const { nickname, birthday, gender } = useUserInfo()
+  const { sex } = useMemo(() => {
+    return { sex: gender === 0 ? '男' : gender === 1 ? '女' : '保密' }
+  }, [gender])
   const dispatch = useDispatch()
-  // getImageToken()
   // useEffect(() => {
   //   dispatch(getImageToken())
   // })
@@ -32,8 +34,8 @@ const EditInfo = (props) => {
       switch (route) {
         case 'NickName':
           return { ...item, rightTitle: nickname }
-        case 'Sex':
-          return { ...item }
+        case 'Gender':
+          return { ...item, rightTitle: sex }
         case 'Birthday':
           return { ...item, rightTitle: birthday }
         case 'PersonalProfile':

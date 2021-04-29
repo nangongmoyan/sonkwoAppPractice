@@ -5,7 +5,7 @@
 
 import { authApi, config, usersApi } from '@sonkwo/sonkwo-api'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { deviceStorage, toastShort } from '@util'
+import { checkNullObj, deviceStorage, toastShort } from '@util'
 import store from '../store'
 import { USER } from '@util/action_types'
 import { setWallet } from './wallet_action'
@@ -102,9 +102,7 @@ export const signInWithPass = (params, cb) => async (dispatch) => {
 
 export const signOut = () => async (dispatch) => {
   const result = await authApi.signOut()
-  if (Object.keys(result).length === 0) {
-    afterLogout()
-  }
+  checkNullObj(result) && afterLogout()
 }
 
 export const refreshToken = (refresh_token) => async (dispatch) => {

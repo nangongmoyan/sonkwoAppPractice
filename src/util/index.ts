@@ -22,3 +22,5 @@ export {
 
 //
 export { toastShort, toastLong } from './toast'
+
+export { checkNullObj } from './common'

@@ -66,5 +66,11 @@ const zh_CN = {
   LANG61: '修改昵称',
   LANG62: '添加一个昵称',
   LANG63: '请设置2-24个字符，不能使用@《 / 等字符哦',
+  LANG64: '修改性别',
+  LANG65: '选择性别',
+  LANG66: '男',
+  LANG67: '女',
+  LANG68: '是否展示性别',
+  LANG69: '展示性别',
 }
 export default zh_CN

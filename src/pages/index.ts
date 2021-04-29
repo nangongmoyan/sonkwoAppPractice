@@ -14,6 +14,7 @@ import { SignIn } from './sign'
 import { EditInfo } from './editInfo'
 import { NickName } from './nickName'
 import { Birthday } from './birthday'
+import { Gender } from './gender'
 
 const tabSatcks = [
   /** 首页 */
@@ -80,6 +81,12 @@ const loggedStacks = [
   {
     name: 'NickName',
     component: NickName,
+    options: { headerShown: false },
+  },
+  /**修改性别 */
+  {
+    name: 'Gender',
+    component: Gender,
     options: { headerShown: false },
   },
   /**修改生日 */
