@@ -29,18 +29,21 @@ if (!__DEV__) {
 const SonkwoAppPractice = () => {
   async function initApp() {
     const userInfo = await deviceStorage.get('userInfo')
-    const { data } = userInfo
-    if (userInfo !== null) {
-      if (data.access_token) {
-        data.accessToken = data.access_token
+    console.log({ userInfo })
+    if (
+      userInfo !== null &&
+      (userInfo.data.access_token || userInfo.data.accessToken)
+    ) {
+      if (userInfo.data.access_token) {
+        userInfo.data.accessToken = userInfo.data.access_token
       }
-      if (data.accessToken) {
+      if (userInfo.data.accessToken) {
         // fetch.setToken(userInfo.data.accessToken, store.dispatch)
         // client.jwt(userInfo.data.accessToken)
-        config.setToken(data.accessToken)
+        config.setToken(userInfo.data.accessToken)
       }
-      store.dispatch(setUserInfo(data))
-      if (!checkTokenOverdue(data)) {
+      store.dispatch(setUserInfo(userInfo.data))
+      if (!checkTokenOverdue(userInfo.data)) {
         store.dispatch(getUserInfo())
       }
     } else {

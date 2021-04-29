@@ -9,6 +9,7 @@ import { deviceStorage, toastShort } from '@util'
 import store from '../store'
 import { USER } from '@util/action_types'
 import { setWallet } from './wallet_action'
+import phoenix from '@util/phoenix'
 export const setUserInfo = (data) => ({
   type: USER.SET_USER_INFO,
   data,
@@ -47,7 +48,7 @@ const afterLogin = (res) => {
   // client.jwt(res.accessToken)
   // fetch.sendToken(res.accessToken, dispatch)
   config.setToken(accessToken)
-  // dispatch(getUserInfo())//
+  store.dispatch(getUserInfo())
   store.dispatch(updateUserInfo(res))
 }
 
@@ -55,7 +56,11 @@ const afterLogout = (res) => {
   // const { id } = res
   // client.jwt('')
   // fetch.sendToken('', dispatch)
+  config.setToken('')
   store.dispatch(clearUserInfo())
+
+  // disconnect all websocket after logout
+  phoenix.disconnect()
 }
 const sendToken = (type) => (params, cb) => async (dispatch) => {
   const result = await authApi.sendValidateToken(params, type)
@@ -97,12 +102,15 @@ export const signInWithPass = (params, cb) => async (dispatch) => {
 
 export const signOut = () => async (dispatch) => {
   const result = await authApi.signOut()
-  afterLogout()
+  if (Object.keys(result).length === 0) {
+    afterLogout()
+  }
 }
 
 export const refreshToken = (refresh_token) => async (dispatch) => {
   const result = await authApi.refreshToken(refresh_token)
   if (result && result.refreshToken) {
+    config.setToken(result.refreshToken)
     deviceStorage.update('userInfo', result)
     store.dispatch(updateUserInfo(result))
     store.dispatch(getUserInfo())
@@ -152,18 +160,18 @@ export const getUserInfo = () => async (dispatch) => {
   // const res = await queryAuthUserInfo()
   const {
     avatar,
-    nickname,
-    birthday,
-    emailAsterisks,
-    phoneNumberAsterisks,
-    credentialNumAsterisks,
-    realNameAsterisks,
     gender,
-    showSteamReview,
-    platforms,
-    point = { tasks: {} },
     wallet,
     configs,
+    nickname,
+    birthday,
+    platforms,
+    emailAsterisks,
+    showSteamReview,
+    realNameAsterisks,
+    phoneNumberAsterisks,
+    point = { tasks: {} },
+    credentialNumAsterisks,
   } = res
 
   wallet && dispatch(setWallet(wallet))
