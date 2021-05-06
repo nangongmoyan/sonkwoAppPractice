@@ -2,7 +2,13 @@
  *
  * created by lijianpo on 2021/04/13
  */
+import BuildConfig from '@native/BuildConfig'
+import MyDeviceInfo from '@native/MyDeviceInfo'
 import { NativeModules, Platform } from 'react-native'
+import { isiOS } from './fullscreen'
+
+export const buildConfig = isiOS ? MyDeviceInfo.buildConfig : BuildConfig.FLAVOR
+console.log({ buildConfig })
 
 // export const buildConfig =
 //   Platform.OS === 'ios'
