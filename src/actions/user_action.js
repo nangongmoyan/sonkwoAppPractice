@@ -46,7 +46,6 @@ const afterLogin = (res) => {
   }
 
   CookieManage.clearAll()
-  // NativeModules.CookieManager.clearAll()
   deviceStorage.save('userInfo', res)
   // client.jwt(res.accessToken)
   // fetch.sendToken(res.accessToken, dispatch)

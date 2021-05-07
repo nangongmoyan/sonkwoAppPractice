@@ -8,8 +8,8 @@ import { NativeModules, Platform } from 'react-native'
 import { isiOS } from './fullscreen'
 
 export const buildConfig = MyDeviceInfo.buildConfig
-console.log({ isiOS, MyDeviceInfo })
-export const isDev = buildConfig.includes('development')
+// console.log({ isiOS, MyDeviceInfo })
+// export const isDev = buildConfig.includes('development')
 // console.log({ isDev })
 export const AREA = { native: 'native', abroad: 'abroad' }
 
@@ -119,6 +119,6 @@ const config = {
       'https://s2.sonkwo.hk/community/830f78e090fe8aec00891405dfc14824/sticker_packages',
   },
 }
-const data = isDev ? config.debug : config.release
+const data = config.debug
 
 export default data

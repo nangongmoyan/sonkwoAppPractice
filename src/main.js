@@ -16,6 +16,7 @@ import { LocaleContext, LocaleProvider } from '@contexts/locale'
 import { deviceStorage } from '@util'
 import { setUserInfo, refreshToken, getUserInfo } from '@actions/user_action'
 import { config } from '@sonkwo/sonkwo-api'
+import SplashScreen from 'react-native-splash-screen'
 // 在正式环境中清空console.log()
 if (!__DEV__) {
   global.console = {
@@ -69,6 +70,7 @@ const SonkwoAppPractice = () => {
 
   useEffect(() => {
     initApp()
+    SplashScreen.hide()
     initPermissions()
   }, [])
 
