@@ -1,4 +1,4 @@
-package com.sonkwoapppractice.module;
+package com.sonkwoapppractice.invokenative;
 
 /**
  *
@@ -12,7 +12,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.GuardedAsyncTask;
 import com.facebook.react.bridge.Promise;

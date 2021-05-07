@@ -5,12 +5,15 @@
 //  Created by sonkwo on 2021/5/7.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <sys/utsname.h>
+#if __has_include(<React/RCTBridge.h>)
+#import <React/RCTBridgeModule.h>
+#else
+#import "RCTBridgeModule.h"
+#endif
+#import <React/RCTLog.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface DeviceInfo : NSObject
+@interface DeviceInfo : NSObject<RCTBridgeModule>
 
 @end
-
-NS_ASSUME_NONNULL_END

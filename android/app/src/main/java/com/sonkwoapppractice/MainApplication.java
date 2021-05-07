@@ -3,11 +3,10 @@ package com.sonkwoapppractice;
 import android.app.Application;
 import android.content.Context;
 
-import androidx.annotation.Nullable;
-
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.sonkwoapppractice.module.DplusReactPackage;
+import com.sonkwoapppractice.invokenative.BuildConfigPackage;
+import com.sonkwoapppractice.invokenative.DeviceInfoPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -15,12 +14,12 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.facebook.react.bridge.JSIModulePackage; // <- add
+import com.sonkwoapppractice.invokenative.DplusReactPackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
 
 public class MainApplication extends Application implements ReactApplication {
 
-  private final ReactNativeHost mReactNativeHost =
-      new ReactNativeHost(this) {
+  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
@@ -32,6 +31,9 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+//          packages.add(new DplusReactPackage(BuildConfig.class));
+//          packages.add(new BuildConfigPackage(BuildConfig.class));
+//          packages.add(new CookieManagerModule());
           packages.add(new DplusReactPackage(BuildConfig.class));
           return packages;
         }

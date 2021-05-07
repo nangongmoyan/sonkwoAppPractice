@@ -124,7 +124,7 @@ android {
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
-
+    flavorDimensions "env"
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -135,7 +135,47 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "5.9.0"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+    }
+    productFlavors {
+      indevelopment {
+        dimension "env"
+        //manifestPlaceholders = []
+        //            applicationIdSuffix '.debug'
+        //buildConfigField "String", "CODEPUSH_KEY", '"Ft7X11ifEtNzRfFdX1tNpkPa2w1Z4ksvOXqog"'
+       // buildConfigField "String", "CODEPUSH_SERVER", '"http://www.sonkwotest.com/codepush"'
+        //buildConfigField "String", "TD_APP_ID", '"23F4319A6D5E413D9265A1D5B50B77C9"'
+        resValue 'string', 'app_name', '"杉果游戏-开发版"'
+      }
+      development {
+        dimension "env"
+        //manifestPlaceholders = []
+        //            applicationIdSuffix '.debug'
+        //buildConfigField "String", "CODEPUSH_KEY", '"Ft7X11ifEtNzRfFdX1tNpkPa2w1Z4ksvOXqog"'
+        // buildConfigField "String", "CODEPUSH_SERVER", '"http://www.sonkwotest.com/codepush"'
+        //buildConfigField "String", "TD_APP_ID", '"23F4319A6D5E413D9265A1D5B50B77C9"'
+        resValue 'string', 'app_name', '"杉果游戏-开发版"'
+      }
+      staging {
+        dimension "env"
+        //manifestPlaceholders = []
+        //            applicationIdSuffix '.debug'
+        //buildConfigField "String", "CODEPUSH_KEY", '"Ft7X11ifEtNzRfFdX1tNpkPa2w1Z4ksvOXqog"'
+        // buildConfigField "String", "CODEPUSH_SERVER", '"http://www.sonkwotest.com/codepush"'
+        //buildConfigField "String", "TD_APP_ID", '"23F4319A6D5E413D9265A1D5B50B77C9"'
+        resValue 'string', 'app_name', '"杉果游戏 内测版"'
+      }
+      production {
+        dimension "env"
+       // manifestPlaceholders = []
+        //            applicationIdSuffix '.debug'
+        //buildConfigField "String", "CODEPUSH_KEY", '"Ft7X11ifEtNzRfFdX1tNpkPa2w1Z4ksvOXqog"'
+        // buildConfigField "String", "CODEPUSH_SERVER", '"http://www.sonkwotest.com/codepush"'
+        //buildConfigField "String", "TD_APP_ID", '"23F4319A6D5E413D9265A1D5B50B77C9"'
+        resValue 'string', 'app_name', '"杉果游戏"'
+      }
     }
     splits {
         abi {

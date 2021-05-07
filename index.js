@@ -6,10 +6,13 @@ import { AppRegistry, Platform } from 'react-native'
 import SonkwoAppPractice from './src/main'
 import { config } from '@sonkwo/sonkwo-api'
 import { name as appName } from './app.json'
+import MyDeviceInfo from '@native/MyDeviceInfo'
+import { isDev, buildConfig } from '@util/check_config'
 
 // 初始化 sonkwo-api 请求配置
+// console.log({ isDev })
 config.setOs(Platform.OS)
-config.setVersion('5.9.0')
+config.setVersion(MyDeviceInfo.appVersion)
 config.setBuildConfig('debug')
 // config.setBuildConfig(isDev ? 'debug' : 'release')
 

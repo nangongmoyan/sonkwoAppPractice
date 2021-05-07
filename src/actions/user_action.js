@@ -10,6 +10,7 @@ import store from '../store'
 import { USER } from '@util/action_types'
 import { setWallet } from './wallet_action'
 import phoenix from '@util/phoenix'
+import CookieManage from '@native/CookieManage'
 
 export const setUserInfo = (data) => ({
   type: USER.SET_USER_INFO,
@@ -44,6 +45,7 @@ const afterLogin = (res) => {
     return toastShort('仅对中国大陆开放')
   }
 
+  CookieManage.clearAll()
   // NativeModules.CookieManager.clearAll()
   deviceStorage.save('userInfo', res)
   // client.jwt(res.accessToken)

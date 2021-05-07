@@ -38,6 +38,7 @@ export default function App() {
   }, [navigationRef])
 
   const userInfo = useSelector((state) => state.UserReducer.userInfo)
+  console.log({ userInfo })
   return (
     <NavigationContainer
       ref={navigationRef}

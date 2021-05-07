@@ -7,15 +7,10 @@ import MyDeviceInfo from '@native/MyDeviceInfo'
 import { NativeModules, Platform } from 'react-native'
 import { isiOS } from './fullscreen'
 
-export const buildConfig = isiOS ? MyDeviceInfo.buildConfig : BuildConfig.FLAVOR
-console.log({ buildConfig })
-
-// export const buildConfig =
-//   Platform.OS === 'ios'
-//     ? NativeModules.MyDeviceInfo.buildConfig
-//     : NativeModules.BuildConfig.FLAVOR
-// export const isDev = buildConfig.includes('development')
-
+export const buildConfig = MyDeviceInfo.buildConfig
+console.log({ isiOS, MyDeviceInfo })
+export const isDev = buildConfig.includes('development')
+// console.log({ isDev })
 export const AREA = { native: 'native', abroad: 'abroad' }
 
 export const configFileHosts = {
@@ -124,7 +119,6 @@ const config = {
       'https://s2.sonkwo.hk/community/830f78e090fe8aec00891405dfc14824/sticker_packages',
   },
 }
-
-const data = config.debug
+const data = isDev ? config.debug : config.release
 
 export default data

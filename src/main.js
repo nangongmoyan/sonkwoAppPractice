@@ -29,7 +29,7 @@ if (!__DEV__) {
 const SonkwoAppPractice = () => {
   async function initApp() {
     const userInfo = await deviceStorage.get('userInfo')
-    console.log({ userInfo })
+    // console.log({ userInfo })
     if (
       userInfo !== null &&
       (userInfo.data.access_token || userInfo.data.accessToken)
@@ -82,7 +82,7 @@ const SonkwoAppPractice = () => {
                 <LocaleContext.Consumer>
                   {(value) => (
                     <RootSiblingParent>
-                      <Navigator />
+                      <Navigator screenProps={value} />
                     </RootSiblingParent>
                   )}
                 </LocaleContext.Consumer>
