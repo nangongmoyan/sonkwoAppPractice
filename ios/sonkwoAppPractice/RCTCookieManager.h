@@ -1,5 +1,5 @@
 //
-//  DeviceInfo.h
+//  RCTCookieManager.h
 //  sonkwoAppPractice
 //
 //  Created by sonkwo on 2021/5/7.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DeviceInfo : NSObject
+@interface RCTCookieManager : NSObject
 
 @end
 
