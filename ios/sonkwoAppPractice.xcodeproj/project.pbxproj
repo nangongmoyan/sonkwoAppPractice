@@ -14,7 +14,6 @@
 		30000D583EF85E0572D4AF21 /* libPods-sonkwoAppPractice-sonkwoAppPracticeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EE8139DBECB61539306E1D /* libPods-sonkwoAppPractice-sonkwoAppPracticeTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9F10826D2644DCA8000A9753 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B04EF2644D394004024B7 /* DeviceInfo.m */; };
-		9F96015E2645445C003FEB99 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F96015A264543F2003FEB99 /* libSplashScreen.a */; };
 		9FA5047F2645324300CCA021 /* RCTCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA504722645313B00CCA021 /* RCTCookieManager.m */; };
 		BB3FCDCD61F00D99573B8BE8 /* libPods-sonkwoAppPractice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95E36350B65E5D2DD83FC7C7 /* libPods-sonkwoAppPractice.a */; };
 /* End PBXBuildFile section */
@@ -26,13 +25,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = sonkwoAppPractice;
-		};
-		9F960159264543F2003FEB99 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9F960155264543F2003FEB99 /* SplashScreen.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D7682761D8E76B80014119E;
-			remoteInfo = SplashScreen;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -70,7 +62,6 @@
 		9E0AD1BAD7AB04265ADEBABA /* Pods-sonkwoAppPractice-sonkwoAppPracticeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sonkwoAppPractice-sonkwoAppPracticeTests.debug.xcconfig"; path = "Target Support Files/Pods-sonkwoAppPractice-sonkwoAppPracticeTests/Pods-sonkwoAppPractice-sonkwoAppPracticeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F2B04EE2644D394004024B7 /* DeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeviceInfo.h; path = sonkwoAppPractice/DeviceInfo.h; sourceTree = "<group>"; };
 		9F2B04EF2644D394004024B7 /* DeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DeviceInfo.m; path = sonkwoAppPractice/DeviceInfo.m; sourceTree = "<group>"; };
-		9F960155264543F2003FEB99 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		9FA504712645313B00CCA021 /* RCTCookieManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTCookieManager.h; path = sonkwoAppPractice/RCTCookieManager.h; sourceTree = "<group>"; };
 		9FA504722645313B00CCA021 /* RCTCookieManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCTCookieManager.m; path = sonkwoAppPractice/RCTCookieManager.m; sourceTree = "<group>"; };
 		B15776EEAA4F405388B113D2 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -94,7 +85,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F96015E2645445C003FEB99 /* libSplashScreen.a in Frameworks */,
 				BB3FCDCD61F00D99573B8BE8 /* libPods-sonkwoAppPractice.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,7 +177,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				9F960155264543F2003FEB99 /* SplashScreen.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -213,14 +202,6 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* sonkwoAppPractice.app */,
 				00E356EE1AD99517003FC87E /* sonkwoAppPracticeTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		9F960156264543F2003FEB99 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9F96015A264543F2003FEB99 /* libSplashScreen.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -300,12 +281,6 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 9F960156264543F2003FEB99 /* Products */;
-					ProjectRef = 9F960155264543F2003FEB99 /* SplashScreen.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* sonkwoAppPractice */,
@@ -313,16 +288,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		9F96015A264543F2003FEB99 /* libSplashScreen.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSplashScreen.a;
-			remoteRef = 9F960159264543F2003FEB99 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -687,6 +652,7 @@
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-splash-screenc\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				NEW_SETTING = "";
@@ -749,6 +715,7 @@
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-splash-screenc\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				NEW_SETTING = "";
@@ -818,6 +785,7 @@
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-splash-screenc\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				NEW_SETTING = "";
@@ -941,6 +909,7 @@
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-splash-screenc\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				NEW_SETTING = "";
