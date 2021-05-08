@@ -8,9 +8,9 @@ import { NativeModules, Platform } from 'react-native'
 import { isiOS } from './fullscreen'
 
 export const buildConfig = MyDeviceInfo.buildConfig
-// console.log({ isiOS, MyDeviceInfo })
-// export const isDev = buildConfig.includes('development')
-// console.log({ isDev })
+console.log({ isiOS, MyDeviceInfo })
+export const isDev = buildConfig.includes('development')
+console.log({ isDev })
 export const AREA = { native: 'native', abroad: 'abroad' }
 
 export const configFileHosts = {
