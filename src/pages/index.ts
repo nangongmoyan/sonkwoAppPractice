@@ -15,6 +15,10 @@ import { EditInfo } from './editInfo'
 import { NickName } from './nickName'
 import { Birthday } from './birthday'
 import { Gender } from './gender'
+import { SecuritySetting } from './securitySetting'
+import { Setting } from './setting'
+import { Notification } from './notification'
+import { Privacy } from './privacy'
 
 const tabSatcks = [
   /** 首页 */
@@ -71,28 +75,52 @@ const loggedStacks = [
     component: TabScreen,
     options: { headerShown: false },
   },
-  /**编辑资料 */
+  /** 设置 */
+  {
+    name: 'Setting',
+    component: Setting,
+    options: { headerShown: false },
+  },
+  /** 通知设置 */
+  {
+    name: 'Notification',
+    component: Notification,
+    options: { headerShown: false },
+  },
+  /** 隐私设置 */
+  {
+    name: 'Privacy',
+    component: Privacy,
+    options: { headerShown: false },
+  },
+  /** 编辑资料 */
   {
     name: 'EditInfo',
     component: EditInfo,
     options: { headerShown: false },
   },
-  /**修改昵称 */
+  /** 修改昵称 */
   {
     name: 'NickName',
     component: NickName,
     options: { headerShown: false },
   },
-  /**修改性别 */
+  /** 修改性别 */
   {
     name: 'Gender',
     component: Gender,
     options: { headerShown: false },
   },
-  /**修改生日 */
+  /** 修改生日 */
   {
     name: 'Birthday',
     component: Birthday,
+    options: { headerShown: false },
+  },
+  /** 账号安全 */
+  {
+    name: 'SecuritySetting',
+    component: SecuritySetting,
     options: { headerShown: false },
   },
 ]

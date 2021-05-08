@@ -44,7 +44,7 @@ const thirdItem = [
   { route: 'Setting', label: 'LANG32' },
   { route: 'Messages', label: 'LANG33' },
   { route: 'EditInfo', label: 'LANG34' },
-  { route: 'AccountSecurity', label: 'LANG35' },
+  { route: 'SecuritySetting', label: 'LANG35' },
   { route: 'Skin', label: 'LANG36' },
 ]
 
@@ -91,33 +91,25 @@ function DrawerScreen(props) {
           case 'Wallet':
             return { ...item, parent: t('LANG21') }
           case 'Order':
-            return { ...item }
           case 'PointsMall':
             return { ...item }
           case 'ActivationCode':
             return { ...item, parent: t('LANG25') }
           case 'SonkwoCoupon':
-            return { ...item }
           case 'Favorites':
-            return { ...item }
           case 'GameLibrary':
-            return { ...item }
           case 'TaskCenter':
             return { ...item }
           case 'Setting':
             return { ...item, parent: t('LANG31') }
           case 'Messages':
-            return { ...item }
           case 'EditInfo':
-            return { ...item }
-          case 'AccountSecurity':
-            return { ...item }
+          case 'SecuritySetting':
           case 'Skin':
             return { ...item }
           case 'Help':
             return { ...item, parent: t('LANG37') }
           case 'ShareSonkwo':
-            return { ...item }
           case 'AboutSonkwo':
             return { ...item }
         }

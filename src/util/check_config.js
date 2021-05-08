@@ -7,7 +7,7 @@ import MyDeviceInfo from '@native/MyDeviceInfo'
 import { NativeModules, Platform } from 'react-native'
 import { isiOS } from './fullscreen'
 
-export const buildConfig = MyDeviceInfo.buildConfig
+export const buildConfig = isiOS ? MyDeviceInfo.buildConfig : BuildConfig.FLAVOR
 console.log({ isiOS, MyDeviceInfo })
 export const isDev = buildConfig.includes('development')
 console.log({ isDev })

@@ -36,7 +36,7 @@ const NickName = ({ navigation }) => {
       />
       <ShadowBox>
         <TextInput
-          style={{ height: 44 }}
+          style={{ height: 44, color: 'black' }}
           value={value}
           defaultValue={userInfo.nickname}
           onChangeText={(text) => onChangeText(text)}
