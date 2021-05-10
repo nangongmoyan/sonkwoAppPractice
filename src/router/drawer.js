@@ -65,9 +65,11 @@ function DrawerScreen(props) {
   const { nickname, avatar } = userInfo
 
   useEffect(() => {
+    const history = navigation.dangerouslyGetState().history
+    const drawer = history.some((v) => v.type === 'drawer')
     const barStyle = isDrawerOpen ? 'dark-content' : 'light-content'
-    StatusBar.setBarStyle(barStyle, true)
-  }, [isDrawerOpen])
+    if (drawer) StatusBar.setBarStyle(barStyle, true)
+  }, [isDrawerOpen, navigation])
 
   /**
    * allRoutes数据结构
@@ -129,9 +131,13 @@ function DrawerScreen(props) {
     return <MyText>200000</MyText>
   }, [])
 
-  const onPress = useCallback((route) => navigation.navigate(route), [
-    navigation,
-  ])
+  const onPress = useCallback(
+    (route) => {
+      console.log({ navigation })
+      navigation.navigate(route)
+    },
+    [navigation],
+  )
 
   const onSignOut = () => {
     dispatch(signOut())

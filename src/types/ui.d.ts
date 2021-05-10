@@ -162,3 +162,11 @@ declare interface ShadowBoxProps {
   boxBorderRadius?: number
   boxBackgroundColor?: string
 }
+
+declare interface SvgIconProps {
+  size: number
+  path: string[]
+  fill: string[]
+  viewBox: string
+  style: Object
+}

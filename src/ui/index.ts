@@ -32,7 +32,6 @@ export {
   TouchableWithoutFeedback as GHWithoutFeedback,
 } from 'react-native-gesture-handler'
 
-export SvgIcon from 'react-native-svg-iconfont'
 export LinearGradient from 'react-native-linear-gradient'
 export { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
 export { default as Icon } from './icon'
@@ -48,3 +47,4 @@ export { default as CustomStackHeader} from './header/customStackHeader'
 export { default as ShadowBox } from './shadowBox'
 export { default as HeadTabView } from './headTabView'
 export { default as MyHListView} from './listview/HListView'
+export { default as SvgIcon} from './svgIcon'
