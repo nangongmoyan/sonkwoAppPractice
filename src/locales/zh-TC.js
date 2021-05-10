@@ -93,10 +93,16 @@ const zh_TC = {
   LANG88: '清除緩存',
   LANG89: '贊/收藏',
   LANG90: '新增關注',
-  LANG91: '评论/回复',
+  LANG91: '評論/回复',
   LANG92: '@',
   LANG93: '私信',
   LANG94: '互動通知',
   LANG95: '私信通知',
+  LANG96: '屏蔽名單',
+  LANG97: '圖片水印',
+  LANG98: 'Steam評論',
+  LANG99: '已屏蔽賬號',
+  LANG100: '在上傳的圖片中添加水印',
+  LANG101: '展示Steam評論',
 }
 export default zh_TC

@@ -4,8 +4,17 @@
  */
 
 import { useLocale } from '@contexts/locale'
-import { Column, CustomStackHeader, MyStatusBar, MyText, NavItem } from '@ui'
+import {
+  Column,
+  CustomStackHeader,
+  Divider,
+  MyStatusBar,
+  MyText,
+  NavItem,
+} from '@ui'
+import { adaptiveWidth } from '@util'
 import React, { useMemo } from 'react'
+import { ThemeColors } from 'ui/theme'
 
 const Interactive = [
   { route: 'Like/Favorite', label: 'LANG89' },
@@ -38,7 +47,7 @@ const Notification: React.FC<any> = ({}) => {
         }
       })
     })
-  }, [])
+  }, [t])
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
       <MyStatusBar isDarkStyle={true} />
@@ -46,7 +55,17 @@ const Notification: React.FC<any> = ({}) => {
       {allRoutes.map((all, index) => {
         return (
           <Column key={index}>
-            <MyText>{all[0].parent}</MyText>
+            <Column
+              style={{
+                height: 30,
+                backgroundColor: ThemeColors.WhiteSmoke,
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                paddingLeft: adaptiveWidth(30),
+              }}
+            >
+              <MyText color={ThemeColors.DimGray}>{all[0].parent}</MyText>
+            </Column>
             {all.map((item, i) => (
               <NavItem
                 key={i}
@@ -58,6 +77,7 @@ const Notification: React.FC<any> = ({}) => {
           </Column>
         )
       })}
+      <Divider style={{ flex: 1, backgroundColor: ThemeColors.WhiteSmoke }} />
     </Column>
   )
 }

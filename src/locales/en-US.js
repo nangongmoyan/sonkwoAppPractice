@@ -99,5 +99,11 @@ const en_US = {
   LANG93: 'PrivateLetters',
   LANG94: 'Interactive Notification',
   LANG95: 'Private Message Notification',
+  LANG96: 'Block List',
+  LANG97: 'Watermark',
+  LANG98: 'Steam Reviews',
+  LANG99: 'Account Blocked',
+  LANG100: 'Add a watermark to the uploaded image',
+  LANG101: 'Show Steam Reviews',
 }
 export default en_US

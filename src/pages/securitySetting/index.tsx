@@ -12,7 +12,6 @@ import {
   MyStatusBar,
   MyText,
   NavItem,
-  StyleSheet,
 } from '@ui'
 import { adaptiveWidth } from '@util'
 import React, { useCallback, useMemo } from 'react'
@@ -59,7 +58,7 @@ const SecuritySetting: React.FC<any> = ({}) => {
           }
       }
     })
-  }, [userInfo])
+  }, [userInfo, t])
 
   const rightExtraTitle = useCallback((rightTitle) => {
     return (
@@ -72,15 +71,21 @@ const SecuritySetting: React.FC<any> = ({}) => {
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
       <MyStatusBar isDarkStyle={true} />
       <CustomStackHeader title={t('LANG35')} />
-      <Divider height={StyleSheet.hairlineWidth} color="#ddd" />
+      <Divider height={5} color={ThemeColors.WhiteSmoke} />
       {routes.map((item, index) => {
         const { title, route, rightTitle } = item
         return (
           <Column key={index}>
-            {index === 2 && <Divider height={15} color="#eee" />}
+            {index === 2 && (
+              <Divider height={15} color={ThemeColors.WhiteSmoke} />
+            )}
             {index === 3 && (
               <Column
-                style={{ width: '100%', height: 30, backgroundColor: '#eee' }}
+                style={{
+                  width: '100%',
+                  height: 30,
+                  backgroundColor: ThemeColors.WhiteSmoke,
+                }}
               >
                 <MyText
                   style={{
@@ -95,12 +100,15 @@ const SecuritySetting: React.FC<any> = ({}) => {
             )}
             <NavItem
               itemTitle={title}
-              showItemSeparator={index === 2 || index === 3 ? false : true}
+              showItemSeparator={
+                index === 2 || index === 3 || index === 6 ? false : true
+              }
               rightExtraTitle={rightExtraTitle(rightTitle)}
             />
           </Column>
         )
       })}
+      <Divider style={{ flex: 1, backgroundColor: ThemeColors.WhiteSmoke }} />
     </Column>
   )
 }

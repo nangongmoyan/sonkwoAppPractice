@@ -98,5 +98,11 @@ const zh_CN = {
   LANG93: '私信',
   LANG94: '互动通知',
   LANG95: '私信通知',
+  LANG96: '屏蔽名单',
+  LANG97: '图片水印',
+  LANG98: 'Steam评论',
+  LANG99: '已屏蔽账号',
+  LANG100: '在上传的图片中添加水印',
+  LANG101: '展示Steam评论',
 }
 export default zh_CN
