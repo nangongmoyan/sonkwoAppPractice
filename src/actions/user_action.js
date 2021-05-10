@@ -119,12 +119,56 @@ export const refreshToken = (refresh_token) => async (dispatch) => {
   }
 }
 
-export const getImageToken = async (dispatch) => {
+export const getImageToken = () => async (dispatch) => {
   const result = await usersApi.getImageToken()
-  if (result) {
-    dispatch(setAvatarToken(result))
-  }
+  result && store.dispatch(setAvatarToken(result))
 }
+
+export const uploadImage = (file, token) => {
+  const formData = new FormData()
+  const xhr = new XMLHttpRequest()
+  const response = function (e) {
+    if (e.target) {
+      if (e.target.status === 200) {
+        const result = JSON.parse(e.target.responseText)
+        dispatch(setTempAvatar(result))
+      } else {
+        switch (e.target.status) {
+          case 400:
+            toast('格式错误')
+            break
+          case 401:
+            toast('上传凭证无效')
+            dispatch(getImageToken())
+            break
+          case 413:
+            toast('图片大小不能超过4M')
+            break
+          case 614:
+            toast('目标资源已存在')
+            break
+          default:
+            break
+        }
+      }
+    }
+  }
+  xhr.addEventListener('load', response, false)
+  xhr.open('POST', 'https://up.qbox.me', true)
+  formData.append('token', token.token)
+  formData.append('file', file)
+  formData.append('x:account_id', token.x.account_id)
+  formData.append('x:timestamp', token.x.timestamp)
+  formData.append('x:sonkwo_token', token.x.sonkwo_token)
+  formData.append('x:bucket_name', token.x.bucket_name)
+  xhr.send(formData)
+}
+// export const uploadImage = (file, token) => {
+//   return (dispatch) => {
+//     const formData = new FormData()
+//     // const
+//   }
+// }
 
 export const changeUserInfo = (user, cb) => async (dispatch) => {
   const result = await usersApi.changeUserInfo(user)
