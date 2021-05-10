@@ -52,10 +52,9 @@ const EditInfo: React.FC<any> = () => {
   }, [nickname, sex, birthday])
 
   const rightExtraTitle = useCallback((rightTitle) => {
-    if (!rightTitle) return null
     return (
       <MyText size={16} color="#222" style={{ marginRight: 10 }}>
-        {rightTitle}
+        {rightTitle ?? ''}
       </MyText>
     )
   }, [])

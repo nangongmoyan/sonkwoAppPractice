@@ -90,7 +90,7 @@ declare interface LoadingProps {
 }
 
 declare interface NavItemProps {
-  onPress?: () => {}
+  onPress?: () => void
   itemType?: 'switch' | 'normal' | 'hidden'
   leftIcon?: Element
   itemStyle?: object

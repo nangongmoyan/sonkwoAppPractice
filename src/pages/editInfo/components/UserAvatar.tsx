@@ -3,14 +3,8 @@
  * created by lijianpo on 2021/04/27
  */
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
-import {
-  Avatar,
-  Column,
-  GHWithoutFeedback,
-  Icon,
-  TouchableWithoutFeedback,
-} from '@ui'
-import { adaptiveWidth, toastShort } from '@util'
+import { Avatar, Column, Icon, TouchableWithoutFeedback } from '@ui'
+import { adaptiveWidth } from '@util'
 import React, { useCallback } from 'react'
 import SyanImagePicker from 'react-native-syan-image-picker'
 import { ThemeColors } from 'ui/theme'

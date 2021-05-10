@@ -62,10 +62,9 @@ const SecuritySetting: React.FC<any> = ({}) => {
   }, [userInfo])
 
   const rightExtraTitle = useCallback((rightTitle) => {
-    if (!rightTitle) return null
     return (
       <MyText color="#222" style={{ marginRight: 10 }}>
-        {rightTitle}
+        {rightTitle ?? ''}
       </MyText>
     )
   }, [])

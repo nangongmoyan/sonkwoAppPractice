@@ -4,9 +4,7 @@
  */
 import { NativeModules } from 'react-native'
 
-const MyDeviceInfo = NativeModules.MyDeviceInfo
-
-export default MyDeviceInfo
+export default NativeModules.MyDeviceInfo
 // const { appVersion, deviceLocale } = MyDeviceInfo
 
 // export default {

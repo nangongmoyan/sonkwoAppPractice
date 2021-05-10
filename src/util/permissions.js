@@ -2,13 +2,9 @@
  * 设置应用权限
  * created by lijianpo on 2021/04/13
  */
-import {
-  Alert,
-  Platform,
-  NativeModules,
-  PermissionsAndroid,
-} from 'react-native'
+import { Alert, Platform, PermissionsAndroid } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
+import { OpenAppSettings } from '@native'
 
 const PERMISSIONS = PermissionsAndroid.PERMISSIONS
 
@@ -57,8 +53,7 @@ const initPermissions = async () => {
                   { text: '关闭', onPress: () => {} },
                   {
                     text: '去设置',
-                    onPress: () =>
-                      NativeModules.OpenAppSettings.appDetailsSetting(),
+                    onPress: () => OpenAppSettings.appDetailsSetting(),
                   },
                 ],
               )

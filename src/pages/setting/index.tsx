@@ -4,8 +4,9 @@
  */
 import { useLocale } from '@contexts/locale'
 import { useNavigation } from '@hooks'
-import { Column, CustomStackHeader, MyStatusBar, NavItem } from '@ui'
-import React, { useMemo, useCallback } from 'react'
+import { clearCache, getCacheSize } from '@native'
+import { Column, CustomStackHeader, MyStatusBar, NavItem, MyText } from '@ui'
+import React, { useMemo, useState, useCallback, useEffect } from 'react'
 
 const ITEMS = [
   { route: 'Notification', label: 'LANG86' },
@@ -15,28 +16,61 @@ const ITEMS = [
 const Setting: React.FC<any> = ({}) => {
   const { t } = useLocale()
   const navigation = useNavigation()
-  const routes = useMemo(() => {
-    return ITEMS.map((item) => {
-      Object.assign(item, { title: t(item.label) })
-      return item
+  const [size, setSize] = useState<string>('0MB')
+
+  useEffect(() => {
+    getCacheSize().then((value) => {
+      const cacheSize = Math.round((value / 1024 / 1024) * 100) / 100
+      setSize(`${cacheSize}MB`)
     })
   }, [])
 
-  const onPress = useCallback((route) => navigation.navigate(route), [
-    navigation,
-  ])
+  const routes = useMemo(() => {
+    return ITEMS.map((item) => {
+      Object.assign(item, { title: t(item.label) })
+      switch (item.route) {
+        case 'Privacy':
+        case 'Notification':
+          return item
+        case 'ClearCache':
+          return { ...item, rightTitle: size }
+      }
+    })
+  }, [size])
+
+  const rightExtraTitle = useCallback((rightTitle) => {
+    if (!rightTitle) return
+    return (
+      <MyText color="#222" style={{ marginRight: 10 }}>
+        {rightTitle}
+      </MyText>
+    )
+  }, [])
+
+  const onPress = useCallback(
+    (route) => {
+      if (route === 'ClearCache') {
+        clearCache().then(() => setSize('0MB'))
+        return
+      }
+      navigation.navigate(route)
+    },
+    [navigation],
+  )
+
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
       <MyStatusBar isDarkStyle={true} />
       <CustomStackHeader title={t('LANG32')} />
       {routes.map((item, index) => {
-        const { title } = item
+        const { route, title, rightTitle } = item
         return (
           <NavItem
             key={index}
             itemTitle={title}
-            onPress={() => onPress(item.route)}
             showItemSeparator={true}
+            onPress={() => onPress(route)}
+            rightExtraTitle={rightExtraTitle(rightTitle)}
           />
         )
       })}

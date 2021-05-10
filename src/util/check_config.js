@@ -2,15 +2,13 @@
  *
  * created by lijianpo on 2021/04/13
  */
-import BuildConfig from '@native/BuildConfig'
-import MyDeviceInfo from '@native/MyDeviceInfo'
-import { NativeModules, Platform } from 'react-native'
 import { isiOS } from './fullscreen'
+import { MyDeviceInfo, BuildConfig } from '@native'
 
 export const buildConfig = isiOS ? MyDeviceInfo.buildConfig : BuildConfig.FLAVOR
-console.log({ isiOS, MyDeviceInfo })
+
 export const isDev = buildConfig.includes('development')
-console.log({ isDev })
+
 export const AREA = { native: 'native', abroad: 'abroad' }
 
 export const configFileHosts = {
