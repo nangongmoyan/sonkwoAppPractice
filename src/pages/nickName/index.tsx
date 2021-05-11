@@ -20,7 +20,7 @@ const NickName = ({ navigation }) => {
   const { changeBgColor, changeTextColor } = useMemo(() => {
     const result = value !== userInfo.nickname ? true : false
     return { changeBgColor: result, changeTextColor: result }
-  }, [value])
+  }, [value, userInfo])
 
   const onPress = useCallback(() => {
     dispatch(changeUserInfo({ nick_name: value }, () => navigation.goBack()))

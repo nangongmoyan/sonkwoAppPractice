@@ -166,6 +166,7 @@ export const uploadImage = (file, token) => async (dispatch) => {
 
 export const changeUserInfo = (user, cb) => async (dispatch) => {
   const result = await usersApi.changeUserInfo(user)
+  console.log({ result })
   if (checkNullObj(result)) {
     if (user.nick_name) {
       Object.assign(user, { nickname: user.nick_name })
@@ -173,57 +174,42 @@ export const changeUserInfo = (user, cb) => async (dispatch) => {
     }
     store.dispatch(updateUserInfo(user))
     toastShort('修改成功')
-    cb & cb()
+    cb && cb()
   }
 }
 
 const defaultAuthQuery = {
   gender: true,
   birthday: true,
+  introduction: true,
   email_asterisks: true,
-  phone_number_asterisks: true,
   show_steam_review: true,
-  credential_num_asterisks: true,
   real_name_asterisks: true,
-  platforms: {
-    show_id: true,
-    kind: true,
-  },
-  point: {
-    score: true,
-    xp: true,
-    tasks: true,
-    history_score: true,
-  },
-  wallet: {
-    balance: true,
-    status: true,
-  },
-  configs: {
-    id: true,
-    kind: true,
-    key: true,
-    value: true,
-  },
+  phone_number_asterisks: true,
+  credential_num_asterisks: true,
+  wallet: { balance: true, status: true },
+  platforms: { show_id: true, kind: true },
+  configs: { id: true, kind: true, key: true, value: true },
+  point: { xp: true, tasks: true, score: true, history_score: true },
 }
 export const getUserInfo = () => async (dispatch) => {
-  const res = await usersApi.queryAuthUserInfo(defaultAuthQuery)
-  // const res = await queryAuthUserInfo()
+  const result = await usersApi.queryAuthUserInfo(defaultAuthQuery)
   const {
+    wallet,
     avatar,
     gender,
-    wallet,
     configs,
-    nickname,
     birthday,
+    nickname,
     platforms,
+    introduction,
     emailAsterisks,
     showSteamReview,
     realNameAsterisks,
-    phoneNumberAsterisks,
     point = { tasks: {} },
+    phoneNumberAsterisks,
     credentialNumAsterisks,
-  } = res
+  } = result
 
   wallet && dispatch(setWallet(wallet))
 
@@ -243,17 +229,18 @@ export const getUserInfo = () => async (dispatch) => {
   })
   dispatch(
     updateUserInfo({
-      nickname,
+      point,
       avatar,
+      gender,
+      configs,
       birthday,
+      nickname,
+      introduction,
+      showSteamReview,
       email: emailAsterisks,
+      real_name: realNameAsterisks,
       phone_number: phoneNumberAsterisks,
       credential_num: credentialNumAsterisks,
-      real_name: realNameAsterisks,
-      gender,
-      showSteamReview,
-      point,
-      configs,
       ...platform,
     }),
   )

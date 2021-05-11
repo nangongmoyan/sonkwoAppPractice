@@ -15,14 +15,14 @@ const ITEMS = [
   { route: 'NickName', label: 'LANG70' },
   { route: 'Gender', label: 'LANG71' },
   { route: 'Birthday', label: 'LANG72' },
-  { route: 'PersonalProfile', label: 'LANG73' },
+  { route: 'Introduction', label: 'LANG73' },
   { route: 'ShippingAddress', label: 'LANG74' },
 ]
 const EditInfo: React.FC<any> = () => {
   const { t } = useLocale()
   const navigation = useNavigation()
-  const { gender, nickname, birthday } = useUserInfo()
-
+  const { gender, nickname, birthday, introduction } = useUserInfo()
+  console.log({ introduction })
   const { sex } = useMemo(() => {
     return {
       sex: gender === 0 ? '男' : gender === 1 ? '女' : '保密',
@@ -43,13 +43,13 @@ const EditInfo: React.FC<any> = () => {
           return { ...item, rightTitle: sex }
         case 'Birthday':
           return { ...item, rightTitle: birthday }
-        case 'PersonalProfile':
-          return { ...item }
+        case 'Introduction':
+          return { ...item, rightTitle: introduction }
         case 'ShippingAddress':
           return { ...item }
       }
     })
-  }, [nickname, sex, birthday])
+  }, [t, nickname, sex, birthday, introduction])
 
   const rightExtraTitle = useCallback((rightTitle) => {
     return (
