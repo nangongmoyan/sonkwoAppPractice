@@ -31,7 +31,7 @@ const setCheckin = (data) => ({
   data,
 })
 const setAvatarToken = (data) => {
-  return { type: SET_AVATAR_TOKEN, data }
+  return { type: USER.SET_AVATAR_TOKEN, data }
 }
 
 const setTempAvatar = (data) => {
@@ -124,14 +124,14 @@ export const getImageToken = () => async (dispatch) => {
   result && store.dispatch(setAvatarToken(result))
 }
 
-export const uploadImage = (file, token) => {
+export const uploadImage = (file, token) => async (dispatch) => {
   const formData = new FormData()
   const xhr = new XMLHttpRequest()
   const response = function (e) {
     if (e.target) {
       if (e.target.status === 200) {
         const result = JSON.parse(e.target.responseText)
-        dispatch(setTempAvatar(result))
+        store.dispatch(changeUserInfo({ avatar: result.dest_url }))
       } else {
         switch (e.target.status) {
           case 400:
@@ -139,7 +139,7 @@ export const uploadImage = (file, token) => {
             break
           case 401:
             toast('上传凭证无效')
-            dispatch(getImageToken())
+            store.dispatch(getImageToken())
             break
           case 413:
             toast('图片大小不能超过4M')
@@ -157,18 +157,12 @@ export const uploadImage = (file, token) => {
   xhr.open('POST', 'https://up.qbox.me', true)
   formData.append('token', token.token)
   formData.append('file', file)
-  formData.append('x:account_id', token.x.account_id)
+  formData.append('x:account_id', token.x.accountId)
   formData.append('x:timestamp', token.x.timestamp)
-  formData.append('x:sonkwo_token', token.x.sonkwo_token)
-  formData.append('x:bucket_name', token.x.bucket_name)
+  formData.append('x:sonkwo_token', token.x.sonkwoToken)
+  formData.append('x:bucket_name', token.x.bucketName)
   xhr.send(formData)
 }
-// export const uploadImage = (file, token) => {
-//   return (dispatch) => {
-//     const formData = new FormData()
-//     // const
-//   }
-// }
 
 export const changeUserInfo = (user, cb) => async (dispatch) => {
   const result = await usersApi.changeUserInfo(user)

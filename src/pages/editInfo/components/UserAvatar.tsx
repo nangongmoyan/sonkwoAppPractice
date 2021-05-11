@@ -4,7 +4,7 @@
  */
 import { getImageToken, uploadImage } from '@actions/user_action'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
-import { useDispatch } from '@hooks'
+import { useDispatch, useSelector } from '@hooks'
 import { Avatar, Column, Icon, TouchableWithoutFeedback } from '@ui'
 import { adaptiveWidth } from '@util'
 import React, { useCallback, useEffect } from 'react'
@@ -21,14 +21,20 @@ const UserAvatar: React.FC<any> = (props) => {
   useEffect(() => {
     dispatch(getImageToken())
   }, [])
+
+  const avatarInfo = useSelector((state) => state.UserReducer.avatarInfo)
   const showImagePicker = useCallback(() => {
     SyanImagePicker.showImagePicker(options, (error, selectedPhotos) => {
-      console.log({ selectedPhotos })
-      // //取消悬着
-      // if (error) return
-      // dispatch(uploadImage(selectedPhotos.uri, ))
+      //取消悬着
+      if (error) return
+      const file = selectedPhotos[0]
+      Object.assign(file, {
+        type: 'image/jpeg',
+        name: `sonkwo${Date.now().valueOf()}.jpg`,
+      })
+      dispatch(uploadImage(file, avatarInfo.token))
     })
-  }, [])
+  }, [avatarInfo])
   return (
     <TouchableWithoutFeedback onPress={showImagePicker}>
       <Column style={{ alignSelf: 'center', marginVertical: 30 }}>

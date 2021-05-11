@@ -19,6 +19,7 @@ import { SecuritySetting } from './securitySetting'
 import { Setting } from './setting'
 import { Notification } from './notification'
 import { Privacy } from './privacy'
+import { ShippingAddress } from './shippingAddress'
 
 const tabSatcks = [
   /** 首页 */
@@ -115,6 +116,12 @@ const loggedStacks = [
   {
     name: 'Birthday',
     component: Birthday,
+    options: { headerShown: false },
+  },
+  /** 收货地址 */
+  {
+    name: 'ShippingAddress',
+    component: ShippingAddress,
     options: { headerShown: false },
   },
   /** 账号安全 */
