@@ -47,6 +47,7 @@ public class DplusReactPackage implements ReactPackage {
     modules.add(new DeviceInfoModule(reactContext));
     modules.add(new CookieManagerModule(reactContext));
     modules.add(new OpenAppSettingsModule(reactContext));
+    modules.add(new ClipboardModule(reactContext));
     modules.add(new BuildConfigModule(reactContext,buildConfigClass));
     return modules;
   }

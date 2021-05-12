@@ -104,5 +104,16 @@ const zh_CN = {
   LANG99: '已屏蔽账号',
   LANG100: '在上传的图片中添加水印',
   LANG101: '展示Steam评论',
+  LANG102: '隐私协议',
+  LANG103: '服务协议',
+  LANG104: '联系我们',
+  LANG105: '微信公众号',
+  LANG106: '微博',
+  LANG107: '给我们评分',
+  LANG108: '杉果游戏',
+  LANG109: '游戏销售合作',
+  LANG110: '游戏发行合作',
+  LANG111: '媒体合作',
+  LANG112: '“跃”计划报名',
 }
 export default zh_CN

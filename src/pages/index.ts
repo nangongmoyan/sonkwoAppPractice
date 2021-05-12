@@ -21,6 +21,8 @@ import { Notification } from './notification'
 import { Privacy } from './privacy'
 import { ShippingAddress } from './shippingAddress'
 import { Introduction } from './introduction'
+import { AboutSonkwo } from './aboutSonkwo'
+import { Contact } from './contact'
 
 const tabSatcks = [
   /** 首页 */
@@ -135,6 +137,18 @@ const loggedStacks = [
   {
     name: 'SecuritySetting',
     component: SecuritySetting,
+    options: { headerShown: false },
+  },
+  /** 关于杉果 */
+  {
+    name: 'AboutSonkwo',
+    component: AboutSonkwo,
+    options: { headerShown: false },
+  },
+  /** 联系我们 */
+  {
+    name: 'Contact',
+    component: Contact,
     options: { headerShown: false },
   },
 ]

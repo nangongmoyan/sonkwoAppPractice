@@ -105,5 +105,16 @@ const en_US = {
   LANG99: 'Account Blocked',
   LANG100: 'Add a watermark to the uploaded image',
   LANG101: 'Show Steam Reviews',
+  LANG102: 'Privacy Agreement',
+  LANG103: 'Service Agreement',
+  LANG104: 'Contact Us',
+  LANG105: 'WeChat Account',
+  LANG106: 'Sina',
+  LANG107: 'Score',
+  LANG108: 'Sonkwo Game',
+  LANG109: 'Game Sales Cooperation',
+  LANG110: 'Game Publishing Cooperation',
+  LANG111: 'Media Cooperation',
+  LANG112: '《Yue》 Project Registration',
 }
 export default en_US

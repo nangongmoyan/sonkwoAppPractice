@@ -104,5 +104,16 @@ const zh_TC = {
   LANG99: '已屏蔽賬號',
   LANG100: '在上傳的圖片中添加水印',
   LANG101: '展示Steam評論',
+  LANG102: '隱私協議',
+  LANG103: '服務協議',
+  LANG104: '聯繫我們',
+  LANG105: '微信公眾號',
+  LANG106: '微博',
+  LANG107: '給我們評分',
+  LANG108: '杉果遊戲',
+  LANG109: '遊戲銷售合作',
+  LANG110: '遊戲發行合作',
+  LANG111: '媒體合作',
+  LANG112: '“躍”計劃報名',
 }
 export default zh_TC

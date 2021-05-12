@@ -14,8 +14,9 @@
 		30000D583EF85E0572D4AF21 /* libPods-sonkwoAppPractice-sonkwoAppPracticeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EE8139DBECB61539306E1D /* libPods-sonkwoAppPractice-sonkwoAppPracticeTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9F10826D2644DCA8000A9753 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B04EF2644D394004024B7 /* DeviceInfo.m */; };
+		9F1F1E80264BD7AD00E6CD90 /* RNCClipboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1E7F264BD72300E6CD90 /* RNCClipboard.m */; };
+		9F1F1E83264BD7B500E6CD90 /* RCTHttpCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1E7D264BD6CE00E6CD90 /* RCTHttpCache.m */; };
 		9FA5047F2645324300CCA021 /* RCTCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA504722645313B00CCA021 /* RCTCookieManager.m */; };
-		9FE9D39226491EDF005F34B0 /* RCTHttpCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F45FA802648D610002F9B88 /* RCTHttpCache.m */; };
 		BB3FCDCD61F00D99573B8BE8 /* libPods-sonkwoAppPractice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95E36350B65E5D2DD83FC7C7 /* libPods-sonkwoAppPractice.a */; };
 /* End PBXBuildFile section */
 
@@ -61,10 +62,12 @@
 		95E36350B65E5D2DD83FC7C7 /* libPods-sonkwoAppPractice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-sonkwoAppPractice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		981120FA8FCF08481E90F4D5 /* Pods-sonkwoAppPractice-sonkwoAppPracticeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sonkwoAppPractice-sonkwoAppPracticeTests.release.xcconfig"; path = "Target Support Files/Pods-sonkwoAppPractice-sonkwoAppPracticeTests/Pods-sonkwoAppPractice-sonkwoAppPracticeTests.release.xcconfig"; sourceTree = "<group>"; };
 		9E0AD1BAD7AB04265ADEBABA /* Pods-sonkwoAppPractice-sonkwoAppPracticeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sonkwoAppPractice-sonkwoAppPracticeTests.debug.xcconfig"; path = "Target Support Files/Pods-sonkwoAppPractice-sonkwoAppPracticeTests/Pods-sonkwoAppPractice-sonkwoAppPracticeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9F1F1E7C264BD6CE00E6CD90 /* RCTHttpCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTHttpCache.h; path = sonkwoAppPractice/RCTHttpCache.h; sourceTree = "<group>"; };
+		9F1F1E7D264BD6CE00E6CD90 /* RCTHttpCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCTHttpCache.m; path = sonkwoAppPractice/RCTHttpCache.m; sourceTree = "<group>"; };
+		9F1F1E7E264BD72300E6CD90 /* RNCClipboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNCClipboard.h; path = sonkwoAppPractice/RNCClipboard.h; sourceTree = "<group>"; };
+		9F1F1E7F264BD72300E6CD90 /* RNCClipboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNCClipboard.m; path = sonkwoAppPractice/RNCClipboard.m; sourceTree = "<group>"; };
 		9F2B04EE2644D394004024B7 /* DeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeviceInfo.h; path = sonkwoAppPractice/DeviceInfo.h; sourceTree = "<group>"; };
 		9F2B04EF2644D394004024B7 /* DeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DeviceInfo.m; path = sonkwoAppPractice/DeviceInfo.m; sourceTree = "<group>"; };
-		9F45FA7F2648D610002F9B88 /* RCTHttpCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTHttpCache.h; sourceTree = "<group>"; };
-		9F45FA802648D610002F9B88 /* RCTHttpCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTHttpCache.m; sourceTree = "<group>"; };
 		9FA504712645313B00CCA021 /* RCTCookieManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTCookieManager.h; path = sonkwoAppPractice/RCTCookieManager.h; sourceTree = "<group>"; };
 		9FA504722645313B00CCA021 /* RCTCookieManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCTCookieManager.m; path = sonkwoAppPractice/RCTCookieManager.m; sourceTree = "<group>"; };
 		B15776EEAA4F405388B113D2 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -125,8 +128,10 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				9F2B04EE2644D394004024B7 /* DeviceInfo.h */,
 				9F2B04EF2644D394004024B7 /* DeviceInfo.m */,
-				9F45FA7F2648D610002F9B88 /* RCTHttpCache.h */,
-				9F45FA802648D610002F9B88 /* RCTHttpCache.m */,
+				9F1F1E7C264BD6CE00E6CD90 /* RCTHttpCache.h */,
+				9F1F1E7E264BD72300E6CD90 /* RNCClipboard.h */,
+				9F1F1E7F264BD72300E6CD90 /* RNCClipboard.m */,
+				9F1F1E7D264BD6CE00E6CD90 /* RCTHttpCache.m */,
 			);
 			name = sonkwoAppPractice;
 			sourceTree = "<group>";
@@ -474,7 +479,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FE9D39226491EDF005F34B0 /* RCTHttpCache.m in Sources */,
+				9F1F1E83264BD7B500E6CD90 /* RCTHttpCache.m in Sources */,
+				9F1F1E80264BD7AD00E6CD90 /* RNCClipboard.m in Sources */,
 				9FA5047F2645324300CCA021 /* RCTCookieManager.m in Sources */,
 				9F10826D2644DCA8000A9753 /* DeviceInfo.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
@@ -633,7 +639,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -703,7 +709,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -766,7 +772,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -890,7 +896,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
