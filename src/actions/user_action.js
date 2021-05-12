@@ -164,6 +164,28 @@ export const uploadImage = (file, token) => async (dispatch) => {
   xhr.send(formData)
 }
 
+export const toggleSteamReview = (show) => async (dispatch) => {
+  const result = await usersApi.toggleSteamReview(show)
+  if (checkNullObj(result)) {
+    store.dispatch(changeUserInfo({ showSteamReview: show }))
+  }
+}
+
+export const changeWaterMark = (configs_attributes) => async (dispatch) => {
+  const res = await usersApi.patchUserInfo({ configs_attributes })
+  if (checkNullObj(res)) {
+    const result = await usersApi.queryAuthUserInfo({
+      configs: {
+        id: true,
+        kind: true,
+        key: true,
+        value: true,
+      },
+    })
+    store.dispatch(updateUserInfo({ configs: result.configs }))
+  }
+}
+
 export const changeUserInfo = (user, cb) => async (dispatch) => {
   const result = await usersApi.changeUserInfo(user)
   console.log({ result })

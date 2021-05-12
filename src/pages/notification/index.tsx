@@ -37,10 +37,9 @@ const Notification: React.FC<any> = ({}) => {
   const hasSwitched = useRef(false)
   const { data, isLoading } = useUserNotification()
 
+  console.log({ data })
   useEffect(() => {
-    if (hasSwitched.current && data) {
-      notiApi.updateNotiSetting(data)
-    }
+    hasSwitched.current && data && notiApi.updateNotiSetting(data)
   }, [data])
 
   const allRoutes = useMemo(() => {
