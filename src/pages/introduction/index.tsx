@@ -22,7 +22,7 @@ const Introduction: React.FC<any> = ({}) => {
   }, [value])
 
   const onPress = useCallback(() => {
-    dispatch(changeUserInfo({ introduction: value }, () => navigation.goBack()))
+    dispatch(changeUserInfo({ introduction: value }, navigation.goBack()))
   }, [value])
   return (
     <Column>

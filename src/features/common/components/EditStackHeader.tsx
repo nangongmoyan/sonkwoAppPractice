@@ -32,7 +32,7 @@ const EditStackHeader: React.FC<EditStackHeader> = ({
     )
   }, [])
 
-  const renderRight = useCallback(() => {
+  const renderRight = () => {
     return (
       <GHWithoutFeedback
         onPress={onPress}
@@ -52,7 +52,7 @@ const EditStackHeader: React.FC<EditStackHeader> = ({
         </MyText>
       </GHWithoutFeedback>
     )
-  }, [changeBgColor, changeTextColor])
+  }
   return (
     <CustomStackHeader
       showBack={false}

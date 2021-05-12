@@ -17,6 +17,7 @@ import { deviceStorage } from '@util'
 import { setUserInfo, refreshToken, getUserInfo } from '@actions/user_action'
 import { config } from '@sonkwo/sonkwo-api'
 import SplashScreen from 'react-native-splash-screen'
+import { QueryClientProvider, queryClient } from '@hooks'
 // 在正式环境中清空console.log()
 if (!__DEV__) {
   global.console = {
@@ -80,15 +81,17 @@ const SonkwoAppPractice = () => {
         <LocaleProvider>
           <NetinfoProvider>
             <Provider store={store}>
-              <LoadingProvider>
-                <LocaleContext.Consumer>
-                  {(value) => (
-                    <RootSiblingParent>
-                      <Navigator screenProps={value} />
-                    </RootSiblingParent>
-                  )}
-                </LocaleContext.Consumer>
-              </LoadingProvider>
+              <QueryClientProvider client={queryClient}>
+                <LoadingProvider>
+                  <LocaleContext.Consumer>
+                    {(value) => (
+                      <RootSiblingParent>
+                        <Navigator screenProps={value} />
+                      </RootSiblingParent>
+                    )}
+                  </LocaleContext.Consumer>
+                </LoadingProvider>
+              </QueryClientProvider>
             </Provider>
           </NetinfoProvider>
         </LocaleProvider>

@@ -9,3 +9,9 @@ export { useNavigation } from '@react-navigation/native'
 export { default as useDimensions } from './useDimensions'
 export { useDispatch, useStore, useSelector } from 'react-redux'
 export { useSafeAreaInsets as useSafeArea } from 'react-native-safe-area-context'
+export {
+  useQuery,
+  queryCache,
+  queryClient,
+  QueryClientProvider,
+} from './useQuery'

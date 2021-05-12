@@ -133,7 +133,6 @@ function DrawerScreen(props) {
 
   const onPress = useCallback(
     (route) => {
-      console.log({ navigation })
       navigation.navigate(route)
     },
     [navigation],

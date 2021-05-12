@@ -15,6 +15,7 @@ import {
   TouchableOpacity,
 } from '@ui'
 import { adaptiveWidth, deviceWidth } from '@util'
+import { ThemeColors } from 'ui/theme'
 
 const NavItem: React.FC<NavItemProps> = ({
   onPress,
@@ -34,7 +35,7 @@ const NavItem: React.FC<NavItemProps> = ({
       return (
         <Switch
           style={{ shadowOpacity: 0 }}
-          trackColor={{ true: '#ce3d3a', false: 'grey' }}
+          trackColor={{ true: ThemeColors.Default, false: 'grey' }}
           {...switchProps}
         />
       )

@@ -3,18 +3,16 @@
  * created by lijianpo on 2021/04/27
  */
 import React, { useState, useCallback, useMemo } from 'react'
-import { useDispatch, useSelector } from '@hooks'
+import { useDispatch, useNavigation, useSelector } from '@hooks'
 import { useLocale } from '@contexts/locale'
 import {
   Column,
-  Divider,
   GHWithoutFeedback,
   MyStatusBar,
   MyText,
   NavItem,
   Row,
   ShadowBox,
-  StyleSheet,
   SvgIcon,
   View,
 } from '@ui'
@@ -29,10 +27,11 @@ const ITEMS = [
   { route: 'Female', label: 'LANG67', color: '#ffb3b3', selected: true },
 ]
 
-const Gender = ({ navigation }) => {
+const Gender: React.FC<any> = ({}) => {
   const { t } = useLocale()
-  const { gender } = useUserInfo()
   const dispatch = useDispatch()
+  const { gender } = useUserInfo()
+  const navigation = useNavigation()
   const [sex, setSex] = useState(gender)
 
   const selections = useMemo(() => {
@@ -52,7 +51,7 @@ const Gender = ({ navigation }) => {
   }, [sex, gender])
 
   const onPress = useCallback(() => {
-    dispatch(changeUserInfo({ gender: sex }, () => navigation.goBack()))
+    dispatch(changeUserInfo({ gender: sex }, navigation.goBack()))
   }, [sex, navigation])
 
   const onSelect = useCallback((index) => setSex(index), [setSex])

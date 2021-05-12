@@ -8,23 +8,24 @@ import { useUserInfo } from '@features/user/hooks/useIsSelf'
 import { Column, MyStatusBar, ShadowBox, TextInput, MyText } from '@ui'
 import { EditStackHeader } from '@features/common/components'
 import { adaptiveHeight, adaptiveWidth } from '@util'
-import { useDispatch } from '@hooks'
+import { useDispatch, useNavigation } from '@hooks'
 import { changeUserInfo } from '@actions/user_action'
 
-const NickName = ({ navigation }) => {
+const NickName: React.FC<any> = ({}) => {
   const { t } = useLocale()
-  const userInfo = useUserInfo()
+  const { nickname } = useUserInfo()
   const dispatch = useDispatch()
-  const [value, onChangeText] = useState(userInfo.nickname)
+  const navigation = useNavigation()
+  const [value, onChangeText] = useState(nickname)
 
   const { changeBgColor, changeTextColor } = useMemo(() => {
-    const result = value !== userInfo.nickname ? true : false
+    const result = value !== nickname ? true : false
     return { changeBgColor: result, changeTextColor: result }
-  }, [value, userInfo])
+  }, [value, nickname])
 
   const onPress = useCallback(() => {
-    dispatch(changeUserInfo({ nick_name: value }, () => navigation.goBack()))
-  }, [value])
+    dispatch(changeUserInfo({ nick_name: value }, navigation.goBack()))
+  }, [dispatch, changeUserInfo, value, navigation])
   return (
     <Column style={{ flex: 1 }}>
       <MyStatusBar isDarkStyle={true} />
@@ -38,7 +39,7 @@ const NickName = ({ navigation }) => {
         <TextInput
           style={{ height: 44, color: 'black' }}
           value={value}
-          defaultValue={userInfo.nickname}
+          defaultValue={nickname}
           onChangeText={(text) => onChangeText(text)}
           clearButtonMode="always"
           maxLength={24}

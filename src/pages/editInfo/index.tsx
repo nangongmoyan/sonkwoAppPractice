@@ -22,7 +22,6 @@ const EditInfo: React.FC<any> = () => {
   const { t } = useLocale()
   const navigation = useNavigation()
   const { gender, nickname, birthday, introduction } = useUserInfo()
-  console.log({ introduction })
   const { sex } = useMemo(() => {
     return {
       sex: gender === 0 ? '男' : gender === 1 ? '女' : '保密',
