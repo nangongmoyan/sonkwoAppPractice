@@ -9,4 +9,12 @@
  */
 const checkNullObj = (obj) => Object.keys(obj).length === 0
 
-export { checkNullObj }
+let timeout = null
+const debounce = (cb, wait = 500) => {
+  if (timeout !== null) clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    timeout = null
+    cb && cb()
+  }, wait)
+}
+export { checkNullObj, debounce }
