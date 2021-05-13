@@ -45,9 +45,9 @@ public class DplusReactPackage implements ReactPackage {
     List<NativeModule> modules = new ArrayList<>();
     modules.add(new HttpCacheModule(reactContext));
     modules.add(new DeviceInfoModule(reactContext));
+    modules.add(new RNClipboardModule(reactContext));
     modules.add(new CookieManagerModule(reactContext));
     modules.add(new OpenAppSettingsModule(reactContext));
-    modules.add(new ClipboardModule(reactContext));
     modules.add(new BuildConfigModule(reactContext,buildConfigClass));
     return modules;
   }

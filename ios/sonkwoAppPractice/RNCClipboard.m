@@ -14,7 +14,7 @@
 
 @implementation RNCClipboard
 
-RCT_EXPORT_MODULE(Clipboard);
+RCT_EXPORT_MODULE(RNClipboard);
 
 - (dispatch_queue_t)methodQueue
 {

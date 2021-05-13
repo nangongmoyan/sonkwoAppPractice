@@ -21,6 +21,6 @@ export {
 } from './scale'
 
 //
-export { toastShort, toastLong } from './toast'
+export { toastMessage, toastSuccess } from './toast'
 
 export { checkNullObj } from './common'

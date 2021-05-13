@@ -14,18 +14,18 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.module.annotations.ReactModule;
 
-@ReactModule(name = ClipboardModule.NAME)
-public class ClipboardModule extends ContextBaseJavaModule {
+@ReactModule(name = RNClipboardModule.NAME)
+public class RNClipboardModule extends ContextBaseJavaModule {
 
-  public ClipboardModule(Context context) {
+  public RNClipboardModule(Context context) {
     super(context);
   }
 
-  public static final String NAME = "Clipboard";
+  public static final String NAME = "RNClipboard";
 
   @Override
   public String getName() {
-    return ClipboardModule.NAME;
+    return RNClipboardModule.NAME;
   }
 
   private ClipboardManager getClipboardService() {

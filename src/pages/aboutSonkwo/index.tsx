@@ -14,6 +14,7 @@ import {
   NavItem,
 } from '@ui'
 import { useNavigation } from '@hooks'
+import { toastSuccess } from '@util'
 
 const ITEMS = [
   { route: 'PrivacyAgreement', label: 'LANG102' },
@@ -38,6 +39,7 @@ const AboutSonkwo: React.FC<any> = ({}) => {
       navigation.navigate(route)
     } else if (route === 'WeChatAccount') {
       Clipboard.setString('杉果游戏')
+      toastSuccess('复制成功')
     }
   }, [])
 

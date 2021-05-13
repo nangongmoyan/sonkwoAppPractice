@@ -5,7 +5,7 @@
 
 import { authApi, config, usersApi } from '@sonkwo/sonkwo-api'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { checkNullObj, deviceStorage, toastShort } from '@util'
+import { checkNullObj, deviceStorage, toastMessage } from '@util'
 import store from '../store'
 import { USER } from '@util/action_types'
 import { setWallet } from './wallet_action'
@@ -42,7 +42,7 @@ const afterLogin = (res) => {
   const { id, region, accessToken } = res
   /**只针对大陆用户开放 */
   if (region && region !== 'cn') {
-    return toastShort('仅对中国大陆开放')
+    return toastMessage('仅对中国大陆开放')
   }
 
   CookieManage.clearAll()
@@ -195,7 +195,7 @@ export const changeUserInfo = (user, cb) => async (dispatch) => {
       delete user.nick_name
     }
     store.dispatch(updateUserInfo(user))
-    toastShort('修改成功')
+    toastMessage('修改成功')
     cb && cb()
   }
 }

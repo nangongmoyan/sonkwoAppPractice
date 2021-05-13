@@ -4,7 +4,7 @@
  */
 import React, { useEffect, useMemo } from 'react'
 import Button from 'ui/button'
-import { toastShort, vw } from '@util'
+import { toastMessage, vw } from '@util'
 import { ThemeColors } from 'ui/theme'
 import TokenButton from './TokenButton'
 import { Row, TextInput, StyleSheet } from '@ui'
@@ -92,7 +92,7 @@ const TokenInput = ({ sendToken, ...props }) => {
   const onPress = (setStart) => {
     const data = getValues()
     if (errors.phone) {
-      toastShort(errors.phone?.message || '请输入手机号')
+      toastMessage(errors.phone?.message || '请输入手机号')
     } else {
       setStart(true)
       sendToken(data.phone)

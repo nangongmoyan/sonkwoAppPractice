@@ -4,4 +4,4 @@
  */
 import { NativeModules } from 'react-native'
 
-export default NativeModules.Clipboard
+export default NativeModules.RNClipboard
