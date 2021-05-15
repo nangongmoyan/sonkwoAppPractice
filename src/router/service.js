@@ -4,24 +4,54 @@
  */
 import URI from 'urijs'
 import { debounce, urlToPathAndParams, toastFail } from '@util'
-import { NavigationActions, StackActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation'
+import { StackRouter, StackActions } from '@react-navigation/native'
 
 let _navigator
+/**
+ *
+ * @param {*} navigatorRef
+ * @returns
+ */
+const setTopLevelNavigator = (navigatorRef) => {
+  _navigator = navigatorRef
+  const router = StackRouter()
+  console.log({ router })
+}
 
-const setTopLevelNavigator = (navigatorRef) => (_navigator = navigatorRef)
-
+/**
+ *
+ * @param {*} routeName
+ * @param {*} params
+ */
 const navigate = (routeName, params) => {
-  _navigator.dispatch(NavigationActions.navigate({ routeName, params }))
+  console.log({ routeName, params })
+  _navigator.dispatch(NavigationActions.navigate(routeName, { params }))
 }
 
+/**
+ *
+ * @param {*} routeName
+ * @param {*} params
+ */
 const push = (routeName, params) => {
-  _navigator.dispatch(StackActions.push({ routeName, params }))
+  _navigator.dispatch(StackActions.push(routeName, { params }))
 }
 
+/**
+ *
+ * @param {*} routeName
+ * @param {*} params
+ */
 const replace = (routeName, params) => {
-  _navigator.dispatch(StackActions.replace({ routeName, params }))
+  _navigator.dispatch(StackActions.replace(routeName, { params }))
 }
 
+/**
+ *
+ * @param {*} routeName
+ * @param {*} params
+ */
 const reset = (routeName, params) => {
   const resetAction = StackActions.reset({
     index: 0,
@@ -30,12 +60,30 @@ const reset = (routeName, params) => {
   _navigator.dispatch(resetAction)
 }
 
+/**
+ *
+ * @param {*} key
+ * @returns
+ */
 const pop = (key) => _navigator.dispatch(NavigationActions.back({ key }))
 
+/**
+ *
+ * @param {*} url
+ * @param {*} options
+ * @returns
+ */
 const navigateByUrl = (url, options = { inWebview: false }) => {
   // 当 navigatorRef 没有赋值前， 延迟执行
+  // if (!_navigator) {
+  //   debounce(() => navigateByUrl(url, options), 1000)
+  //   return
+  // }
+
   if (!_navigator) {
-    debounce(navigateByUrl(url, options), 1000)
+    setTimeout(() => {
+      navigateByUrl(url, options)
+    }, 1000)
     return
   }
 
@@ -74,34 +122,34 @@ const navigateByUrl = (url, options = { inWebview: false }) => {
 
   if (parsedUrl) {
     const { path, params } = parsedUrl
+    console.log({ parsedUrl })
+    // const action = router.getActionForPathAndParams(path, params)
 
-    const action = router.getActionForPathAndParams(path, params)
-
-    if (action && !urlHost.include('support.sonkwo.com')) {
-      if (!_navigator) {
-        toastFail('_navigator dose not exist!!!')
-        return true
-      }
-      if (action?.params?.id) {
-        _navigator.dispatch(
-          Object.assign({}, action, {
-            key: `${action.routeName}_${action.params.id}`,
-          }),
-        )
-      } else if (action?.params?.game_id) {
-        _navigator.dispatch(
-          Object.assign({}, action, {
-            key: `${action.routeName}_${action.params.game_id}`,
-          }),
-        )
-      } else {
-        _navigator.dispatch(action)
-      }
-      return true
-    }
+    // if (action && !urlHost.include('support.sonkwo.com')) {
+    //   if (!_navigator) {
+    //     toastFail('_navigator dose not exist!!!')
+    //     return true
+    //   }
+    //   if (action?.params?.id) {
+    //     _navigator.dispatch(
+    //       Object.assign({}, action, {
+    //         key: `${action.routeName}_${action.params.id}`,
+    //       }),
+    //     )
+    //   } else if (action?.params?.game_id) {
+    //     _navigator.dispatch(
+    //       Object.assign({}, action, {
+    //         key: `${action.routeName}_${action.params.game_id}`,
+    //       }),
+    //     )
+    //   } else {
+    //     _navigator.dispatch(action)
+    //   }
+    //   return true
+    // }
 
     if (!inWebview) {
-      navigate('AppWebView', { url })
+      // navigate('AppWebView', { url })
       return true
     }
     return false

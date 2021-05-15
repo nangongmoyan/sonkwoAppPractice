@@ -11,6 +11,7 @@ import { NavigationContainer, InitialState } from '@react-navigation/native'
 import { useSelector } from '@hooks'
 import { vw } from '@util'
 import { DrawerScreen } from './drawer'
+import service from './service'
 
 const Drawer = createDrawerNavigator() //  抽屉drawer实例
 
@@ -31,7 +32,10 @@ export default function App() {
   const [currentRoute, setCurrentRoute] = useState('MainTabBar')
   const [initialState, setInitialState] = useState(InitialState)
 
+  const router = RootRouteScreen.router
+  console.log({ RootRouteScreen, router })
   useEffect(() => {
+    service.setTopLevelNavigator(navigationRef.current)
     const state = navigationRef.current.getRootState()
     // Save the initial route name
     routeNameRef.current = getActiveRouteName(state)
@@ -42,6 +46,7 @@ export default function App() {
   return (
     <NavigationContainer
       ref={navigationRef}
+      // linking
       initialState={InitialState}
       onStateChange={(state) => {
         const previousRouteName = routeNameRef.current

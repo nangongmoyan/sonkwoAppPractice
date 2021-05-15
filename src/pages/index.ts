@@ -23,6 +23,7 @@ import { ShippingAddress } from './shippingAddress'
 import { Introduction } from './introduction'
 import { AboutSonkwo } from './aboutSonkwo'
 import { Contact } from './contact'
+import { Browser } from '@ui'
 
 const tabSatcks = [
   /** 首页 */
@@ -70,6 +71,12 @@ const unLoginStacks = [
     component: SignIn,
     options: { headerShown: false },
   },
+  /** webview */
+  {
+    name: 'AppWebView',
+    component: Browser,
+    options: { headerShown: false },
+  },
 ]
 
 const loggedStacks = [
@@ -77,6 +84,12 @@ const loggedStacks = [
   {
     name: 'TabScreen',
     component: TabScreen,
+    options: { headerShown: false },
+  },
+  /** webview */
+  {
+    name: 'AppWebView',
+    component: Browser,
     options: { headerShown: false },
   },
   /** 设置 */

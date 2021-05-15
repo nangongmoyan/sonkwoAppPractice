@@ -15,6 +15,7 @@ import {
 } from '@ui'
 import { useNavigation } from '@hooks'
 import { toastSuccess } from '@util'
+import service from 'router/service'
 
 const ITEMS = [
   { route: 'PrivacyAgreement', label: 'LANG102' },
@@ -35,7 +36,9 @@ const AboutSonkwo: React.FC<any> = ({}) => {
   }, [t])
 
   const onPress = useCallback((route) => {
-    if (route === 'Contact') {
+    if (route === 'PrivacyAgreement') {
+      service.navigateByUrl('/mobile/privacy')
+    } else if (route === 'Contact') {
       navigation.navigate(route)
     } else if (route === 'WeChatAccount') {
       Clipboard.setString('杉果游戏')
