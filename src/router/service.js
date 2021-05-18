@@ -5,18 +5,20 @@
 import URI from 'urijs'
 import { debounce, urlToPathAndParams, toastFail } from '@util'
 import { NavigationActions } from 'react-navigation'
-import { StackRouter, StackActions } from '@react-navigation/native'
+import {
+  StackRouter,
+  CommonActions,
+  StackActions,
+} from '@react-navigation/native'
 
-let _navigator
+let _navigation
 /**
  *
  * @param {*} navigatorRef
  * @returns
  */
-const setTopLevelNavigator = (navigatorRef) => {
-  _navigator = navigatorRef
-  const router = StackRouter()
-  console.log({ router })
+const setNavigation = (navigatorRef) => {
+  _navigation = navigatorRef
 }
 
 /**
@@ -24,9 +26,9 @@ const setTopLevelNavigator = (navigatorRef) => {
  * @param {*} routeName
  * @param {*} params
  */
-const navigate = (routeName, params) => {
-  console.log({ routeName, params })
-  _navigator.dispatch(NavigationActions.navigate(routeName, { params }))
+const navigate = (name, params) => {
+  console.log({ name, params })
+  _navigation.dispatch(CommonActions.navigate({ name, params }))
 }
 
 /**
@@ -35,7 +37,7 @@ const navigate = (routeName, params) => {
  * @param {*} params
  */
 const push = (routeName, params) => {
-  _navigator.dispatch(StackActions.push(routeName, { params }))
+  _navigation.dispatch(StackActions.push(routeName, { params }))
 }
 
 /**
@@ -44,7 +46,7 @@ const push = (routeName, params) => {
  * @param {*} params
  */
 const replace = (routeName, params) => {
-  _navigator.dispatch(StackActions.replace(routeName, { params }))
+  _navigation.dispatch(StackActions.replace(routeName, { params }))
 }
 
 /**
@@ -57,7 +59,7 @@ const reset = (routeName, params) => {
     index: 0,
     actions: [NavigationActions.navigate({ routeName: 'Tabs' })],
   })
-  _navigator.dispatch(resetAction)
+  _navigation.dispatch(resetAction)
 }
 
 /**
@@ -65,7 +67,7 @@ const reset = (routeName, params) => {
  * @param {*} key
  * @returns
  */
-const pop = (key) => _navigator.dispatch(NavigationActions.back({ key }))
+const pop = (key) => _navigation.dispatch(NavigationActions.back({ key }))
 
 /**
  *
@@ -80,7 +82,7 @@ const navigateByUrl = (url, options = { inWebview: false }) => {
   //   return
   // }
 
-  if (!_navigator) {
+  if (!_navigation) {
     setTimeout(() => {
       navigateByUrl(url, options)
     }, 1000)
@@ -147,9 +149,8 @@ const navigateByUrl = (url, options = { inWebview: false }) => {
     //   }
     //   return true
     // }
-
     if (!inWebview) {
-      // navigate('AppWebView', { url })
+      navigate('AppWebView', { url })
       return true
     }
     return false
@@ -163,5 +164,5 @@ export default {
   replace,
   navigate,
   navigateByUrl,
-  setTopLevelNavigator,
+  setNavigation,
 }

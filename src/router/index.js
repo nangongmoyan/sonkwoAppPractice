@@ -32,10 +32,10 @@ export default function App() {
   const [currentRoute, setCurrentRoute] = useState('MainTabBar')
   const [initialState, setInitialState] = useState(InitialState)
 
-  const router = RootRouteScreen.router
-  console.log({ RootRouteScreen, router })
   useEffect(() => {
-    service.setTopLevelNavigator(navigationRef.current)
+    console.log({ navigationRef })
+    service.setNavigation(navigationRef.current)
+    // service.setTopLevelNavigator(navigationRef.current)
     const state = navigationRef.current.getRootState()
     // Save the initial route name
     routeNameRef.current = getActiveRouteName(state)

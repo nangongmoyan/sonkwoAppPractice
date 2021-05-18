@@ -37,6 +37,7 @@ const AboutSonkwo: React.FC<any> = ({}) => {
 
   const onPress = useCallback((route) => {
     if (route === 'PrivacyAgreement') {
+      // navigation.navigate('AppWebView', { url: 'https://www.baidu.com' })
       service.navigateByUrl('/mobile/privacy')
     } else if (route === 'Contact') {
       navigation.navigate(route)
