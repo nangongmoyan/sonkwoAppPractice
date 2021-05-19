@@ -24,6 +24,7 @@ import { Introduction } from './introduction'
 import { AboutSonkwo } from './aboutSonkwo'
 import { Contact } from './contact'
 import { Browser } from '@ui'
+import { Wallet } from './wallet'
 
 const tabSatcks = [
   /** 首页 */
@@ -90,6 +91,12 @@ const loggedStacks = [
   {
     name: 'AppWebView',
     component: Browser,
+    options: { headerShown: false },
+  },
+  /** 果币 */
+  {
+    name: 'Wallet',
+    component: Wallet,
     options: { headerShown: false },
   },
   /** 设置 */

@@ -5,7 +5,7 @@
 export { useTypedSelector } from './useSelector'
 export { default as useInterval } from './useInterval'
 export { default as usePrevious } from './usePrevious'
-export { useNavigation } from '@react-navigation/native'
+export { useNavigation, useRoute } from '@react-navigation/native'
 export { useNavigationParam } from 'react-navigation-hooks'
 export { default as useDimensions } from './useDimensions'
 export { useDispatch, useStore, useSelector } from 'react-redux'

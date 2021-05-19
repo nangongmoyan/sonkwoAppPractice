@@ -27,7 +27,6 @@ const setNavigation = (navigatorRef) => {
  * @param {*} params
  */
 const navigate = (name, params) => {
-  console.log({ name, params })
   _navigation.dispatch(CommonActions.navigate({ name, params }))
 }
 

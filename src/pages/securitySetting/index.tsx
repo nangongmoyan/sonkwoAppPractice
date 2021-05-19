@@ -29,7 +29,6 @@ const ITEMS = [
 const SecuritySetting: React.FC<any> = ({}) => {
   const { t } = useLocale()
   const userInfo = useUserInfo()
-  console.log({ userInfo })
   const routes = useMemo(() => {
     return ITEMS.map((item) => {
       const { route, label } = item

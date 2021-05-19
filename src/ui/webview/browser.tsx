@@ -8,12 +8,12 @@ import { sendEvent } from './util'
 const webviewUrl = '/mobile/webview'
 import service from 'router/service'
 import { MyDeviceInfo } from '@native'
-import { useNavigation } from '@hooks'
+import { useNavigation, useRoute } from '@hooks'
 import config from '@util/check_config'
 import { StyleSheet } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { snakelizeKeys } from '@util/ramdaUtil'
-import { useRoute } from '@react-navigation/native'
+// import { useRoute } from '@react-navigation/native'
 import CustomStackHeader from '../header/customStackHeader'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
 
@@ -58,7 +58,6 @@ const Browser = memo(({ navigation }) => {
     })
     return !hasPath
   }
-  console.log({ middleUrl })
 
   const onNavigationStateChange = (navState) => {
     setCanBack(navState.canGoBack)
@@ -67,7 +66,6 @@ const Browser = memo(({ navigation }) => {
     const hasPath = service.navigateByUrl(navState.url, {
       inWebview: true,
     })
-    console.log({ hasPath })
     if (hasPath) {
       // this may not work on android
       // use onShouldStartLoadWithRequest to stop loading

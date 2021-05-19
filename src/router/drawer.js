@@ -23,7 +23,7 @@ import {
 import { statusBarHeight, vw } from '@util'
 import { routerStyles } from './css'
 import { ThemeColors } from 'ui/theme'
-import { useDispatch } from '@hooks'
+import { useDispatch, useSelector } from '@hooks'
 import { signOut } from '@actions/user_action'
 import * as iconPath from '@source/svg'
 import SubmitLoading from '@components/SubmitLoading'
@@ -59,12 +59,13 @@ const allItem = [firstItem, secondItem, thirdItem, fourthItem]
 
 function DrawerScreen(props) {
   const { t } = useLocale()
-  const dispatch = useDispatch()
   const loadingRef = useRef()
+  const dispatch = useDispatch()
   const isDrawerOpen = useIsDrawerOpen()
   const { userInfo, navigation } = props
 
   const { nickname, avatar } = userInfo
+  const wallet = useSelector((state) => state.WalletReducer.wallet)
 
   useEffect(() => {
     const history = navigation.dangerouslyGetState().history
@@ -93,7 +94,11 @@ function DrawerScreen(props) {
 
         switch (route) {
           case 'Wallet':
-            return { ...item, parent: t('LANG21') }
+            return {
+              ...item,
+              parent: t('LANG21'),
+              rightTitle: wallet?.balance ?? 0,
+            }
           case 'Order':
           case 'PointsMall':
             return { ...item }
@@ -119,7 +124,7 @@ function DrawerScreen(props) {
         }
       })
     })
-  }, [t])
+  }, [t, wallet])
 
   const leftIcon = useCallback((item) => {
     return (
@@ -130,12 +135,12 @@ function DrawerScreen(props) {
   }, [])
 
   const rightExtraTitle = useCallback((item) => {
-    return <MyText>200000</MyText>
+    return <MyText> {item?.rightTitle ?? ''}</MyText>
   }, [])
 
   const onPress = useCallback(
-    (route) => {
-      navigation.navigate(route)
+    (item) => {
+      navigation.navigate(item.route, { value: item?.rightTitle })
     },
     [navigation],
   )
@@ -182,7 +187,7 @@ function DrawerScreen(props) {
                   leftIcon={leftIcon(item)}
                   rightExtraTitle={rightExtraTitle(item)}
                   itemStyle={routerStyles.itemStyle}
-                  onPress={() => onPress(item.route)}
+                  onPress={() => onPress(item)}
                   itemTitleStyle={routerStyles.itemTitleStyle}
                   showItemSeparator={i !== all.length - 1 ? true : false}
                 />
