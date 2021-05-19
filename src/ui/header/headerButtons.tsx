@@ -2,8 +2,8 @@
  *
  * created by lijianpo on 2021/04/14
  */
-import React, { useMemo } from 'react'
-import { Row } from '@ui'
+import React from 'react'
+import { Row } from '../flex'
 import { useNavigation } from '@hooks'
 import { HeaderBackButton } from 'react-navigation-stack'
 // const Item = ({ children, route, onPress }) => {}

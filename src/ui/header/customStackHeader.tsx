@@ -3,10 +3,11 @@
  * created by lijianpo on 2021/04/14
  */
 import React, { useMemo } from 'react'
-import { Row, MyText } from '@ui'
+import MyText from '../text'
+import { Row } from '../flex'
+import { adaptiveWidth } from '@util'
 import { HeaderButtons } from './headerButtons'
 import { useDimensions, useSafeArea } from '@hooks'
-import { adaptiveWidth } from '@util'
 
 const HEADER_HEIGHT = 44
 

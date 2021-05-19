@@ -4,7 +4,7 @@
  */
 import React, { useMemo, useCallback } from 'react'
 import R from 'ramda'
-import { Column } from '@ui'
+import { Column } from '../flex'
 import ListView, { ListViewProps } from './ListView'
 
 type TwoColumnListProps<ItemT> = ListViewProps<ItemT> & {

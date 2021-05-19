@@ -3,13 +3,14 @@
  * created by lijianpo on 2021/04/14
  */
 import React, { useEffect, useMemo } from 'react'
-import Button from 'ui/button'
-import { toastMessage, vw } from '@util'
-import { ThemeColors } from 'ui/theme'
+import { Row } from '../flex'
+import Button from '../button'
+import { ThemeColors } from '../theme'
 import TokenButton from './TokenButton'
-import { Row, TextInput, StyleSheet } from '@ui'
-import { useFormContext } from 'react-hook-form'
+import { toastMessage, vw } from '@util'
 import { useLocale } from '@contexts/locale'
+import { useFormContext } from 'react-hook-form'
+import { TextInput, StyleSheet } from 'react-native'
 
 const BasicInput = ({
   name,

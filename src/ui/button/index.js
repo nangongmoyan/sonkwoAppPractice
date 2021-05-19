@@ -3,8 +3,10 @@
  * created by lijianpo on 2021/04/14
  */
 import React, { useMemo } from 'react'
-import { GHWithoutFeedback, MyText, StyleSheet } from '@ui'
-import { ThemeColors, ThemeStyle } from 'ui/theme'
+import { MyText } from '../text'
+import { StyleSheet } from 'react-native'
+import { ThemeColors, ThemeStyle } from '../theme'
+import { TouchableWithoutFeedback as GHWithoutFeedback } from 'react-native-gesture-handler'
 
 const Button = (props) => {
   const {

@@ -33,7 +33,6 @@ export default function App() {
   const [initialState, setInitialState] = useState(InitialState)
 
   useEffect(() => {
-    console.log({ navigationRef })
     service.setNavigation(navigationRef.current)
     // service.setTopLevelNavigator(navigationRef.current)
     const state = navigationRef.current.getRootState()

@@ -3,10 +3,10 @@
  * created by lijianpo on 2021/04/25
  */
 import React from 'react'
-import { Image, ViewStyle } from 'react-native'
 import MyImage from '../myImage'
+import { Column } from '../flex'
+import { Image, ViewStyle } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import { Column } from 'ui/flex'
 // import { NavigationService } from '@router'
 
 const defaultAvatar = '/avatar/default'

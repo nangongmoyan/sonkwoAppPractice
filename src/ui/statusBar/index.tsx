@@ -3,7 +3,7 @@
  * created by lijianpo on 2021/04/13
  */
 import React, { useCallback } from 'react'
-import { StatusBar, Platform } from '@ui'
+import { StatusBar, Platform } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 
 const MyStatusBar: React.FC<StatusBarProps> = (props) => {

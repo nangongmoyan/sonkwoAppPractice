@@ -3,8 +3,7 @@
  * created by lijianpo on 2021/04/13
  */
 import React from 'react'
-import { Text, Platform } from '@ui'
-import { TextStyle, ViewStyle } from 'react-native'
+import { TextStyle, Text, Platform } from 'react-native'
 import { normalSizeMap } from './style'
 
 const os = Platform.OS

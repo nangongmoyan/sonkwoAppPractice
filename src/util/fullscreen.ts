@@ -2,7 +2,7 @@
  * 平台、设备相关的数据
  * changed by lijianpo on 2021/04/14
  */
-import { StatusBar, Platform } from '@ui'
+import { StatusBar, Platform } from 'react-native'
 import { deviceHeight, deviceWidth } from './scale'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 

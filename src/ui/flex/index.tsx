@@ -3,7 +3,8 @@
  * created by lijianpo on 2021/04/13
  */
 import React, { useMemo } from 'react'
-import { View, StyleSheet, LinearGradient } from '@ui'
+import { View, StyleSheet } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 
 function elevationShadowStyle() {
   return {

@@ -9,6 +9,11 @@
  */
 const checkNullObj = (obj) => Object.keys(obj).length === 0
 
+/**
+ *
+ * @param {*} cb
+ * @param {*} wait
+ */
 let timeout = null
 const debounce = (cb, wait = 500) => {
   if (timeout !== null) clearTimeout(timeout)

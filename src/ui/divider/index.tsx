@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { View, StyleSheet } from '@ui'
+import { View, StyleSheet } from 'react-native'
 
 const Divider: React.FC<DividerProps> = (props) => {
   const {

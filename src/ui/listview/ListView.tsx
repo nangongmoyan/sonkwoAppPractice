@@ -3,9 +3,9 @@
  * created by lijianpo on 2021/04/26
  */
 import React, { useRef, useCallback, useEffect } from 'react'
-import { FlatListProps } from 'react-native'
-//  import WaveLoading from '@components/WaveLoading'
-import { Row, Column, MyText, FlatList } from '@ui'
+import MyText from '../text'
+import { Row, Column } from '@ui'
+import { FlatList, FlatListProps } from 'react-native'
 
 export interface ListViewProps<ItemT = any> extends FlatListProps<ItemT> {
   data: ItemT[]

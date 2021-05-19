@@ -4,10 +4,11 @@
  */
 
 import React, { useState, useEffect, useMemo, useRef } from 'react'
+import MyText from '../text'
 import { deviceWidth } from '@util'
-import { ThemeColors } from 'ui/theme'
+import { ThemeColors } from '../theme'
 import { useDimensions } from '@hooks'
-import { MyText, StyleSheet } from '@ui'
+import { StyleSheet } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { TabBar } from 'react-native-tab-view'
 import { CollapsibleHeaderTabView } from 'react-native-tab-view-collapsible-header'

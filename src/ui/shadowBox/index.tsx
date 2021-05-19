@@ -4,9 +4,10 @@
  */
 
 import React from 'react'
-import { Column, StyleSheet, Platform } from '@ui'
-import { ThemeColors } from 'ui/theme'
+import { Column } from '../flex'
+import { ThemeColors } from '../theme'
 import { adaptiveWidth, deviceWidth } from '@util'
+import { StyleSheet, Platform } from 'react-native'
 
 const ShadowBox: React.FC<ShadowBoxProps> = ({
   children,

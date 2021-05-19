@@ -2,19 +2,20 @@
  *
  * created by lijianpo on 2021/05/13
  */
-import { useUserInfo } from '@features/user/hooks/useIsSelf'
-import { useNavigation } from '@hooks'
 import React, { memo, useMemo, useRef, useState } from 'react'
-import config from '@util/check_config'
-import { Column, StyleSheet } from '@ui'
-import { WebView } from 'react-native-webview'
-import { useRoute } from '@react-navigation/native'
+import { Column } from '../flex'
+import { sendEvent } from './util'
+const webviewUrl = '/mobile/webview'
 import service from 'router/service'
 import { MyDeviceInfo } from '@native'
-import { sendEvent } from './util'
+import { useNavigation } from '@hooks'
+import config from '@util/check_config'
+import { StyleSheet } from 'react-native'
+import { WebView } from 'react-native-webview'
 import { snakelizeKeys } from '@util/ramdaUtil'
-import CustomStackHeader from 'ui/header/customStackHeader'
-const webviewUrl = '/mobile/webview'
+import { useRoute } from '@react-navigation/native'
+import CustomStackHeader from '../header/customStackHeader'
+import { useUserInfo } from '@features/user/hooks/useIsSelf'
 
 // 处理单页应用无法触发 onNavigationStateChange
 const historyJs = `

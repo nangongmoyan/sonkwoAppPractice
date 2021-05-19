@@ -4,9 +4,11 @@
  */
 import React, { useMemo } from 'react'
 import icons from './icons'
-import { Row, Text, TouchableWithoutFeedback } from '@ui'
+import { Row } from '../flex'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { Text, TouchableWithoutFeedback } from 'react-native'
 import { TouchableWithoutFeedback as GHTouchableWithoutFeedback } from 'react-native-gesture-handler'
+
 const hitSlop = { top: 5, left: 5, bottom: 5, right: 5 }
 
 const MyIcon: React.FC<IconProps> = ({

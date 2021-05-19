@@ -4,18 +4,13 @@
  */
 
 import React from 'react'
-import {
-  Row,
-  Icon,
-  Column,
-  Switch,
-  MyText,
-  Divider,
-  StyleSheet,
-  TouchableOpacity,
-} from '@ui'
+import Icon from '../icon'
+import MyText from '../text'
+import Divider from '../divider'
+import { Column, Row } from '../flex'
+import { ThemeColors } from '../theme'
 import { adaptiveWidth, deviceWidth } from '@util'
-import { ThemeColors } from 'ui/theme'
+import { StyleSheet, TouchableOpacity, Switch } from 'react-native'
 
 const NavItem: React.FC<NavItemProps> = ({
   onPress,

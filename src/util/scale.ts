@@ -2,7 +2,7 @@
  *
  * created by lijianpo on 2021/04/13
  */
-import { Dimensions, PixelRatio } from '@ui'
+import { Dimensions, PixelRatio } from 'react-native'
 import { isiOS } from './fullscreen'
 import ExtraDimensions from 'react-native-extra-dimensions-android'
 
