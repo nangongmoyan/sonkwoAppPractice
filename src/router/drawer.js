@@ -2,7 +2,7 @@
  *
  * changed by lijianpo on 2021/04/26
  */
-import React, { useEffect, useMemo, useCallback } from 'react'
+import React, { useEffect, useMemo, useCallback, useRef } from 'react'
 import {
   useIsDrawerOpen,
   DrawerContentScrollView,
@@ -26,6 +26,7 @@ import { ThemeColors } from 'ui/theme'
 import { useDispatch } from '@hooks'
 import { signOut } from '@actions/user_action'
 import * as iconPath from '@source/svg'
+import SubmitLoading from '@components/SubmitLoading'
 const firstItem = [
   { route: 'Wallet', label: 'LANG22' },
   { route: 'Order', label: 'LANG23' },
@@ -59,6 +60,7 @@ const allItem = [firstItem, secondItem, thirdItem, fourthItem]
 function DrawerScreen(props) {
   const { t } = useLocale()
   const dispatch = useDispatch()
+  const loadingRef = useRef()
   const isDrawerOpen = useIsDrawerOpen()
   const { userInfo, navigation } = props
 
@@ -139,7 +141,8 @@ function DrawerScreen(props) {
   )
 
   const onSignOut = () => {
-    dispatch(signOut())
+    loadingRef.current.show('正在退出...')
+    dispatch(signOut(() => loadingRef.current.hide()))
   }
   return (
     <Column style={{ flex: 1, paddingTop: statusBarHeight }}>
@@ -196,6 +199,7 @@ function DrawerScreen(props) {
             </Column>
           </GHWithoutFeedback>
         </ShadowBox>
+        <SubmitLoading ref={loadingRef} />
       </DrawerContentScrollView>
     </Column>
   )

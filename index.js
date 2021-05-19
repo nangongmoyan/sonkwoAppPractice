@@ -10,10 +10,9 @@ import MyDeviceInfo from '@native/MyDeviceInfo'
 import { enableScreens } from 'react-native-screens'
 import { isDev } from '@util/check_config'
 
-// const buildConfig = isDev ? 'debug' : 'release'
 config.setOs(Platform.OS)
 config.setVersion(MyDeviceInfo.appVersion)
-config.setBuildConfig('debug')
+config.setBuildConfig(isDev ? 'debug' : 'release')
 
 enableScreens()
 if (process.env.NODE_ENV === 'development') {

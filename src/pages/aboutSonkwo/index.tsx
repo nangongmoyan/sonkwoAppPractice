@@ -36,14 +36,17 @@ const AboutSonkwo: React.FC<any> = ({}) => {
   }, [t])
 
   const onPress = useCallback((route) => {
-    if (route === 'PrivacyAgreement') {
-      // navigation.navigate('AppWebView', { url: 'https://www.baidu.com' })
-      service.navigateByUrl('/mobile/privacy')
-    } else if (route === 'Contact') {
-      navigation.navigate(route)
-    } else if (route === 'WeChatAccount') {
-      Clipboard.setString('杉果游戏')
-      toastSuccess('复制成功')
+    switch (route) {
+      case 'PrivacyAgreement':
+        return service.navigateByUrl('/mobile/privacy')
+      case 'ServiceAgreement':
+        return service.navigateByUrl('/mobile/agreement')
+      case 'WeChatAccount':
+        Clipboard.setString('杉果游戏')
+        toastSuccess('复制成功')
+        return
+      default:
+        return navigation.navigate(route)
     }
   }, [])
 

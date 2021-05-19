@@ -3,12 +3,12 @@
  * created by lijianpo on 2021/04/14
  */
 import React, { useMemo } from 'react'
-import { MyText } from '../text'
+import MyText from '../text'
 import { StyleSheet } from 'react-native'
 import { ThemeColors, ThemeStyle } from '../theme'
-import { TouchableWithoutFeedback as GHWithoutFeedback } from 'react-native-gesture-handler'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
-const Button = (props) => {
+const Button: React.FC<any> = (props) => {
   const {
     title,
     icon,
@@ -58,7 +58,7 @@ const Button = (props) => {
     }
   }, [buttonColor, type, disabled, size, style, customTextStyle])
   return (
-    <GHWithoutFeedback
+    <TouchableWithoutFeedback
       onPress={(e) => onPress(e)}
       disabled={disabled}
       style={wrapperStyle}
@@ -67,7 +67,7 @@ const Button = (props) => {
       <MyText numberOfLines={numberOfLines} style={textStyle}>
         {title}
       </MyText>
-    </GHWithoutFeedback>
+    </TouchableWithoutFeedback>
   )
 }
 

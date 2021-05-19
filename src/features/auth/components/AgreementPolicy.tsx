@@ -8,6 +8,7 @@ import { useNavigation } from '@hooks'
 import { GHWithoutFeedback, MyText, Row } from '@ui'
 import { useLocale } from '@contexts/locale'
 import { vw } from '@util'
+import service from 'router/service'
 
 const AgreementPolicy = (props) => {
   const { t } = useLocale()
@@ -20,13 +21,17 @@ const AgreementPolicy = (props) => {
         {t('LANG8')}
       </MyText>
 
-      <GHWithoutFeedback onPress={() => navigation.navigate('AppWebView')}>
+      <GHWithoutFeedback
+        onPress={() => service.navigateByUrl('/mobile/agreement')}
+      >
         <MyText size={textSize} color={ThemeColors.Default}>
           {t('LANG9')}
         </MyText>
       </GHWithoutFeedback>
 
-      <GHWithoutFeedback onPress={() => navigation.navigate('AppWebView')}>
+      <GHWithoutFeedback
+        onPress={() => service.navigateByUrl('/mobile/privacy')}
+      >
         <MyText size={textSize} color={ThemeColors.Default}>
           {t('LANG10')}
         </MyText>

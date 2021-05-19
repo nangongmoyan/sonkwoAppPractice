@@ -16,8 +16,7 @@ import { adaptiveFont } from '@util'
 import { useLocale } from '@contexts/locale'
 
 // 登录页
-const SignIn = (data) => {
-  const { route, navigation } = data
+const SignIn = (props: routeAndNavigation) => {
   const { t } = useLocale()
   const [smsMethod, toggleMethod] = useState(true)
   const { methodText, toggleText } = useMemo(() => {
@@ -33,7 +32,6 @@ const SignIn = (data) => {
     // layoutRef.current.animateNextTransition()
     toggleMethod((c) => !c)
   }
-  const signParams: SignParams = route.params.signParams ?? { route: '' }
 
   return (
     <Column style={{ flex: 1 }} align="center">
@@ -59,11 +57,7 @@ const SignIn = (data) => {
       >
         {methodText}
       </MyText>
-      {smsMethod ? (
-        <PhoneVerification signParams={signParams} />
-      ) : (
-        <PasswordVerification signParams={signParams} />
-      )}
+      {smsMethod ? <PhoneVerification /> : <PasswordVerification />}
     </Column>
   )
 }

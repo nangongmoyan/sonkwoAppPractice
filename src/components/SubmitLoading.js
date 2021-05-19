@@ -28,8 +28,8 @@ const SubmitLoading = forwardRef((props, ref) => {
       hasBackdrop={false}
     >
       <Column style={componentsStyles.submitLoading}>
-        <ActivityIndicator size="large" color={ThemeColors.Default} />
-        <MyText size={14} color={ThemeColors.Default}>
+        <ActivityIndicator size="large" color={ThemeColors.White} />
+        <MyText size={14} color={ThemeColors.White}>
           {text}
         </MyText>
       </Column>

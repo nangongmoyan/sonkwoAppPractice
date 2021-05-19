@@ -77,12 +77,12 @@ export const sendSms = sendToken('Sms')
 export const sendEmail = sendToken('Email')
 
 export const signInWithSms = (params, cb) => async (dispatch) => {
-  const { data, signParams } = params
-  const { phone, token } = data
+  const { phone, token } = params.data
   const result = await authApi.signInBySms(phone, token)
   if ('status' in result) {
   } else {
     afterLogin(result)
+    cb && cb()
   }
 }
 
@@ -97,14 +97,19 @@ export const signInWithPass = (params, cb) => async (dispatch) => {
   }
   const result = await authApi.signIn(data)
   if ('status' in result) {
+    console.log({ result })
   } else {
     afterLogin(result)
+    cb && cb()
   }
 }
 
-export const signOut = () => async (dispatch) => {
+export const signOut = (cb) => async (dispatch) => {
   const result = await authApi.signOut()
-  checkNullObj(result) && afterLogout()
+  if (checkNullObj(result)) {
+    afterLogout()
+    cb && cb()
+  }
 }
 
 export const refreshToken = (refresh_token) => async (dispatch) => {

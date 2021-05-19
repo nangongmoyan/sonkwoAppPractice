@@ -4,20 +4,18 @@
  */
 
 import { Divider, Form } from '@ui'
-import React, { useCallback } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { useLocale } from '@contexts/locale'
 import { useDispatch } from '@hooks'
 import { FormProvider } from '@contexts/form'
 import { sendSms, signInWithSms } from '@actions/user_action'
 import AgreementPolicy from './AgreementPolicy'
-interface Props {
-  signParams: SignParams
-}
+import SubmitLoading from '@components/SubmitLoading'
 
-const PhoneVerification: React.FC<Props> = ({ signParams }) => {
+const PhoneVerification: React.FC<any> = ({}) => {
   const { t } = useLocale()
   const dispatch = useDispatch()
-
+  const loadingRef = useRef<any>()
   const sendToken = useCallback(
     (phone) => {
       dispatch(sendSms({ kind: 'login', number: phone }))
@@ -26,11 +24,8 @@ const PhoneVerification: React.FC<Props> = ({ signParams }) => {
   )
 
   const onSubmit = (data: SignInSmsParam) => {
-    const params = { data, signParams }
-    dispatch(signInWithSms(params))
-    // dispatch(signInWithSms(params))
-    // ref.current.show('正在登录...')
-    // signInWithSms(data, () => ref.current.hide())
+    loadingRef.current.show('正在登录...')
+    dispatch(signInWithSms({ data }, () => loadingRef.current.hide()))
   }
 
   return (
@@ -42,6 +37,7 @@ const PhoneVerification: React.FC<Props> = ({ signParams }) => {
         <Divider height={20} />
         <AgreementPolicy style={{ marginTop: 20, marginBottom: 36 }} />
         <Form.SubmitButton onSubmit={onSubmit} title={t('LANG20')} />
+        <SubmitLoading ref={loadingRef} />
       </>
     </FormProvider>
   )
