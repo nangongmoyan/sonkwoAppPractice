@@ -7,12 +7,12 @@ import { useLocale } from '@contexts/locale'
 import { Column, CustomStackHeader, Image, MyText, Row, ShadowBox } from '@ui'
 import { ThemeColors } from 'ui/theme'
 import { adaptiveWidth } from '@util'
-import { useRoute } from '@hooks'
+import { useSelector } from '@hooks'
 
 const Wallet: React.FC<any> = ({}) => {
   const { t } = useLocale()
-  const route = useRoute()
-  const { value: balance } = route.params
+  const wallet = useSelector((state) => state.WalletReducer.wallet)
+  const { status, balance } = wallet
 
   const renderRight = useCallback(() => {
     return (
@@ -33,31 +33,37 @@ const Wallet: React.FC<any> = ({}) => {
         tintColor={ThemeColors.White}
         rightWidth={adaptiveWidth(120)}
       />
-      <ShadowBox
-        boxStyle={{
-          alignItems: 'flex-start',
-          height: 120,
-          marginTop: 50,
-          paddingTop: 10,
-          paddingLeft: 15,
-          paddingRight: 15,
-        }}
-      >
-        <MyText>我的果币</MyText>
-        <Row style={{ marginTop: 10 }}>
-          <Image
-            source={require('@source/images/wallet_p.png')}
-            style={{ width: 40, height: (40 * 406) / 320 }}
-          />
-          <MyText size={22} weight="medium">
-            {balance}
-          </MyText>
-          <Column style={{ flex: 1 }} />
-          <Column>
-            <MyText>充值</MyText>
-          </Column>
-        </Row>
-      </ShadowBox>
+      {status === 'enabled' ? (
+        <ShadowBox
+          boxStyle={{
+            alignItems: 'flex-start',
+            height: 120,
+            marginTop: 50,
+            paddingTop: 10,
+            paddingLeft: 15,
+            paddingRight: 15,
+          }}
+        >
+          <MyText>我的果币</MyText>
+          <Row style={{ marginTop: 10 }}>
+            <Image
+              source={require('@source/images/wallet_p.png')}
+              style={{ width: 40, height: (40 * 406) / 320 }}
+            />
+            <MyText size={22} weight="medium">
+              {balance}
+            </MyText>
+            <Column style={{ flex: 1 }} />
+            <Column>
+              <MyText>充值</MyText>
+            </Column>
+          </Row>
+        </ShadowBox>
+      ) : (
+        <ShadowBox>
+          <MyText>激活</MyText>
+        </ShadowBox>
+      )}
     </Column>
   )
 }
