@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from '@hooks'
 import { signOut } from '@actions/user_action'
 import * as iconPath from '@source/svg'
 import SubmitLoading from '@components/SubmitLoading'
+import service from './service'
 const firstItem = [
   { route: 'Wallet', label: 'LANG22' },
   { route: 'Order', label: 'LANG23' },
@@ -43,7 +44,7 @@ const secondItem = [
 
 const thirdItem = [
   { route: 'Setting', label: 'LANG32' },
-  { route: 'Messages', label: 'LANG33' },
+  { route: 'Message', label: 'LANG33' },
   { route: 'EditInfo', label: 'LANG34' },
   { route: 'SecuritySetting', label: 'LANG35' },
   { route: 'Skin', label: 'LANG36' },
@@ -63,8 +64,8 @@ function DrawerScreen(props) {
   const dispatch = useDispatch()
   const isDrawerOpen = useIsDrawerOpen()
   const { userInfo, navigation } = props
-
-  const { nickname, avatar } = userInfo
+  console.log({ userInfo })
+  const { nickname, avatar, point = {} } = userInfo
   const wallet = useSelector((state) => state.WalletReducer.wallet)
 
   useEffect(() => {
@@ -100,18 +101,23 @@ function DrawerScreen(props) {
               rightTitle: wallet?.balance ?? 0,
             }
           case 'Order':
-          case 'PointsMall':
             return { ...item }
+          case 'PointsMall':
+            return {
+              ...item,
+              rightTitle: (point.score ?? 0) + (point.historyScore ?? 0),
+            }
           case 'ActivationCode':
             return { ...item, parent: t('LANG25') }
           case 'SonkwoCoupon':
           case 'Favorites':
           case 'GameLibrary':
+            return { ...item }
           case 'TaskCenter':
             return { ...item }
           case 'Setting':
             return { ...item, parent: t('LANG31') }
-          case 'Messages':
+          case 'Message':
           case 'EditInfo':
           case 'SecuritySetting':
           case 'Skin':
@@ -124,7 +130,7 @@ function DrawerScreen(props) {
         }
       })
     })
-  }, [t, wallet])
+  }, [t, wallet, point])
 
   const leftIcon = useCallback((item) => {
     return (
@@ -140,7 +146,11 @@ function DrawerScreen(props) {
 
   const onPress = useCallback(
     (item) => {
-      navigation.navigate(item.route, { value: item?.rightTitle })
+      if (item.route === 'TaskCenter') {
+        service.navigateByUrl('/mobile/task')
+      } else {
+        navigation.navigate(item.route, { value: item?.rightTitle })
+      }
     },
     [navigation],
   )

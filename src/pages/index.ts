@@ -25,6 +25,7 @@ import { AboutSonkwo } from './aboutSonkwo'
 import { Contact } from './contact'
 import { Browser } from '@ui'
 import { Wallet } from './wallet'
+import { Message } from './message'
 
 const tabSatcks = [
   /** 首页 */
@@ -115,6 +116,12 @@ const loggedStacks = [
   {
     name: 'Privacy',
     component: Privacy,
+    options: { headerShown: false },
+  },
+  /** 消息 */
+  {
+    name: 'Message',
+    component: Message,
     options: { headerShown: false },
   },
   /** 编辑资料 */
