@@ -116,5 +116,17 @@ const en_US = {
   LANG110: 'Game Publishing Cooperation',
   LANG111: 'Media Cooperation',
   LANG112: '《Yue》 Project Registration',
+  LANG113: 'My Wallet',
+  LANG114: 'My SonkwoCoupon',
+  LANG115: 'What is SonkwoCoupon',
+  LANG116: 'Not yet activated, please activate first!!',
+  LANG117: 'Recharge',
+  LANG118: 'Activation',
+  LANG119: 'Purchase Record',
+  LANG120: 'Expenses Record',
+  LANG121: 'Refund Record',
+  LANG122: 'Prize Record',
+  LANG123: 'Return To Wallet',
+  LANG124: 'No Sonkwo Coupon Record Yet',
 }
 export default en_US

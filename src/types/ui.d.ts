@@ -48,6 +48,7 @@ declare interface MyTextProps {
   textAlign?: 'center'
   children: string | React.ReactNode
   style?: object
+  numberOfLines?: number
 }
 
 declare interface AvatarProps {
@@ -169,4 +170,19 @@ declare interface SvgIconProps {
   fill: string[]
   viewBox: string
   style: Object
+}
+
+declare interface MyButtonProps {
+  icon?: string
+  title: string
+  style?: Object
+  color?: string
+  linear?: Object
+  onPress?: () => void
+  iconProps?: Object
+  textSize?: number
+  type?: 'solid' | 'outline' | 'transparent'
+  containerStyle?: Object
+  disabled?: boolean
+  textStyle?: Object
 }

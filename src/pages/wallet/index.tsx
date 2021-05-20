@@ -2,12 +2,31 @@
  *
  * created by lijianpo on 2021/05/19
  */
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useLocale } from '@contexts/locale'
-import { Column, CustomStackHeader, Image, MyText, Row, ShadowBox } from '@ui'
+import {
+  Column,
+  CustomStackHeader,
+  Divider,
+  Image,
+  MyButton,
+  MyText,
+  NavItem,
+  Row,
+  ShadowBox,
+} from '@ui'
 import { ThemeColors } from 'ui/theme'
 import { adaptiveWidth } from '@util'
 import { useSelector } from '@hooks'
+import { walletStyle } from './walletCss'
+
+const ITEMS = [
+  { route: 'PurchaseRecord', label: 'LANG119' },
+  { route: 'ExpensesRecord', label: 'LANG120' },
+  { route: 'RefundRecord', label: 'LANG121' },
+  { route: 'PrizeRecord', label: 'LANG122' },
+  { route: 'ReturnToWallet', label: 'LANG123' },
+]
 
 const Wallet: React.FC<any> = ({}) => {
   const { t } = useLocale()
@@ -15,54 +34,61 @@ const Wallet: React.FC<any> = ({}) => {
   const { status, balance } = wallet
 
   const renderRight = useCallback(() => {
-    return (
-      <MyText color={ThemeColors.White} style={{ width: adaptiveWidth(120) }}>
-        什么是果币
-      </MyText>
+    return <MyText style={walletStyle.rightText}>{t('LANG115')}</MyText>
+  }, [t])
+
+  const showBalance = useCallback(() => {
+    return status === 'enabled' ? (
+      <MyText style={walletStyle.enabledBalance}>{balance}</MyText>
+    ) : (
+      <MyText style={walletStyle.disabledBalance}>{t('LANG116')}</MyText>
     )
-  }, [])
+  }, [status, t])
+
+  const { buttonName } = useMemo(() => {
+    return { buttonName: status === 'enabled' ? t('LANG117') : t('LANG118') }
+  }, [status, t])
+
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
       <Image
-        source={require('@source/images/mineBgc.png')}
-        style={{ width: '100%', height: 200, position: 'absolute' }}
+        style={walletStyle.walletBg}
+        source={require('@source/images/walletBg.png')}
       />
       <CustomStackHeader
-        title="我的钱包"
+        title={t('LANG113')}
         renderRight={renderRight}
         tintColor={ThemeColors.White}
-        rightWidth={adaptiveWidth(120)}
+        rightWidth={adaptiveWidth(124)}
       />
+      <Divider height={55} />
+      <ShadowBox boxStyle={walletStyle.shadowBox}>
+        <MyText style={walletStyle.walletName}>{t('LANG114')}</MyText>
+        <Row>
+          <Image
+            source={require('@source/images/wallet_p.png')}
+            style={walletStyle.walletLogo}
+          />
+          {showBalance()}
+          <Column style={{ flex: 1 }} />
+          <MyButton
+            title={buttonName}
+            linear={['#FF9017', '#FF6D3F']}
+            style={walletStyle.buttonStyle}
+            onPress={() => console.log('xxxx')}
+          />
+        </Row>
+      </ShadowBox>
       {status === 'enabled' ? (
-        <ShadowBox
-          boxStyle={{
-            alignItems: 'flex-start',
-            height: 120,
-            marginTop: 50,
-            paddingTop: 10,
-            paddingLeft: 15,
-            paddingRight: 15,
-          }}
-        >
-          <MyText>我的果币</MyText>
-          <Row style={{ marginTop: 10 }}>
-            <Image
-              source={require('@source/images/wallet_p.png')}
-              style={{ width: 40, height: (40 * 406) / 320 }}
-            />
-            <MyText size={22} weight="medium">
-              {balance}
-            </MyText>
-            <Column style={{ flex: 1 }} />
-            <Column>
-              <MyText>充值</MyText>
-            </Column>
-          </Row>
-        </ShadowBox>
+        ITEMS.map((item, index) => (
+          <NavItem
+            key={index}
+            itemTitle={t(item.label)}
+            showItemSeparator={true}
+          />
+        ))
       ) : (
-        <ShadowBox>
-          <MyText>激活</MyText>
-        </ShadowBox>
+        <MyText>{t('LANG124')}</MyText>
       )}
     </Column>
   )
