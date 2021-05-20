@@ -49,6 +49,7 @@ declare interface MyTextProps {
   children: string | React.ReactNode
   style?: object
   numberOfLines?: number
+  onPress?: () => void
 }
 
 declare interface AvatarProps {
@@ -186,3 +187,5 @@ declare interface MyButtonProps {
   disabled?: boolean
   textStyle?: Object
 }
+
+declare type ModalType = 'center' | 'right' | 'bottom'

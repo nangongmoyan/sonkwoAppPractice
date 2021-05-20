@@ -128,5 +128,10 @@ const en_US = {
   LANG122: 'Prize Record',
   LANG123: 'Return To Wallet',
   LANG124: 'No Sonkwo Coupon Record Yet',
+  LANG125: 'About Sonkwo Coupon',
+  LANG126:
+    'Use the wallet normally，please ensure that the account is in the phone binding state.',
+  LANG127: '1 sonkwo coin = ￥1.00',
+  LANG128: 'Confirm',
 }
 export default en_US

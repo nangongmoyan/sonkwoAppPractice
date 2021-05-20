@@ -4,7 +4,7 @@
  */
 
 import { StyleSheet } from '@ui'
-import { adaptiveWidth, deviceWidth } from '@util'
+import { adaptiveWidth, deviceWidth, vw } from '@util'
 import { ThemeColors } from 'ui/theme'
 
 const walletStyle = StyleSheet.create({
@@ -47,6 +47,19 @@ const walletStyle = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 5,
     paddingHorizontal: 15,
+  },
+  divider: {
+    width: vw(64),
+    marginTop: 10,
+    backgroundColor: '#CCC',
+  },
+  sureButton: {
+    height: 40,
+    width: vw(64),
+    justifyContent: 'center',
+  },
+  sureText: {
+    fontSize: 15,
   },
 })
 

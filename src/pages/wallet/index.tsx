@@ -2,9 +2,10 @@
  *
  * created by lijianpo on 2021/05/19
  */
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useLocale } from '@contexts/locale'
 import {
+  CenterModal,
   Column,
   CustomStackHeader,
   Divider,
@@ -16,7 +17,7 @@ import {
   ShadowBox,
 } from '@ui'
 import { ThemeColors } from 'ui/theme'
-import { adaptiveWidth } from '@util'
+import { adaptiveWidth, vw } from '@util'
 import { useSelector } from '@hooks'
 import { walletStyle } from './walletCss'
 
@@ -30,11 +31,16 @@ const ITEMS = [
 
 const Wallet: React.FC<any> = ({}) => {
   const { t } = useLocale()
+  const [isVisible, setIsVisible] = useState(false)
   const wallet = useSelector((state) => state.WalletReducer.wallet)
   const { status, balance } = wallet
 
   const renderRight = useCallback(() => {
-    return <MyText style={walletStyle.rightText}>{t('LANG115')}</MyText>
+    return (
+      <MyText style={walletStyle.rightText} onPress={() => setIsVisible(true)}>
+        {t('LANG115')}
+      </MyText>
+    )
   }, [t])
 
   const showBalance = useCallback(() => {
@@ -90,6 +96,26 @@ const Wallet: React.FC<any> = ({}) => {
       ) : (
         <MyText>{t('LANG124')}</MyText>
       )}
+      <CenterModal
+        title={t('LANG125')}
+        isVisible={isVisible}
+        style={{ width: vw(64), paddingBottom: 0 }}
+        onClose={() => setIsVisible(false)}
+      >
+        <MyText>
+          {t('LANG126')}
+          {t('LANG127')}
+        </MyText>
+        <Divider style={walletStyle.divider} />
+        <Column style={walletStyle.sureButton}>
+          <MyText
+            style={walletStyle.sureText}
+            onPress={() => setIsVisible(false)}
+          >
+            {t('LANG128')}
+          </MyText>
+        </Column>
+      </CenterModal>
     </Column>
   )
 }
