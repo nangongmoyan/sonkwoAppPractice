@@ -133,5 +133,9 @@ const en_US = {
     'Use the wallet normally，please ensure that the account is in the phone binding state.',
   LANG127: '1 sonkwo coin = ￥1.00',
   LANG128: 'Confirm',
+  LANG129: 'Sonkwo XiaoMi',
+  LANG130: 'Like And Follow',
+  LANG131: 'Comment And Reply',
+  LANG132: 'Mentioned Me',
 }
 export default en_US

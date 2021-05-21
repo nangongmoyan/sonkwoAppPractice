@@ -2,6 +2,7 @@
  * hooks导出类
  * created by lijianpo on 2021/04/14
  */
+export { default as useDate } from './useDate'
 export { useTypedSelector } from './useSelector'
 export { default as useInterval } from './useInterval'
 export { default as usePrevious } from './usePrevious'
