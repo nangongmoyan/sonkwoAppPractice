@@ -80,4 +80,16 @@ const getCurrentTime = (time = 0) => {
   }
 }
 
-export { getCurrentTime }
+const isSomeDay = (currentMessage, previousMessage) => {
+  if (!previousMessage || !previousMessage.time) {
+    return false
+  }
+  const currentCreatedAt = moment(currentMessage.time)
+  const previousCreatedAt = moment(previousMessage.time)
+  if (!currentCreatedAt.isValid() || !previousCreatedAt.isValid()) {
+    return false
+  }
+  return currentCreatedAt.isSame(previousCreatedAt, 'day')
+}
+
+export { getCurrentTime, isSomeDay }

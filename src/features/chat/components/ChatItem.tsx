@@ -2,14 +2,18 @@
  *
  * created by lijianpo on 2021/05/23
  */
+import { useIsSelf } from '@features/user/hooks/useIsSelf'
 import {
   TouchableWithoutFeedback,
   View,
   TouchableOpacity,
   StyleSheet,
   Text,
+  Avatar,
 } from '@ui'
 import React, { useCallback, useMemo, useState } from 'react'
+import { MessageTime } from './MessageTime'
+import { TextMessage } from './TextMessage'
 
 const ChatItem: React.FC<any> = ({
   type,
@@ -20,12 +24,10 @@ const ChatItem: React.FC<any> = ({
   rowId,
   message,
   closeAll,
-  renderMessageTime,
-  renderTextMessage,
 }) => {
   const [loading, setLoading] = useState(false)
   const [isSelect, setIsSelect] = useState(false)
-
+  const isSelf = useIsSelf(message.targetId)
   const showName = useMemo(() => {
     return chatType === 'group' && showUserName && type !== 'system'
   }, [chatType, showUserName, type])
@@ -40,11 +42,7 @@ const ChatItem: React.FC<any> = ({
     const { content = {}, type = '' } = message
     switch (type) {
       case 'text':
-        if (renderTextMessage) {
-          // renderTextMessage({true,true,message, views: message.content,index:parseInt(rowId)})
-        } else {
-          return <Text>{message.content}</Text>
-        }
+        return <TextMessage isSelf={isSelf} message={message} />
     }
   }, [])
   return (
@@ -53,21 +51,35 @@ const ChatItem: React.FC<any> = ({
         <View>
           {type === 'system' ? null : (
             <TouchableOpacity activeOpacity={1}>
-              {message.renderTime ? renderMessageTime(message.time) : null}
+              <MessageTime time={message.time} />
             </TouchableOpacity>
           )}
-          {/* <TouchableOpacity onPress={closeAll()}>
-
-          </TouchableOpacity> */}
-          <View
-            style={StyleSheet.flatten([
-              { justifyContent: 'center' },
-              type === 'system' && { flex: 1 },
-            ])}
+          <TouchableOpacity
+            style={[styles.chat, isSelf ? styles.right : styles.left]}
           >
-            {showName ? <Text>{message.chatInfo.nickName}</Text> : null}
-            {renderContent()}
-          </View>
+            {type === 'system' ? null : (
+              <TouchableOpacity>
+                <Avatar
+                  avatar={message.avatar}
+                  style={{
+                    marginLeft: 8,
+                    borderRadius: 24,
+                    width: 48,
+                    height: 48,
+                  }}
+                />
+              </TouchableOpacity>
+            )}
+            <View
+              style={StyleSheet.flatten([
+                { justifyContent: 'center' },
+                type === 'system' && { flex: 1 },
+              ])}
+            >
+              {showName ? <Text>{message.nickName}</Text> : null}
+              {renderContent()}
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -75,3 +87,16 @@ const ChatItem: React.FC<any> = ({
 }
 
 export { ChatItem }
+
+const styles = StyleSheet.create({
+  chat: {
+    paddingHorizontal: 10,
+    paddingVertical: 14,
+  },
+  right: {
+    flexDirection: 'row-reverse',
+  },
+  left: {
+    flexDirection: 'row',
+  },
+})

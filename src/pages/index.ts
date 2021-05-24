@@ -26,7 +26,7 @@ import { Contact } from './contact'
 import { Browser } from '@ui'
 import { Wallet } from './wallet'
 import { Message } from './message'
-import { Conversation } from './conversation'
+import { PrivateMessages } from './privateMessages'
 
 const tabSatcks = [
   /** 首页 */
@@ -127,8 +127,8 @@ const loggedStacks = [
   },
   /** 聊天 */
   {
-    name: 'Conversation',
-    component: Conversation,
+    name: 'PrivateMessages',
+    component: PrivateMessages,
     options: { headerShown: false },
   },
   /** 编辑资料 */

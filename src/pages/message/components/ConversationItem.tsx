@@ -24,9 +24,7 @@ const ConversationItem: React.FC<any> = ({
   const navigation = useNavigation()
   return (
     <GHWithoutFeedback
-      onPress={() =>
-        navigation.navigate('Conversation', { nickname: target.nickname })
-      }
+      onPress={() => navigation.navigate('PrivateMessages', { id, target })}
     >
       <Row style={{ paddingHorizontal: 25, height: 74, paddingVertical: 15 }}>
         <Column>

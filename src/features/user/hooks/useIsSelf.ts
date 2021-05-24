@@ -5,8 +5,12 @@
 
 import { useSelector } from '@hooks'
 
-function useUserInfo() {
+const useUserInfo = () => {
   return useSelector((state) => state.UserReducer.userInfo)
 }
 
-export { useUserInfo }
+const useIsSelf = (userId: number) => {
+  const { id } = useUserInfo()
+  return id === userId
+}
+export { useUserInfo, useIsSelf }

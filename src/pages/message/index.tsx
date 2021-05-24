@@ -72,7 +72,7 @@ const Message: React.FC<any> = ({}) => {
         }}
       >
         {allRoutes.map((item, index) => (
-          <Column align="center">
+          <Column align="center" key={index}>
             <ImageBackground
               source={item?.uri}
               style={{ width: 44, height: 44, marginVertical: 10 }}

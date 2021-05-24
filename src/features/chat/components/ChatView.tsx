@@ -3,16 +3,7 @@
  * created by lijianpo on 2021/05/22
  */
 import React, { useCallback, useRef, useState } from 'react'
-import {
-  FlatList,
-  MyText,
-  Platform,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  Column,
-} from '@ui'
+import { FlatList, View } from '@ui'
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -23,18 +14,20 @@ import Animated, {
 import { deviceHeight, isiOS } from '@util'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 import { ChatItem } from './ChatItem'
-import { getCurrentTime } from '../utils'
 
 const ChatView: React.FC<any> = ({
-  flatListProps,
   messageList,
   headerHeight,
+  flatListProps,
+  inverted = false,
   allPanelHeight = 200,
   iphoneXBottomPadding = 34,
 }) => {
-  console.log({ messageList })
   const chatList = useRef(null)
   const currentList = messageList
+    .slice()
+    .sort((a, b) => (inverted ? b.time - a.time : a.time - b.time))
+  console.log({ currentList })
   const [keyboardHeight, setKeyboardHeight] = useState(0)
   const [keyboardShow, setKeyboardShow] = useState(false)
   const [visibleHeight, setVisibleHeight] = useState(useSharedValue(0))
@@ -73,31 +66,8 @@ const ChatView: React.FC<any> = ({
     return console.log('xxx')
   }, [])
 
-  const renderMessageTime = useCallback((time) => {
-    return (
-      <Column
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingTop: 10,
-        }}
-      >
-        <MyText style={{ color: '#333', fontSize: 10 }}>
-          {getCurrentTime(parseInt(time))}
-        </MyText>
-      </Column>
-    )
-  }, [])
-
-  const renderItem = useCallback(({ item }) => {
-    return (
-      <ChatItem
-        chatType="friend"
-        message={item}
-        showUserName={true}
-        renderMessageTime={renderMessageTime}
-      />
-    )
+  const renderItem = useCallback(({ item, index }) => {
+    return <ChatItem message={item} chatType="friend" showUserName={true} />
   }, [])
 
   return (
@@ -118,6 +88,7 @@ const ChatView: React.FC<any> = ({
           {...flatListProps}
           ref={chatList}
           data={currentList}
+          inverted={inverted}
           renderItem={renderItem}
           keyExtractor={(item) => `${item.id}`}
           automaticallyAdjustContentInsets={false}
