@@ -23,6 +23,7 @@ const ChatItem: React.FC<any> = ({
   selectMultiple,
   rowId,
   message,
+  renderMessageTime,
   closeAll,
 }) => {
   const [loading, setLoading] = useState(false)
@@ -47,41 +48,13 @@ const ChatItem: React.FC<any> = ({
   }, [])
   return (
     <View>
-      <View onPress={onPress}>
-        <View>
-          {type === 'system' ? null : (
-            <TouchableOpacity activeOpacity={1}>
-              <MessageTime time={message.time} />
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity
-            style={[styles.chat, isSelf ? styles.right : styles.left]}
-          >
-            {type === 'system' ? null : (
-              <TouchableOpacity>
-                <Avatar
-                  avatar={message.avatar}
-                  style={{
-                    marginLeft: 8,
-                    borderRadius: 24,
-                    width: 48,
-                    height: 48,
-                  }}
-                />
-              </TouchableOpacity>
-            )}
-            <View
-              style={StyleSheet.flatten([
-                { justifyContent: 'center' },
-                type === 'system' && { flex: 1 },
-              ])}
-            >
-              {showName ? <Text>{message.nickName}</Text> : null}
-              {renderContent()}
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+      {renderMessageTime && renderMessageTime()}
+      <TouchableOpacity
+        style={[styles.chat, isSelf ? styles.right : styles.left]}
+      >
+        <Avatar size={32} avatar={message.avatar} />
+        {renderContent()}
+      </TouchableOpacity>
     </View>
   )
 }
@@ -90,8 +63,9 @@ export { ChatItem }
 
 const styles = StyleSheet.create({
   chat: {
-    paddingHorizontal: 10,
+    alignItems: 'center',
     paddingVertical: 14,
+    paddingHorizontal: 10,
   },
   right: {
     flexDirection: 'row-reverse',

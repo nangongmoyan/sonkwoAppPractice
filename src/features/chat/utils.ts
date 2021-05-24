@@ -56,31 +56,31 @@ const getCurrentTime = (time = 0) => {
   }
 
   if (delay > 1 && myday === oldday && oldyear === myyear) {
-    return `${oldm}/${oldd} ${oldh}:${oldmin}`
+    return `${oldm}月${oldd}日 ${oldh}:${oldmin}`
   }
 
   if (delay > 1 && myday === oldday && oldyear < myyear) {
-    return `${oldyear}/${oldm}/${oldd} ${oldh}:${oldmin}`
+    return `${oldyear}年${oldm}月${oldd}日 ${oldh}:${oldmin}`
   }
 
   if (delay > 1 && myday < oldday && oldyear === myyear) {
-    return `${oldm}/${oldd} ${oldh}:${oldmin}`
+    return `${oldm}月${oldd}日 ${oldh}:${oldmin}`
   }
 
   if (delay > 1 && myday > oldday && oldyear === myyear && delay > 7) {
-    return `${oldm}/${oldd} ${oldh}:${oldmin}`
+    return `${oldm}月${oldd}日 ${oldh}:${oldmin}`
   }
 
   if (delay > 1 && myday > oldday && delay >= 7 && oldyear < myyear) {
-    return `${oldyear}/${oldm}/${oldd} ${oldh}:${oldmin}`
+    return `${oldyear}年${oldm}月${oldd}日 ${oldh}:${oldmin}`
   }
 
   if (delay > 1 && myday < oldday && oldyear < myyear) {
-    return `${oldyear}/${oldm}/${oldd} ${oldh}:${oldmin}`
+    return `${oldyear}年${oldm}月${oldd}日 ${oldh}:${oldmin}`
   }
 }
 
-const isSomeDay = (currentMessage, previousMessage) => {
+const isSomeMinutes = (currentMessage, previousMessage) => {
   if (!previousMessage || !previousMessage.time) {
     return false
   }
@@ -89,7 +89,7 @@ const isSomeDay = (currentMessage, previousMessage) => {
   if (!currentCreatedAt.isValid() || !previousCreatedAt.isValid()) {
     return false
   }
-  return currentCreatedAt.isSame(previousCreatedAt, 'day')
+  return currentCreatedAt.isSame(previousCreatedAt, 'minute')
 }
 
-export { getCurrentTime, isSomeDay }
+export { getCurrentTime, isSomeMinutes }

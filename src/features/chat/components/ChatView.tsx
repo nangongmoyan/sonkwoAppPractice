@@ -14,6 +14,9 @@ import Animated, {
 import { deviceHeight, isiOS } from '@util'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 import { ChatItem } from './ChatItem'
+import { MessageTime } from './MessageTime'
+import { isSomeMinutes } from '../utils'
+import { InputBar } from './InputBar'
 
 const ChatView: React.FC<any> = ({
   messageList,
@@ -28,11 +31,16 @@ const ChatView: React.FC<any> = ({
     .slice()
     .sort((a, b) => (inverted ? b.time - a.time : a.time - b.time))
   console.log({ currentList })
+
+  const [isEmojiShow, setIsEmojiShow] = useState(false)
+  const [isPanelShow, setIsPanelShow] = useState(false)
   const [keyboardHeight, setKeyboardHeight] = useState(0)
   const [keyboardShow, setKeyboardShow] = useState(false)
+  const [xHeight, setXHeight] = useState(iphoneXBottomPadding)
   const [visibleHeight, setVisibleHeight] = useState(useSharedValue(0))
   const [viewHeaderHeight, setViewHeaderHeight] = useState(headerHeight)
-
+  const [messageContent, setMessageContent] = useState('')
+  const [inputChangeSize, setInputChangeSize] = useState(0)
   const panelContainerHeight =
     allPanelHeight + (isIphoneX() ? iphoneXBottomPadding : 0)
 
@@ -66,8 +74,47 @@ const ChatView: React.FC<any> = ({
     return console.log('xxx')
   }, [])
 
+  const renderMessageTime = useCallback(
+    (time, index) => {
+      const previousMessage =
+        (inverted ? currentList[index + 1] : currentList[index - 1]) || {}
+      const currentMessage = currentList[index]
+      if (currentMessage && !isSomeMinutes(currentMessage, previousMessage)) {
+        return <MessageTime time={time} />
+      } else {
+        return null
+      }
+    },
+    [currentList, inverted],
+  )
+
   const renderItem = useCallback(({ item, index }) => {
-    return <ChatItem message={item} chatType="friend" showUserName={true} />
+    return (
+      <ChatItem
+        message={item}
+        chatType="friend"
+        showUserName={true}
+        renderMessageTime={() => renderMessageTime(item.time, index)}
+      />
+    )
+  }, [])
+
+  const onFocus = useCallback(() => {
+    if (!isiOS) {
+      return null
+    }
+  }, [])
+
+  const _changeText = useCallback((value) => {
+    setMessageContent(value)
+  }, [])
+
+  const _onContentSizeChange = useCallback((e) => {
+    const changeHeight = e.nativeEvent.contentSize.height
+    if (changeHeight === 34) return
+    setInputChangeSize(changeHeight <= 70 ? changeHeight : 70)
+    if (!inverted) {
+    }
   }, [])
 
   return (
@@ -75,6 +122,7 @@ const ChatView: React.FC<any> = ({
       style={{
         flex: 1,
         position: 'relative',
+        backgroundColor: '#f0f0f0',
       }}
       // onLayout={(e) => (this.rootHeight = e.nativeEvent.layout.height)}
     >
@@ -89,13 +137,29 @@ const ChatView: React.FC<any> = ({
           ref={chatList}
           data={currentList}
           inverted={inverted}
+          enableEmptySections
           renderItem={renderItem}
+          scrollEventThrottle={100}
+          showsVerticalScrollIndicator={true}
           keyExtractor={(item) => `${item.id}`}
           automaticallyAdjustContentInsets={false}
           // ListFooterComponent={renderLoadEarlier}
-          showsVerticalScrollIndicator={true}
         />
         {/* </TouchableOpacity> */}
+        <InputBar
+          xHeight={xHeight}
+          onFocus={onFocus}
+          // isIphoneX,
+          isEmojiShow={isEmojiShow}
+          isPanelShow={isPanelShow}
+          inputHeightFix={0}
+          messageContent={messageContent}
+          inputChangeSize={inputChangeSize}
+          // inputContainerStyle,
+          textChange={_changeText}
+          // inputOutContainerStyle,
+          onContentSizeChange={_onContentSizeChange}
+        />
       </Animated.View>
     </View>
   )

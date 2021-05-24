@@ -10,7 +10,7 @@ import { ThemeColors } from 'ui/theme'
 const TextMessage: React.FC<any> = ({
   isSelf,
   message,
-  leftMessageBackground = 'red',
+  leftMessageBackground = ThemeColors.White,
   rightMessageBackground = ThemeColors.Default,
 }) => {
   return (
