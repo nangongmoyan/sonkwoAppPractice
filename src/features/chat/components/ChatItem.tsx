@@ -18,20 +18,14 @@ import { TextMessage } from './TextMessage'
 const ChatItem: React.FC<any> = ({
   type,
   // isOpen,
-  chatType,
-  showUserName,
   selectMultiple,
   rowId,
   message,
-  renderMessageTime,
   closeAll,
 }) => {
   const [loading, setLoading] = useState(false)
   const [isSelect, setIsSelect] = useState(false)
   const isSelf = useIsSelf(message.targetId)
-  const showName = useMemo(() => {
-    return chatType === 'group' && showUserName && type !== 'system'
-  }, [chatType, showUserName, type])
 
   const onPress = useCallback(() => {
     setIsSelect(!isSelect)
@@ -48,7 +42,8 @@ const ChatItem: React.FC<any> = ({
   }, [])
   return (
     <View>
-      {renderMessageTime && renderMessageTime()}
+      {message.renderTime ? <MessageTime time={message.time} /> : null}
+      {/* {renderMessageTime && renderMessageTime()} */}
       <TouchableOpacity
         style={[styles.chat, isSelf ? styles.right : styles.left]}
       >

@@ -6,11 +6,11 @@ import React from 'react'
 import Animated from 'react-native-reanimated'
 import { StyleSheet, View } from 'react-native'
 import { deviceWidth, isiOS } from '@util'
+import { isIphoneX } from 'react-native-iphone-x-helper'
 
 const Container: React.FC<any> = ({
   children,
   xHeight,
-  isIphoneX,
   setInputHeight,
   inputContainerStyle,
   inputOutContainerStyle,
@@ -20,7 +20,7 @@ const Container: React.FC<any> = ({
       style={[
         styles.commentBar,
         inputOutContainerStyle,
-        isiOS ? { paddingBottom: isIphoneX ? xHeight : 0 } : {},
+        isiOS ? { paddingBottom: isIphoneX() ? xHeight : 0 } : {},
       ]}
       onLayout={(e) => setInputHeight(e.nativeEvent.layout.height)}
     >

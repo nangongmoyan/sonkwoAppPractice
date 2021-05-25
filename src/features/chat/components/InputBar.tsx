@@ -2,20 +2,25 @@
  *
  * created by lijianpo on 2021/05/24
  */
-import { StyleSheet, View, Platform } from '@ui'
-import { deviceWidth } from '@util'
-import React, { useCallback } from 'react'
+import { StyleSheet, View, Platform, TouchableOpacity, Image } from '@ui'
+import { deviceWidth, isiOS } from '@util'
+import React, { useCallback, useMemo } from 'react'
 import { Container } from './Container'
 import { Input } from './Input'
 
 const InputBar: React.FC<any> = ({
   xHeight,
   onFocus,
+  plusIcon,
+  sendIcon,
+  showEmoji,
+  emojiIcon,
   inputStyle,
-  isIphoneX,
   placeholder = '请输入...',
   isEmojiShow,
   isPanelShow,
+  keyboardIcon,
+  sendUnableIcon,
   inputHeightFix,
   messageContent,
   inputChangeSize,
@@ -28,8 +33,10 @@ const InputBar: React.FC<any> = ({
     return null
   }, [])
 
-  const enabled = (() => {
-    if (Platform.OS === 'android') {
+  const enabled = useMemo(() => {
+    if (isiOS) {
+      return false
+    } else {
       if (isPanelShow) {
         return true
       }
@@ -37,30 +44,84 @@ const InputBar: React.FC<any> = ({
         return true
       }
       return false
-    } else {
-      return false
     }
-  })()
+  }, [])
+
+  const renderEmojieIcon = useCallback(() => {
+    if (isEmojiShow) {
+      return (
+        keyboardIcon || (
+          <Image
+            source={require('@source/images/keyboard.png')}
+            style={{ width: 30, height: 30 }}
+          />
+        )
+      )
+    } else {
+      return (
+        emojiIcon || (
+          <Image
+            source={require('@source/images/emoji.png')}
+            style={{ width: 30, height: 30 }}
+          />
+        )
+      )
+    }
+  }, [])
+
+  const renderIcon = useCallback(() => {
+    const sendAbleIcon = sendIcon || (
+      <Image
+        source={require('@source/images/sendAble.png')}
+        style={{ width: 30, height: 30 }}
+      />
+    )
+    const sendUnableIconDefault = sendUnableIcon || (
+      <Image
+        source={require('@source/images/send.png')}
+        style={{ width: 30, height: 30 }}
+      />
+    )
+    if (messageContent.trim().length) {
+      return sendAbleIcon
+    } else {
+      return (
+        plusIcon || (
+          <Image
+            source={require('@source/images/more.png')}
+            style={{ width: 30, height: 30 }}
+          />
+        )
+      )
+    }
+  }, [])
   return (
     <Container
-      setInputHeight={setInputHeight}
-      inputOutContainerStyle={inputOutContainerStyle}
-      isIphoneX={isIphoneX}
       xHeight={xHeight}
+      setInputHeight={setInputHeight}
       inputContainerStyle={inputContainerStyle}
+      inputOutContainerStyle={inputOutContainerStyle}
     >
       <View style={styles.container}>
         <Input
           enabled={enabled}
           onFocus={onFocus}
-          placeholder={placeholder}
-          onContentSizeChange={onContentSizeChange}
           textChange={textChange}
+          inputStyle={inputStyle}
+          placeholder={placeholder}
           messageContent={messageContent}
           inputHeightFix={inputHeightFix}
           inputChangeSize={inputChangeSize}
-          inputStyle={inputStyle}
+          onContentSizeChange={onContentSizeChange}
         />
+      </View>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => showEmoji()}>
+          {renderEmojieIcon()}
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.7} style={{ marginLeft: 8 }}>
+          {renderIcon()}
+        </TouchableOpacity>
       </View>
     </Container>
   )

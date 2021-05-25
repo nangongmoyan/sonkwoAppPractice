@@ -17,155 +17,69 @@ import {
 // import { ChatScreen } from 'react-native-easy-chat-ui'
 import FastImage from 'react-native-fast-image'
 import { ChatView } from '@features/chat/components/ChatView'
-import { getCurrentTime } from '@features/chat/utils'
+import { isSomeMinutes } from '@features/chat/utils'
 import { useRoute } from '@hooks'
 import {
-  setConversationQueryCache,
   usePrivateMessages,
+  setConversationQueryCache,
 } from '@features/conversation/model'
-import { conversationApi } from '@sonkwo/sonkwo-api'
-import { then } from 'ramda-adjunct'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
-
-const { width, height } = Dimensions.get('window')
 
 const PrivateMessages: React.FC<any> = ({}) => {
   const { params = {} } = useRoute()
   const { id, target } = params
-  const { id: userId, nickname, avatar } = useUserInfo()
+  const { id: userId, nickname: userName, avatar: userAvatar } = useUserInfo()
   setConversationQueryCache(id)
-  const { data = {} } = usePrivateMessages(id)
-  const { pages = [] } = data
-  console.log({ data })
+  const { data } = usePrivateMessages(id)
+  const messageArr = data?.pages[0]?.privateMessages
   const messages = useMemo(() => {
-    if (pages[0]?.privateMessages) {
-      return pages[0].privateMessages.map((message, index) => {
-        const messageData = {
-          id: index,
-          type: 'text',
-          targetId: message.accountId,
-          time: message.createdAtTimestamp * 1000,
-          ...message,
-        }
-        if (message.accountId == userId) {
-          Object.assign(messageData, { nickname, avatar })
-        } else {
-          Object.assign(messageData, {
-            avatar: target.avatar,
-            nickname: target.nickname,
-          })
-        }
-        return messageData
-      })
+    if (messageArr) {
+      return messageArr
+        .sort((a, b) => a.createdAtTimestamp - b.createdAtTimestamp)
+        .map((message, index) => {
+          const nickname =
+            message.accountId == userId ? userName : target.nickname
+          const avatar =
+            message.accountId == userId ? userAvatar : target.avatar
+          const messageData = {
+            avatar,
+            nickname,
+            id: index,
+            type: 'text',
+            renderTime: false,
+            content: message.content,
+            targetId: message.accountId,
+            time: message.createdAtTimestamp * 1000,
+          }
+          const previousMessage = messageArr[index - 1] || {}
+          !isSomeMinutes(message, previousMessage) &&
+            Object.assign(messageData, { renderTime: true })
+
+          return messageData
+        })
     } else {
       return []
     }
-  }, [pages, nickname, avatar, target])
-  console.log({ messages })
-  // conversationApi
-  //   .getPrivateMessages(id, 1)
-  //   .then((data) => console.log({ data }))
-  // const [messages, setMessages] = useState([
-  //   {
-  //     id: '1',
-  //     type: 'text',
-  //     content: 'hello world',
-  //     targetId: '12345678',
-  //     chatInfo: {
-  //       avatar: require('@source/images/defaultAvatar.png'),
-  //       id: '12345678',
-  //       nickName: 'Test',
-  //     },
-  //     renderTime: true,
-  //     sendStatus: 0,
-  //     time: '1542006036549',
-  //   },
-  //   {
-  //     id: '2',
-  //     type: 'text',
-  //     content: 'hi/{se}',
-  //     targetId: '12345678',
-  //     chatInfo: {
-  //       avatar: require('@source/images/defaultAvatar.png'),
-  //       id: '12345678',
-  //       nickName: 'Test',
-  //     },
-  //     renderTime: true,
-  //     sendStatus: 0,
-  //     time: '1542106036549',
-  //   },
-  //   {
-  //     id: '3',
-  //     type: 'image',
-  //     content: {
-  //       uri:
-  //         'https://upload-images.jianshu.io/upload_images/11942126-044bd33212dcbfb8.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240',
-  //       width: 100,
-  //       height: 80,
-  //     },
-  //     targetId: '12345678',
-  //     chatInfo: {
-  //       avatar: require('@source/images/defaultAvatar.png'),
-  //       id: '12345678',
-  //       nickName: 'Test',
-  //     },
-  //     renderTime: false,
-  //     sendStatus: 0,
-  //     time: '1542106037000',
-  //   },
-  //   {
-  //     id: '4',
-  //     type: 'text',
-  //     content: '你好/{weixiao}',
-  //     targetId: '88886666',
-  //     chatInfo: {
-  //       avatar: require('@source/images/avatar.png'),
-  //       id: '12345678',
-  //     },
-  //     renderTime: true,
-  //     sendStatus: -2,
-  //     time: '1542177036549',
-  //   },
-  //   {
-  //     id: '5',
-  //     type: 'voice',
-  //     content: {
-  //       uri: 'http://music.163.com/song/media/outer/url?id=317151.mp3',
-  //       length: 10,
-  //     },
-  //     targetId: '12345678',
-  //     chatInfo: {
-  //       avatar: require('@source/images/defaultAvatar.png'),
-  //       id: '12345678',
-  //       nickName: 'Test',
-  //     },
-  //     renderTime: true,
-  //     sendStatus: 1,
-  //     time: '1542260667161',
-  //   },
-  //   {
-  //     id: '6',
-  //     type: 'voice',
-  //     content: {
-  //       uri: 'http://music.163.com/song/media/outer/url?id=317151.mp3',
-  //       length: 30,
-  //     },
-  //     targetId: '88886666',
-  //     chatInfo: {
-  //       avatar: require('@source/images/avatar.png'),
-  //       id: '12345678',
-  //     },
-  //     renderTime: true,
-  //     sendStatus: 0,
-  //     time: '1542264667161',
-  //   },
-  // ])
+  }, [messageArr, target])
+
+  const sendMessage = useCallback(() => {
+    return null
+  }, [])
+
+  const onMessagePress = useCallback(() => {
+    return null
+  }, [])
 
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
       <MyStatusBar isDarkStyle={true} />
       <CustomStackHeader title={target.nickname} />
-      <ChatView messageList={messages} headerHeight={50} />
+      <ChatView
+        headerHeight={44}
+        messageList={messages}
+        sendMessage={sendMessage}
+        onMessagePress={onMessagePress}
+      />
     </Column>
   )
 }
