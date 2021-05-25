@@ -19,6 +19,7 @@ const InputBar: React.FC<any> = ({
   placeholder = '请输入...',
   isEmojiShow,
   isPanelShow,
+  isShowPanel,
   keyboardIcon,
   sendUnableIcon,
   inputHeightFix,
@@ -45,7 +46,7 @@ const InputBar: React.FC<any> = ({
       }
       return false
     }
-  }, [])
+  }, [isPanelShow, isEmojiShow])
 
   const renderEmojieIcon = useCallback(() => {
     if (isEmojiShow) {
@@ -119,7 +120,16 @@ const InputBar: React.FC<any> = ({
         <TouchableOpacity activeOpacity={0.7} onPress={() => showEmoji()}>
           {renderEmojieIcon()}
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.7} style={{ marginLeft: 8 }}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{ marginLeft: 8 }}
+          onPress={() => {
+            if (messageContent.trim().length > 0) {
+            } else {
+              isShowPanel(!isPanelShow)
+            }
+          }}
+        >
           {renderIcon()}
         </TouchableOpacity>
       </View>

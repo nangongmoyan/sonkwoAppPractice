@@ -4,64 +4,55 @@
  */
 import React, { useCallback, useRef, useState, useMemo } from 'react'
 import { FlatList, StyleSheet, View, TouchableOpacity } from '@ui'
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  useDerivedValue,
-  interpolate,
-  Extrapolate,
-} from 'react-native-reanimated'
+import { Animated, Easing } from 'react-native'
 import { deviceHeight, isiOS } from '@util'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 import { ChatItem } from './ChatItem'
-import { MessageTime } from './MessageTime'
-import { isSomeMinutes } from '../utils'
 import { InputBar } from './InputBar'
+import { PanelContainer } from './PanelContainer'
 
 const ChatView: React.FC<any> = ({
   messageList,
   headerHeight,
   flatListProps,
+  extraData = null,
   inverted = false,
   allPanelHeight = 200,
   iphoneXBottomPadding = 34,
+  renderLoadEarlier = () => {},
+  allPanelAnimateDuration = 100,
 }) => {
   const rootHeight = useRef(0)
   const chatList = useRef(null)
-  const viewHeaderHeight = useRef(headerHeight)
+  const inputBar = useRef(null).current
+  const viewHeaderHeight = useRef(headerHeight).current
   const listHeight = useRef(deviceHeight - viewHeaderHeight.current)
   const [isEmojiShow, setIsEmojiShow] = useState(false)
   const [isPanelShow, setIsPanelShow] = useState(false)
   const [keyboardHeight, setKeyboardHeight] = useState(0)
   const [keyboardShow, setKeyboardShow] = useState(false)
+  const [panelShow, setPanelShow] = useState(false)
+  const [emojiShow, setEmojiShow] = useState(false)
   const [xHeight, setXHeight] = useState(iphoneXBottomPadding)
-  const [visibleHeight, setVisibleHeight] = useState(useSharedValue(0))
-  // const [viewHeaderHeight, setViewHeaderHeight] = useState(headerHeight)
+
+  const visibleHeight = useRef(new Animated.Value(0)).current
+  const panelHeight = useRef(new Animated.Value(0)).current
+  const paddingHeight = useRef(new Animated.Value(0)).current
+  const emojiHeight = useRef(new Animated.Value(0)).current
   const [messageContent, setMessageContent] = useState('')
   const [inputChangeSize, setInputChangeSize] = useState(0)
   const panelContainerHeight =
     allPanelHeight + (isIphoneX() ? iphoneXBottomPadding : 0)
 
-  const height = useDerivedValue(() => {
-    return interpolate(
-      visibleHeight.value,
-      [0, 1],
-      [
-        deviceHeight - viewHeaderHeight.current,
-        keyboardShow
-          ? deviceHeight - keyboardHeight - viewHeaderHeight.current
-          : deviceHeight - viewHeaderHeight.current - panelContainerHeight,
-      ],
-      Extrapolate.CLAMP,
-    )
-  })
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return { height: height.value }
-  })
-
-  const closeAll = useCallback(() => {
-    return console.log('xxx')
+  const closeAll = useCallback((callback = () => {}) => {
+    if (panelShow) {
+      setXHeight(iphoneXBottomPadding)
+      return closePanel(true, callback)
+    }
+    if (emojiShow) {
+      setXHeight(iphoneXBottomPadding)
+      return closeEmoji(true, callback)
+    }
   }, [])
 
   const renderItem = useCallback(({ item, index }) => {
@@ -86,6 +77,98 @@ const ChatView: React.FC<any> = ({
     }
   }, [])
 
+  const closeEmoji = useCallback((realClose = false, callback) => {
+    Animated.parallel([
+      Animated.timing(isiOS ? visibleHeight : paddingHeight, {
+        useNativeDriver: false,
+        toValue: realClose ? 0 : 1,
+        duration: allPanelAnimateDuration,
+      }),
+      Animated.timing(emojiHeight, {
+        toValue: 0,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease),
+        duration: allPanelAnimateDuration,
+      }),
+    ]).start(() => {
+      setEmojiShow(false)
+      callback && callback()
+    })
+  }, [])
+
+  const showPanel = useCallback((callback = () => {}) => {
+    setXHeight(0)
+    Animated.parallel([
+      Animated.timing(isiOS ? visibleHeight : paddingHeight, {
+        toValue: 1,
+        useNativeDriver: false,
+        duration: allPanelAnimateDuration,
+      }),
+      Animated.timing(panelHeight, {
+        toValue: 1,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease),
+        duration: allPanelAnimateDuration,
+      }),
+    ]).start(() => {
+      callback && callback()
+      setPanelShow(true)
+    })
+  }, [])
+
+  const closePanel = useCallback((realClose = false, callback = () => {}) => {
+    Animated.parallel([
+      Animated.timing(isiOS ? visibleHeight : paddingHeight, {
+        useNativeDriver: false,
+        toValue: realClose ? 0 : 1,
+        duration: allPanelAnimateDuration,
+      }),
+      Animated.timing(panelHeight, {
+        toValue: 0,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease),
+        duration: allPanelAnimateDuration,
+      }),
+    ]).start(() => {
+      setPanelShow(false)
+      callback && callback
+    })
+  }, [])
+
+  const isShowPanel = useCallback(() => {
+    if (panelShow) {
+      return isiOS
+        ? inputBar?.input?.focus()
+        : closePanel(true, () => {
+            inputBar?.input?.focus()
+          })
+    } else {
+      if (emojiShow) {
+        return closeEmoji(false, () => showPanel())
+      }
+      if (!keyboardShow) {
+        showPanel()
+      } else {
+        setPanelShow(true)
+        setKeyboardShow(false)
+        if (isiOS) {
+          setXHeight(0)
+          setKeyboardHeight(0)
+        }
+        inputBar?.input?.blur()
+      }
+    }
+  }, [])
+  const animatedHeight = visibleHeight.interpolate({
+    inputRange: [0, 1],
+    outputRange: [
+      deviceHeight - viewHeaderHeight,
+      keyboardShow
+        ? deviceHeight - keyboardHeight - viewHeaderHeight
+        : deviceHeight - viewHeaderHeight - panelContainerHeight,
+    ],
+  })
+
   return (
     <View
       style={{
@@ -96,11 +179,14 @@ const ChatView: React.FC<any> = ({
       onLayout={(e) => (rootHeight.current = e.nativeEvent.layout.height)}
     >
       <Animated.View
-        style={[styles.animated, isiOS ? animatedStyle : { flex: 1 }]}
+        style={[
+          styles.animated,
+          isiOS ? { height: animatedHeight } : { flex: 1 },
+        ]}
       >
         <TouchableOpacity
           activeOpacity={1}
-          onPress={closeAll}
+          onPress={() => closeAll}
           style={{ flex: 1, backgroundColor: 'transparent' }}
         >
           <FlatList
@@ -109,6 +195,7 @@ const ChatView: React.FC<any> = ({
             data={messageList}
             inverted={inverted}
             enableEmptySections
+            extraData={extraData}
             renderItem={renderItem}
             scrollEventThrottle={100}
             onEndReachedThreshold={0.1}
@@ -122,17 +209,24 @@ const ChatView: React.FC<any> = ({
           />
         </TouchableOpacity>
         <InputBar
+          ref={inputBar}
           xHeight={xHeight}
           onFocus={onFocus}
-          isEmojiShow={isEmojiShow}
-          isPanelShow={isPanelShow}
+          isEmojiShow={emojiShow}
+          isPanelShow={panelShow}
           inputHeightFix={0}
           messageContent={messageContent}
           inputChangeSize={inputChangeSize}
+          isShowPanel={isShowPanel}
           // inputContainerStyle,
           textChange={_changeText}
           // inputOutContainerStyle,
           onContentSizeChange={_onContentSizeChange}
+        />
+        <PanelContainer
+          panelHeight={panelHeight}
+          visibleHeight={visibleHeight}
+          panelContainerHeight={panelContainerHeight}
         />
       </Animated.View>
     </View>
