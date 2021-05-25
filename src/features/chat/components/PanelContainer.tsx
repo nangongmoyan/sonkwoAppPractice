@@ -6,15 +6,13 @@ import { StyleSheet } from '@ui'
 import { deviceWidth, isiOS } from '@util'
 import React from 'react'
 import { Animated } from 'react-native'
+import { EmojiPanel } from './EmojiPanel'
 import { PlusPanel } from './PlusPanel'
 
 const PanelContainer: React.FC<any> = ({
-  usePlus,
-  useEmoji,
-  panelSource,
+  emojiHeight,
   panelHeight,
   visibleHeight,
-  renderPanelRow,
   panelContainerHeight,
 }) => {
   const bottom = visibleHeight.interpolate({
@@ -41,7 +39,10 @@ const PanelContainer: React.FC<any> = ({
         panelHeight={panelHeight}
         panelContainerHeight={panelContainerHeight}
       />
-      {/* {useEmoji ? <EmojiPanel /> : null} */}
+      <EmojiPanel
+        emojiHeight={emojiHeight}
+        panelContainerHeight={panelContainerHeight}
+      />
     </Animated.View>
   )
 }

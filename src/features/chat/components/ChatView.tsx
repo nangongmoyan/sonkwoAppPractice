@@ -77,6 +77,26 @@ const ChatView: React.FC<any> = ({
     }
   }, [])
 
+  const showEmoji = useCallback((callback = () => {}) => {
+    setXHeight(0)
+    Animated.parallel([
+      Animated.timing(isiOS ? visibleHeight : paddingHeight, {
+        toValue: 1,
+        useNativeDriver: false,
+        duration: allPanelAnimateDuration,
+      }),
+      Animated.timing(emojiHeight, {
+        toValue: 1,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease),
+        duration: allPanelAnimateDuration,
+      }),
+    ]).start(() => {
+      setEmojiShow(true)
+      callback && callback()
+    })
+  }, [])
+
   const closeEmoji = useCallback((realClose = false, callback) => {
     Animated.parallel([
       Animated.timing(isiOS ? visibleHeight : paddingHeight, {
@@ -159,6 +179,32 @@ const ChatView: React.FC<any> = ({
       }
     }
   }, [])
+
+  const isShowEmoji = useCallback(() => {
+    if (emojiShow) {
+      return isiOS
+        ? inputBar?.input?.focus()
+        : closeEmoji(true, () => {
+            inputBar?.input?.focus()
+          })
+    } else {
+      if (panelShow) {
+        return closePanel(false, () => showEmoji())
+      }
+
+      if (!keyboardShow) {
+        showEmoji()
+      } else {
+        setEmojiShow(true)
+        setKeyboardShow(true)
+        if (isiOS) {
+          setXHeight(0)
+          setKeyboardHeight(0)
+        }
+        inputBar?.input?.blur()
+      }
+    }
+  }, [])
   const animatedHeight = visibleHeight.interpolate({
     inputRange: [0, 1],
     outputRange: [
@@ -217,6 +263,7 @@ const ChatView: React.FC<any> = ({
           inputHeightFix={0}
           messageContent={messageContent}
           inputChangeSize={inputChangeSize}
+          isShowEmoji={isShowEmoji}
           isShowPanel={isShowPanel}
           // inputContainerStyle,
           textChange={_changeText}
@@ -224,6 +271,7 @@ const ChatView: React.FC<any> = ({
           onContentSizeChange={_onContentSizeChange}
         />
         <PanelContainer
+          emojiHeight={emojiHeight}
           panelHeight={panelHeight}
           visibleHeight={visibleHeight}
           panelContainerHeight={panelContainerHeight}

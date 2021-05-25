@@ -13,10 +13,9 @@ const InputBar: React.FC<any> = ({
   onFocus,
   plusIcon,
   sendIcon,
-  showEmoji,
   emojiIcon,
   inputStyle,
-  placeholder = '请输入...',
+  isShowEmoji,
   isEmojiShow,
   isPanelShow,
   isShowPanel,
@@ -28,6 +27,7 @@ const InputBar: React.FC<any> = ({
   inputContainerStyle,
   textChange = () => {},
   inputOutContainerStyle,
+  placeholder = '请输入...',
   onContentSizeChange = () => {},
 }) => {
   const setInputHeight = useCallback(() => {
@@ -117,7 +117,7 @@ const InputBar: React.FC<any> = ({
         />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <TouchableOpacity activeOpacity={0.7} onPress={() => showEmoji()}>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => isShowEmoji()}>
           {renderEmojieIcon()}
         </TouchableOpacity>
         <TouchableOpacity
