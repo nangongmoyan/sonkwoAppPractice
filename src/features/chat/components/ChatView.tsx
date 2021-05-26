@@ -5,7 +5,7 @@
 import React, { useCallback, useRef, useState, useMemo } from 'react'
 import { FlatList, StyleSheet, View, TouchableOpacity } from '@ui'
 import { Animated, Easing } from 'react-native'
-import { deviceHeight, isiOS } from '@util'
+import { debounce, deviceHeight, isiOS } from '@util'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 import { ChatItem } from './ChatItem'
 import { InputBar } from './InputBar'
@@ -15,7 +15,6 @@ const ChatView: React.FC<any> = ({
   messageList,
   headerHeight,
   flatListProps,
-  extraData = null,
   inverted = false,
   allPanelHeight = 200,
   iphoneXBottomPadding = 34,
@@ -23,10 +22,12 @@ const ChatView: React.FC<any> = ({
   allPanelAnimateDuration = 100,
 }) => {
   const rootHeight = useRef(0)
-  const chatList = useRef(null)
+  const chatList = useRef()
   const inputBar = useRef(null).current
   const viewHeaderHeight = useRef(headerHeight).current
-  const listHeight = useRef(deviceHeight - viewHeaderHeight.current)
+  const listHeight = useRef(deviceHeight - viewHeaderHeight)
+  const isInverted = useRef(false)
+  const _userHasBeenInputed = useRef(false)
   const [isEmojiShow, setIsEmojiShow] = useState(false)
   const [isPanelShow, setIsPanelShow] = useState(false)
   const [keyboardHeight, setKeyboardHeight] = useState(0)
@@ -205,6 +206,24 @@ const ChatView: React.FC<any> = ({
       }
     }
   }, [])
+
+  const scrollToBottom = (listHeightAndWidth) => {
+    if (listHeightAndWidth !== undefined) {
+      const { contentHeight } = listHeightAndWidth
+      isInverted.current = contentHeight > listHeight
+    }
+
+    if (!inverted) {
+      debounce(
+        () => {
+          chatList?.current?.scrollToEnd({
+            animated: _userHasBeenInputed.current,
+          })
+        },
+        _userHasBeenInputed ? 0 : 130,
+      )
+    }
+  }
   const animatedHeight = visibleHeight.interpolate({
     inputRange: [0, 1],
     outputRange: [
@@ -215,6 +234,7 @@ const ChatView: React.FC<any> = ({
     ],
   })
 
+  console.log({ chatList })
   return (
     <View
       style={{
@@ -222,7 +242,7 @@ const ChatView: React.FC<any> = ({
         position: 'relative',
         backgroundColor: '#f0f0f0',
       }}
-      onLayout={(e) => (rootHeight.current = e.nativeEvent.layout.height)}
+      // onLayout={(e) => (rootHeight.current = e.nativeEvent.layout.height)}
     >
       <Animated.View
         style={[
@@ -232,16 +252,13 @@ const ChatView: React.FC<any> = ({
       >
         <TouchableOpacity
           activeOpacity={1}
-          onPress={() => closeAll}
+          onPress={() => closeAll()}
           style={{ flex: 1, backgroundColor: 'transparent' }}
         >
           <FlatList
-            {...flatListProps}
             ref={chatList}
             data={messageList}
             inverted={inverted}
-            enableEmptySections
-            extraData={extraData}
             renderItem={renderItem}
             scrollEventThrottle={100}
             onEndReachedThreshold={0.1}
@@ -249,7 +266,11 @@ const ChatView: React.FC<any> = ({
             keyExtractor={(item) => `${item.id}`}
             automaticallyAdjustContentInsets={false}
             onLayout={(e) => {
+              scrollToBottom(undefined)
               listHeight.current = e.nativeEvent.layout.height
+            }}
+            onContentSizeChange={(contentWidth, contentHeight) => {
+              scrollToBottom({ contentWidth, contentHeight })
             }}
             // ListFooterComponent={renderLoadEarlier}
           />
