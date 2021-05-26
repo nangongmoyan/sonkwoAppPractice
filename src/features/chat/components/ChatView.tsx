@@ -45,7 +45,7 @@ const ChatView: React.FC<any> = ({
   const panelContainerHeight =
     allPanelHeight + (isIphoneX() ? iphoneXBottomPadding : 0)
 
-  const closeAll = useCallback((callback = () => {}) => {
+  const closeAll = (callback = () => {}) => {
     if (panelShow) {
       setXHeight(iphoneXBottomPadding)
       return closePanel(true, callback)
@@ -54,11 +54,14 @@ const ChatView: React.FC<any> = ({
       setXHeight(iphoneXBottomPadding)
       return closeEmoji(true, callback)
     }
-  }, [])
+  }
 
-  const renderItem = useCallback(({ item, index }) => {
-    return <ChatItem message={item} />
-  }, [])
+  const renderItem = useCallback(
+    ({ item, index }) => {
+      return <ChatItem message={item} closeAll={closeAll} />
+    },
+    [closeAll],
+  )
 
   const onFocus = useCallback(() => {
     if (!isiOS) {
@@ -70,13 +73,16 @@ const ChatView: React.FC<any> = ({
     setMessageContent(value)
   }, [])
 
-  const _onContentSizeChange = useCallback((e) => {
-    const changeHeight = e.nativeEvent.contentSize.height
-    if (changeHeight === 34) return
-    setInputChangeSize(changeHeight <= 70 ? changeHeight : 70)
-    if (!inverted) {
-    }
-  }, [])
+  // const _onContentSizeChange = useCallback((e) => {
+  //   const changeHeight = e.nativeEvent.contentSize.height
+  //   if (changeHeight === 34) return
+  //   setInputChangeSize(changeHeight <= 70 ? changeHeight : 70)
+  //   if (!inverted) {
+  //     chatList?.current?.scrollToEnd({
+  //       animated: true,
+  //     })
+  //   }
+  // }, [])
 
   const showEmoji = useCallback((callback = () => {}) => {
     setXHeight(0)
@@ -152,7 +158,7 @@ const ChatView: React.FC<any> = ({
       }),
     ]).start(() => {
       setPanelShow(false)
-      callback && callback
+      callback && callback()
     })
   }, [])
 
@@ -234,7 +240,6 @@ const ChatView: React.FC<any> = ({
     ],
   })
 
-  console.log({ chatList })
   return (
     <View
       style={{
@@ -289,7 +294,7 @@ const ChatView: React.FC<any> = ({
           // inputContainerStyle,
           textChange={_changeText}
           // inputOutContainerStyle,
-          onContentSizeChange={_onContentSizeChange}
+          // onContentSizeChange={_onContentSizeChange}
         />
         <PanelContainer
           emojiHeight={emojiHeight}

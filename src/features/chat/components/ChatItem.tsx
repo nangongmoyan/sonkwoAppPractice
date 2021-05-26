@@ -42,14 +42,17 @@ const ChatItem: React.FC<any> = ({
   }, [])
   return (
     <View>
-      {message.renderTime ? <MessageTime time={message.time} /> : null}
-      {/* {renderMessageTime && renderMessageTime()} */}
-      <TouchableOpacity
-        style={[styles.chat, isSelf ? styles.right : styles.left]}
-      >
-        <Avatar size={32} avatar={message.avatar} />
-        {renderContent()}
-      </TouchableOpacity>
+      <View>
+        {message.renderTime ? <MessageTime time={message.time} /> : null}
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => closeAll()}
+          style={[styles.chat, isSelf ? styles.right : styles.left]}
+        >
+          <Avatar size={32} avatar={message.avatar} />
+          {renderContent()}
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }

@@ -4,7 +4,7 @@
  */
 import { StyleSheet, View, Platform, TouchableOpacity, Image } from '@ui'
 import { deviceWidth, isiOS } from '@util'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import { Container } from './Container'
 import { Input } from './Input'
 
@@ -30,8 +30,9 @@ const InputBar: React.FC<any> = ({
   placeholder = '请输入...',
   onContentSizeChange = () => {},
 }) => {
-  const setInputHeight = useCallback(() => {
-    return null
+  const inputHeight = useRef(0)
+  const setInputHeight = useCallback((height) => {
+    inputHeight.current = height
   }, [])
 
   const enabled = useMemo(() => {
