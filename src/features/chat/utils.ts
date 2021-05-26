@@ -81,15 +81,16 @@ const getCurrentTime = (time = 0) => {
 }
 
 const isSomeMinutes = (currentMessage, previousMessage) => {
-  if (!previousMessage || !previousMessage.time) {
+  if (!previousMessage || !previousMessage.createdAtTimestamp) {
     return false
   }
-  const currentCreatedAt = moment(currentMessage.time)
-  const previousCreatedAt = moment(previousMessage.time)
+  const currentCreatedAt = moment(currentMessage.createdAtTimestamp * 1000)
+  const previousCreatedAt = moment(previousMessage.createdAtTimestamp * 1000)
+
   if (!currentCreatedAt.isValid() || !previousCreatedAt.isValid()) {
     return false
   }
-  return currentCreatedAt.isSame(previousCreatedAt, 'minute')
+  return currentCreatedAt.isSame(previousCreatedAt, 'm')
 }
 
 export { getCurrentTime, isSomeMinutes }

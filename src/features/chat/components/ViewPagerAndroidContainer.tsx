@@ -10,13 +10,13 @@ const ViewPagerAndroidContainer: React.FC<any> = ({ style, children }) => {
   const [height, setHeight] = useState(0)
 
   const _onLayoutChange = (e) => {
-    const { width: layoutWidth, height: layoutHeight } = e.nativeEcent.layout
+    const { width: layoutWidth, height: layoutHeight } = e.nativeEvent.layout
     setWidth(layoutWidth)
     setHeight(layoutHeight)
   }
 
   return (
-    <View style={[style]}>
+    <View style={[style]} onLayout={_onLayoutChange}>
       <View style={{ width, height }}>{children}</View>
     </View>
   )

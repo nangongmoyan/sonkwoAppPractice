@@ -24,6 +24,7 @@ import {
   setConversationQueryCache,
 } from '@features/conversation/model'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
+import moment from 'moment'
 
 const PrivateMessages: React.FC<any> = ({}) => {
   const { params = {} } = useRoute()
@@ -38,9 +39,9 @@ const PrivateMessages: React.FC<any> = ({}) => {
         .sort((a, b) => a.createdAtTimestamp - b.createdAtTimestamp)
         .map((message, index) => {
           const nickname =
-            message.accountId == userId ? userName : target.nickname
+            message.accountId === userId ? userName : target.nickname
           const avatar =
-            message.accountId == userId ? userAvatar : target.avatar
+            message.accountId === userId ? userAvatar : target.avatar
           const messageData = {
             avatar,
             nickname,
@@ -52,15 +53,23 @@ const PrivateMessages: React.FC<any> = ({}) => {
             time: message.createdAtTimestamp * 1000,
           }
           const previousMessage = messageArr[index - 1] || {}
-          !isSomeMinutes(message, previousMessage) &&
-            Object.assign(messageData, { renderTime: true })
 
+          const currentCreatedAt = moment(message.createdAtTimestamp * 1000)
+          const previousCreatedAt = moment(
+            previousMessage.createdAtTimestamp * 1000,
+          )
+          const result = currentCreatedAt.isSame(previousCreatedAt, 'm')
+          console.log({ currentCreatedAt, previousCreatedAt, result })
+
+          if (!isSomeMinutes(message, previousMessage)) {
+            Object.assign(messageData, { renderTime: true })
+          }
           return messageData
         })
     } else {
       return []
     }
-  }, [messageArr, target])
+  }, [messageArr, target.avatar, target.nickname, userAvatar, userId, userName])
 
   const sendMessage = useCallback(() => {
     return null

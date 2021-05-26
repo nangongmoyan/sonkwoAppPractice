@@ -35,7 +35,7 @@ const EmojiPanel: React.FC<any> = ({ emojiHeight, panelContainerHeight }) => {
       <ViewPagerAndroidContainer
         style={{ height: panelContainerHeight, width: deviceWidth }}
       >
-        <ScrollView ref={scroll} style={{ flex: 1, backgroundColor: 'red' }}>
+        <ScrollView ref={scroll}>
           <Text>sdfsdfsdf</Text>
           <Text>sdfsdfsdf</Text>
           <Text>sdfsdfsdf</Text>
