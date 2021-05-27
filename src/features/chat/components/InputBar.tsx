@@ -11,6 +11,7 @@ import { Input } from './Input'
 const InputBar: React.FC<any> = ({
   xHeight,
   onFocus,
+  inputRef,
   isShowEmoji,
   isEmojiShow,
   isPanelShow,
@@ -89,6 +90,7 @@ const InputBar: React.FC<any> = ({
     <Container xHeight={xHeight} setInputHeight={setInputHeight}>
       <View style={styles.container}>
         <Input
+          inputRef={inputRef}
           enabled={enabled}
           onFocus={onFocus}
           textChange={textChange}

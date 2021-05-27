@@ -26,7 +26,6 @@ import {
   invalidateMessaqgesQueries,
 } from '@features/conversation/model'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
-import { conversationApi } from '@sonkwo/sonkwo-api'
 
 const PrivateMessages: React.FC<any> = ({}) => {
   const { params = {} } = useRoute()
@@ -81,8 +80,8 @@ const PrivateMessages: React.FC<any> = ({}) => {
       <MyStatusBar isDarkStyle={true} />
       <CustomStackHeader title={target.nickname} />
       <ChatView
-        headerHeight={headerHeight}
         messageList={messages}
+        headerHeight={headerHeight}
         sendMessage={sendMessage}
         onMessagePress={onMessagePress}
       />

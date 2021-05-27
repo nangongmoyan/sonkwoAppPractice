@@ -64,7 +64,6 @@ function DrawerScreen(props) {
   const dispatch = useDispatch()
   const isDrawerOpen = useIsDrawerOpen()
   const { userInfo, navigation } = props
-  console.log({ userInfo })
   const { nickname, avatar, point = {} } = userInfo
   const wallet = useSelector((state) => state.WalletReducer.wallet)
 

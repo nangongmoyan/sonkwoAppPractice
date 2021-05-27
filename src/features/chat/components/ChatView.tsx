@@ -2,9 +2,9 @@
  *
  * created by lijianpo on 2021/05/22
  */
-import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { FlatList, StyleSheet, View, TouchableOpacity } from '@ui'
-import { Animated, Easing, Keyboard } from 'react-native'
+import { Animated, Easing } from 'react-native'
 import { debounce, deviceHeight, isiOS } from '@util'
 import { isIphoneX, getBottomSpace } from 'react-native-iphone-x-helper'
 import { ChatItem } from './ChatItem'
@@ -18,12 +18,11 @@ const ChatView: React.FC<any> = ({
   sendMessage,
   inverted = false,
   allPanelHeight = 200,
-  renderLoadEarlier = () => {},
   allPanelAnimateDuration = 100,
   iphoneXBottomPadding = getBottomSpace(),
 }) => {
   const chatList = useRef()
-  const inputBar = useRef(null).current
+  const inputBar = useRef(null)
   const viewHeaderHeight = useRef(headerHeight).current
   const listHeight = useRef(deviceHeight - viewHeaderHeight)
   const isInverted = useRef(false)
@@ -46,7 +45,6 @@ const ChatView: React.FC<any> = ({
     allPanelHeight + (isIphoneX() ? iphoneXBottomPadding : 0)
 
   const keyboardShowListener = (e) => {
-    console.log({ e })
     setKeyboardShow(true)
     if (isiOS) {
       setXHeight(0)
@@ -87,16 +85,19 @@ const ChatView: React.FC<any> = ({
 
   useKeyboardStatus(keyboardShowListener, keyboardHideListener)
 
-  const closeAll = (callback = () => {}) => {
-    if (panelShow) {
-      setXHeight(iphoneXBottomPadding)
-      return closePanel(true, callback)
-    }
-    if (emojiShow) {
-      setXHeight(iphoneXBottomPadding)
-      return closeEmoji(true, callback)
-    }
-  }
+  const closeAll = useCallback(
+    (callback = () => {}) => {
+      if (panelShow) {
+        setXHeight(iphoneXBottomPadding)
+        return closePanel(true, callback)
+      }
+      if (emojiShow) {
+        setXHeight(iphoneXBottomPadding)
+        return closeEmoji(true, callback)
+      }
+    },
+    [panelShow, emojiShow, iphoneXBottomPadding],
+  )
 
   const renderItem = useCallback(
     ({ item, index }) => {
@@ -108,7 +109,7 @@ const ChatView: React.FC<any> = ({
   const onFocus = () => {
     if (!isiOS) {
       closeAll(() => {
-        inputBar?.input?.focus()
+        inputBar.current?.focus()
       })
     }
   }
@@ -198,9 +199,9 @@ const ChatView: React.FC<any> = ({
   const isShowPanel = useCallback(() => {
     if (panelShow) {
       return isiOS
-        ? inputBar?.input?.focus()
+        ? inputBar.current?.focus()
         : closePanel(true, () => {
-            inputBar?.input?.focus()
+            inputBar.current?.focus()
           })
     } else {
       if (emojiShow) {
@@ -215,7 +216,7 @@ const ChatView: React.FC<any> = ({
           setXHeight(0)
           setKeyboardHeight(0)
         }
-        inputBar?.input?.blur()
+        inputBar.current?.blur()
       }
     }
   }, [isiOS, panelShow, emojiShow, keyboardShow])
@@ -223,9 +224,9 @@ const ChatView: React.FC<any> = ({
   const isShowEmoji = useCallback(() => {
     if (emojiShow) {
       return isiOS
-        ? inputBar?.input?.focus()
+        ? inputBar.current?.focus()
         : closeEmoji(true, () => {
-            inputBar?.input?.focus()
+            inputBar.current?.focus()
           })
     } else {
       if (panelShow) {
@@ -241,7 +242,7 @@ const ChatView: React.FC<any> = ({
           setXHeight(0)
           setKeyboardHeight(0)
         }
-        inputBar?.input?.blur()
+        inputBar.current?.blur()
       }
     }
   }, [isiOS, panelShow, emojiShow, keyboardShow])
@@ -267,7 +268,7 @@ const ChatView: React.FC<any> = ({
   const _sendMessage = useCallback((messageContent) => {
     _userHasBeenInputed.current = true
     sendMessage(messageContent)
-    inputBar?.input?.clear()
+    inputBar.current?.clear()
   }, [])
 
   const _onContentSizeChange = useCallback((e) => {
@@ -329,7 +330,8 @@ const ChatView: React.FC<any> = ({
           />
         </TouchableOpacity>
         <InputBar
-          ref={inputBar}
+          inputRef={inputBar}
+          // ref={inputBar}
           xHeight={xHeight}
           onFocus={onFocus}
           inputHeightFix={0}

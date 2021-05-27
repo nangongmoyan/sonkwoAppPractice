@@ -9,6 +9,7 @@ import { TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 const Input: React.FC<any> = ({
   enabled,
   onFocus,
+  inputRef,
   inputStyle,
   placeholder,
   textChange,
@@ -17,12 +18,12 @@ const Input: React.FC<any> = ({
   inputChangeSize,
   onContentSizeChange,
 }) => {
-  const input = useRef(null)
+  // const input = useRef(null)
   return (
     <TouchableOpacity activeOpacity={1} disabled={!enabled} onPress={onFocus}>
       <TextInput
         multiline
-        ref={input}
+        ref={inputRef}
         editable={!enabled}
         blurOnSubmit={false}
         value={messageContent}
