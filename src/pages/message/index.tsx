@@ -49,7 +49,6 @@ const KINDS = [
 const Message: React.FC<any> = ({}) => {
   const { t } = useLocale()
   const { data } = useConversation()
-  console.log({ data })
   const allRoutes = useMemo(() => {
     return KINDS.map((kind) => {
       switch (kind.route) {

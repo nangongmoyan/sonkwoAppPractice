@@ -8,35 +8,16 @@ import { StyleSheet, View } from 'react-native'
 import { deviceWidth, isiOS } from '@util'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 
-const Container: React.FC<any> = ({
-  children,
-  xHeight,
-  setInputHeight,
-  inputContainerStyle,
-  inputOutContainerStyle,
-}) => {
+const Container: React.FC<any> = ({ children, xHeight, setInputHeight }) => {
   return (
     <Animated.View
       style={[
         styles.commentBar,
-        inputOutContainerStyle,
         isiOS ? { paddingBottom: isIphoneX() ? xHeight : 0 } : {},
       ]}
       onLayout={(e) => setInputHeight(e.nativeEvent.layout.height)}
     >
-      <View
-        style={[
-          {
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginVertical: 8,
-            paddingHorizontal: 10,
-          },
-          inputContainerStyle,
-        ]}
-      >
-        {children}
-      </View>
+      <View style={styles.container}>{children}</View>
     </Animated.View>
   )
 }
@@ -50,5 +31,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: '#ccc',
     borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  container: {
+    marginVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
 })

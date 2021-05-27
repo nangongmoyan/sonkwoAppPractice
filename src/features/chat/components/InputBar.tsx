@@ -11,10 +11,7 @@ import { Input } from './Input'
 const InputBar: React.FC<any> = ({
   xHeight,
   onFocus,
-  plusIcon,
-  sendIcon,
   emojiIcon,
-  inputStyle,
   isShowEmoji,
   isEmojiShow,
   isPanelShow,
@@ -24,9 +21,8 @@ const InputBar: React.FC<any> = ({
   inputHeightFix,
   messageContent,
   inputChangeSize,
-  inputContainerStyle,
+  onSubmitEditing,
   textChange = () => {},
-  inputOutContainerStyle,
   placeholder = '请输入...',
   onContentSizeChange = () => {},
 }) => {
@@ -72,13 +68,13 @@ const InputBar: React.FC<any> = ({
   }, [])
 
   const renderIcon = useCallback(() => {
-    const sendAbleIcon = sendIcon || (
+    const sendAbleIcon = (
       <Image
         source={require('@source/images/sendAble.png')}
         style={{ width: 30, height: 30 }}
       />
     )
-    const sendUnableIconDefault = sendUnableIcon || (
+    const sendUnableIconDefault = (
       <Image
         source={require('@source/images/send.png')}
         style={{ width: 30, height: 30 }}
@@ -88,28 +84,20 @@ const InputBar: React.FC<any> = ({
       return sendAbleIcon
     } else {
       return (
-        plusIcon || (
-          <Image
-            source={require('@source/images/more.png')}
-            style={{ width: 30, height: 30 }}
-          />
-        )
+        <Image
+          source={require('@source/images/more.png')}
+          style={{ width: 30, height: 30 }}
+        />
       )
     }
   }, [])
   return (
-    <Container
-      xHeight={xHeight}
-      setInputHeight={setInputHeight}
-      inputContainerStyle={inputContainerStyle}
-      inputOutContainerStyle={inputOutContainerStyle}
-    >
+    <Container xHeight={xHeight} setInputHeight={setInputHeight}>
       <View style={styles.container}>
         <Input
           enabled={enabled}
           onFocus={onFocus}
           textChange={textChange}
-          inputStyle={inputStyle}
           placeholder={placeholder}
           messageContent={messageContent}
           inputHeightFix={inputHeightFix}
@@ -126,8 +114,9 @@ const InputBar: React.FC<any> = ({
           style={{ marginLeft: 8 }}
           onPress={() => {
             if (messageContent.trim().length > 0) {
+              onSubmitEditing(messageContent)
             } else {
-              isShowPanel(!isPanelShow)
+              isShowPanel()
             }
           }}
         >

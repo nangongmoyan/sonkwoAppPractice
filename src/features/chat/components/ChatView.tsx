@@ -6,7 +6,7 @@ import React, { useCallback, useRef, useState, useMemo } from 'react'
 import { FlatList, StyleSheet, View, TouchableOpacity } from '@ui'
 import { Animated, Easing } from 'react-native'
 import { debounce, deviceHeight, isiOS } from '@util'
-import { isIphoneX } from 'react-native-iphone-x-helper'
+import { isIphoneX, getBottomSpace } from 'react-native-iphone-x-helper'
 import { ChatItem } from './ChatItem'
 import { InputBar } from './InputBar'
 import { PanelContainer } from './PanelContainer'
@@ -14,14 +14,12 @@ import { PanelContainer } from './PanelContainer'
 const ChatView: React.FC<any> = ({
   messageList,
   headerHeight,
-  flatListProps,
   inverted = false,
   allPanelHeight = 200,
-  iphoneXBottomPadding = 34,
   renderLoadEarlier = () => {},
   allPanelAnimateDuration = 100,
+  iphoneXBottomPadding = getBottomSpace(),
 }) => {
-  const rootHeight = useRef(0)
   const chatList = useRef()
   const inputBar = useRef(null).current
   const viewHeaderHeight = useRef(headerHeight).current
@@ -72,17 +70,6 @@ const ChatView: React.FC<any> = ({
   const _changeText = useCallback((value) => {
     setMessageContent(value)
   }, [])
-
-  // const _onContentSizeChange = useCallback((e) => {
-  //   const changeHeight = e.nativeEvent.contentSize.height
-  //   if (changeHeight === 34) return
-  //   setInputChangeSize(changeHeight <= 70 ? changeHeight : 70)
-  //   if (!inverted) {
-  //     chatList?.current?.scrollToEnd({
-  //       animated: true,
-  //     })
-  //   }
-  // }, [])
 
   const showEmoji = useCallback((callback = () => {}) => {
     setXHeight(0)
@@ -185,7 +172,7 @@ const ChatView: React.FC<any> = ({
         inputBar?.input?.blur()
       }
     }
-  }, [])
+  }, [isiOS, panelShow, emojiShow, keyboardShow])
 
   const isShowEmoji = useCallback(() => {
     if (emojiShow) {
@@ -211,7 +198,7 @@ const ChatView: React.FC<any> = ({
         inputBar?.input?.blur()
       }
     }
-  }, [])
+  }, [isiOS, panelShow, emojiShow, keyboardShow])
 
   const scrollToBottom = (listHeightAndWidth) => {
     if (listHeightAndWidth !== undefined) {
@@ -230,6 +217,20 @@ const ChatView: React.FC<any> = ({
       )
     }
   }
+
+  const _sendMessage = useCallback((messageContent) => {
+    _userHasBeenInputed.current = true
+    inputBar?.input?.clear()
+  }, [])
+
+  const _onContentSizeChange = useCallback((e) => {
+    const changeHeight = e.nativeEvent.contentSize.height
+    if (changeHeight === 34) return
+    setInputChangeSize(changeHeight <= 70 ? changeHeight : 70)
+    if (!inverted) {
+      chatList?.current?.scrollToEnd({ animated: true })
+    }
+  }, [])
   const animatedHeight = visibleHeight.interpolate({
     inputRange: [0, 1],
     outputRange: [
@@ -284,17 +285,16 @@ const ChatView: React.FC<any> = ({
           ref={inputBar}
           xHeight={xHeight}
           onFocus={onFocus}
+          inputHeightFix={0}
           isEmojiShow={emojiShow}
           isPanelShow={panelShow}
-          inputHeightFix={0}
-          messageContent={messageContent}
-          inputChangeSize={inputChangeSize}
           isShowEmoji={isShowEmoji}
           isShowPanel={isShowPanel}
-          // inputContainerStyle,
           textChange={_changeText}
-          // inputOutContainerStyle,
-          // onContentSizeChange={_onContentSizeChange}
+          messageContent={messageContent}
+          inputChangeSize={inputChangeSize}
+          onContentSizeChange={_onContentSizeChange}
+          onSubmitEditing={(content) => _sendMessage(content)}
         />
         <PanelContainer
           emojiHeight={emojiHeight}

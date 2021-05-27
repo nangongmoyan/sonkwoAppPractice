@@ -18,7 +18,7 @@ import {
 import FastImage from 'react-native-fast-image'
 import { ChatView } from '@features/chat/components/ChatView'
 import { isSomeMinutes } from '@features/chat/utils'
-import { useRoute } from '@hooks'
+import { useRoute, useSafeArea } from '@hooks'
 import {
   usePrivateMessages,
   setConversationQueryCache,
@@ -29,8 +29,10 @@ import moment from 'moment'
 const PrivateMessages: React.FC<any> = ({}) => {
   const { params = {} } = useRoute()
   const { id, target } = params
-  const { id: userId, nickname: userName, avatar: userAvatar } = useUserInfo()
   setConversationQueryCache(id)
+  const { top } = useSafeArea()
+  const headerHeight = top + 44
+  const { id: userId, nickname: userName, avatar: userAvatar } = useUserInfo()
   const { data } = usePrivateMessages(id)
   const messageArr = data?.pages[0]?.privateMessages
   const messages = useMemo(() => {
@@ -53,14 +55,6 @@ const PrivateMessages: React.FC<any> = ({}) => {
             time: message.createdAtTimestamp * 1000,
           }
           const previousMessage = messageArr[index - 1] || {}
-
-          const currentCreatedAt = moment(message.createdAtTimestamp * 1000)
-          const previousCreatedAt = moment(
-            previousMessage.createdAtTimestamp * 1000,
-          )
-          const result = currentCreatedAt.isSame(previousCreatedAt, 'm')
-          console.log({ currentCreatedAt, previousCreatedAt, result })
-
           if (!isSomeMinutes(message, previousMessage)) {
             Object.assign(messageData, { renderTime: true })
           }
@@ -84,7 +78,7 @@ const PrivateMessages: React.FC<any> = ({}) => {
       <MyStatusBar isDarkStyle={true} />
       <CustomStackHeader title={target.nickname} />
       <ChatView
-        headerHeight={44}
+        headerHeight={headerHeight}
         messageList={messages}
         sendMessage={sendMessage}
         onMessagePress={onMessagePress}
