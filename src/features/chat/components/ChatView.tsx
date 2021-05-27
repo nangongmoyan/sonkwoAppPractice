@@ -10,6 +10,7 @@ import { isIphoneX, getBottomSpace } from 'react-native-iphone-x-helper'
 import { ChatItem } from './ChatItem'
 import { InputBar } from './InputBar'
 import { PanelContainer } from './PanelContainer'
+import useKeyboardStatus from 'hooks/useKeyboardStatus'
 
 const ChatView: React.FC<any> = ({
   messageList,
@@ -42,6 +43,47 @@ const ChatView: React.FC<any> = ({
   const [inputChangeSize, setInputChangeSize] = useState(0)
   const panelContainerHeight =
     allPanelHeight + (isIphoneX() ? iphoneXBottomPadding : 0)
+
+  const keyboardShowListener = useCallback((e) => {
+    setKeyboardShow(true)
+    if (isiOS) {
+      setXHeight(0)
+      setKeyboardHeight(e.endCoordinates.height)
+      Animated.timing(visibleHeight, {
+        toValue: 1,
+        duration: e.duration,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease),
+      }).start()
+      if (emojiShow) {
+        return closeEmoji()
+      }
+      if (panelShow) {
+        return closePanel()
+      }
+    }
+  }, [])
+
+  const keyboardHideListener = useCallback((e) => {
+    setKeyboardShow(false)
+    if (isiOS) {
+      if (emojiShow) {
+        return showEmoji()
+      }
+      if (panelShow) {
+        return showPanel()
+      }
+      Animated.timing(visibleHeight, {
+        toValue: 9,
+        duration: e.duration,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.ease),
+      }).start()
+      setXHeight(iphoneXBottomPadding)
+    }
+  }, [])
+
+  useKeyboardStatus(keyboardShowListener, keyboardHideListener)
 
   const closeAll = (callback = () => {}) => {
     if (panelShow) {
@@ -91,7 +133,7 @@ const ChatView: React.FC<any> = ({
     })
   }, [])
 
-  const closeEmoji = useCallback((realClose = false, callback) => {
+  const closeEmoji = useCallback((realClose = false, callback = () => {}) => {
     Animated.parallel([
       Animated.timing(isiOS ? visibleHeight : paddingHeight, {
         useNativeDriver: false,
