@@ -63,11 +63,10 @@ const first = [
 
 const second = [
   {
-    key: require('../skemoji/1dianzan.gif'),
-    value: '/{1_点赞}',
+    key: require('../skemoji/2liuliuliu.gif'),
+    value: '/{2_666}',
     packageName: '杉果表情2号',
   },
-  { key: require('../skemoji/2liuliuliu.gif'), value: '/{2_666}' },
   { key: require('../skemoji/2hi.gif'), value: '/{2_HI}' },
   { key: require('../skemoji/2keyne.gif'), value: '/{2_KEY呢}' },
   { key: require('../skemoji/2baibai.gif'), value: '/{2_拜拜}' },

@@ -31,18 +31,7 @@ const EmojiPanel: React.FC<any> = ({ emojiHeight, panelContainerHeight }) => {
     inputRange: [0, 1],
     outputRange: [0, 1],
   })
-  useEffect(() => {
-    default_emoji()
-  }, [])
-  const default_emoji = () => {
-    let index = 0
-    const data = []
-    const strMap = new Map()
-    console.log({ SONKWO_EMOJI })
-    // for (const key of Object.keys(SONKWO_EMOJI)) {
-    //   strMap.set(key, SONKWO_EMOJI[key])
-    // }
-  }
+
   return (
     <Animated.View
       style={[

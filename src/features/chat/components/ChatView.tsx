@@ -2,9 +2,9 @@
  *
  * created by lijianpo on 2021/05/22
  */
-import React, { useCallback, useRef, useState, useMemo } from 'react'
+import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react'
 import { FlatList, StyleSheet, View, TouchableOpacity } from '@ui'
-import { Animated, Easing } from 'react-native'
+import { Animated, Easing, Keyboard } from 'react-native'
 import { debounce, deviceHeight, isiOS } from '@util'
 import { isIphoneX, getBottomSpace } from 'react-native-iphone-x-helper'
 import { ChatItem } from './ChatItem'
@@ -15,6 +15,7 @@ import useKeyboardStatus from 'hooks/useKeyboardStatus'
 const ChatView: React.FC<any> = ({
   messageList,
   headerHeight,
+  sendMessage,
   inverted = false,
   allPanelHeight = 200,
   renderLoadEarlier = () => {},
@@ -44,7 +45,8 @@ const ChatView: React.FC<any> = ({
   const panelContainerHeight =
     allPanelHeight + (isIphoneX() ? iphoneXBottomPadding : 0)
 
-  const keyboardShowListener = useCallback((e) => {
+  const keyboardShowListener = (e) => {
+    console.log({ e })
     setKeyboardShow(true)
     if (isiOS) {
       setXHeight(0)
@@ -62,9 +64,9 @@ const ChatView: React.FC<any> = ({
         return closePanel()
       }
     }
-  }, [])
+  }
 
-  const keyboardHideListener = useCallback((e) => {
+  const keyboardHideListener = (e) => {
     setKeyboardShow(false)
     if (isiOS) {
       if (emojiShow) {
@@ -74,14 +76,14 @@ const ChatView: React.FC<any> = ({
         return showPanel()
       }
       Animated.timing(visibleHeight, {
-        toValue: 9,
+        toValue: 0,
         duration: e.duration,
         useNativeDriver: false,
         easing: Easing.inOut(Easing.ease),
       }).start()
       setXHeight(iphoneXBottomPadding)
     }
-  }, [])
+  }
 
   useKeyboardStatus(keyboardShowListener, keyboardHideListener)
 
@@ -103,11 +105,13 @@ const ChatView: React.FC<any> = ({
     [closeAll],
   )
 
-  const onFocus = useCallback(() => {
+  const onFocus = () => {
     if (!isiOS) {
-      return null
+      closeAll(() => {
+        inputBar?.input?.focus()
+      })
     }
-  }, [])
+  }
 
   const _changeText = useCallback((value) => {
     setMessageContent(value)
@@ -262,6 +266,7 @@ const ChatView: React.FC<any> = ({
 
   const _sendMessage = useCallback((messageContent) => {
     _userHasBeenInputed.current = true
+    sendMessage(messageContent)
     inputBar?.input?.clear()
   }, [])
 
@@ -336,7 +341,7 @@ const ChatView: React.FC<any> = ({
           messageContent={messageContent}
           inputChangeSize={inputChangeSize}
           onContentSizeChange={_onContentSizeChange}
-          onSubmitEditing={(content) => _sendMessage(content)}
+          onSubmitEditing={_sendMessage}
         />
         <PanelContainer
           emojiHeight={emojiHeight}

@@ -7,34 +7,22 @@ import React, { useRef, useEffect } from 'react'
 import { Keyboard } from 'react-native'
 
 const useKeyboardStatus = (
-  showCallback = (e) => {},
-  hideCallback = (e) => {},
+  showCallback: (e) => void,
+  hideCallback: (e) => void,
 ) => {
-  const keyboardShowListener = useRef(null)
-  const keyboardHideListener = useRef(null)
-
   const keyboardShowName = isiOS ? 'keyboardWillShow' : 'keyboardDidShow'
   const keyboardHideName = isiOS ? 'keyboardWillHide' : 'keyboardDidShow'
 
   useEffect(() => {
-    keyboardShowListener.current = Keyboard.addListener(
-      keyboardShowName,
-      (e) => {
-        showCallback && showCallback(e)
-      },
-    )
-    keyboardHideListener.current = Keyboard.addListener(
-      keyboardHideName,
-      (e) => {
-        hideCallback && hideCallback(e)
-      },
-    )
+    Keyboard.addListener(keyboardShowName, (e) => showCallback(e))
+    Keyboard.addListener(keyboardHideName, (e) => hideCallback(e))
 
+    // cleanup function
     return () => {
-      keyboardShowListener.current.remove()
-      keyboardHideListener.current.remove()
+      Keyboard.removeListener(keyboardShowName, (e) => showCallback(e))
+      Keyboard.removeListener(keyboardHideName, (e) => hideCallback(e))
     }
-  })
+  }, [])
 }
 
 export default useKeyboardStatus

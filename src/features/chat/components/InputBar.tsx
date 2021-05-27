@@ -11,13 +11,10 @@ import { Input } from './Input'
 const InputBar: React.FC<any> = ({
   xHeight,
   onFocus,
-  emojiIcon,
   isShowEmoji,
   isEmojiShow,
   isPanelShow,
   isShowPanel,
-  keyboardIcon,
-  sendUnableIcon,
   inputHeightFix,
   messageContent,
   inputChangeSize,
@@ -48,24 +45,20 @@ const InputBar: React.FC<any> = ({
   const renderEmojieIcon = useCallback(() => {
     if (isEmojiShow) {
       return (
-        keyboardIcon || (
-          <Image
-            source={require('@source/images/keyboard.png')}
-            style={{ width: 30, height: 30 }}
-          />
-        )
+        <Image
+          source={require('@source/images/keyboard.png')}
+          style={{ width: 30, height: 30 }}
+        />
       )
     } else {
       return (
-        emojiIcon || (
-          <Image
-            source={require('@source/images/emoji.png')}
-            style={{ width: 30, height: 30 }}
-          />
-        )
+        <Image
+          source={require('@source/images/emoji.png')}
+          style={{ width: 30, height: 30 }}
+        />
       )
     }
-  }, [])
+  }, [isEmojiShow])
 
   const renderIcon = useCallback(() => {
     const sendAbleIcon = (
@@ -83,14 +76,15 @@ const InputBar: React.FC<any> = ({
     if (messageContent.trim().length) {
       return sendAbleIcon
     } else {
-      return (
-        <Image
-          source={require('@source/images/more.png')}
-          style={{ width: 30, height: 30 }}
-        />
-      )
+      return sendUnableIconDefault
+      // return (
+      //   <Image
+      //     source={require('@source/images/more.png')}
+      //     style={{ width: 30, height: 30 }}
+      //   />
+      // )
     }
-  }, [])
+  }, [messageContent])
   return (
     <Container xHeight={xHeight} setInputHeight={setInputHeight}>
       <View style={styles.container}>
@@ -111,6 +105,7 @@ const InputBar: React.FC<any> = ({
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.7}
+          disabled={messageContent.trim().length === 0}
           style={{ marginLeft: 8 }}
           onPress={() => {
             if (messageContent.trim().length > 0) {

@@ -22,9 +22,11 @@ import { useRoute, useSafeArea } from '@hooks'
 import {
   usePrivateMessages,
   setConversationQueryCache,
+  postPrivateMessage,
+  invalidateMessaqgesQueries,
 } from '@features/conversation/model'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
-import moment from 'moment'
+import { conversationApi } from '@sonkwo/sonkwo-api'
 
 const PrivateMessages: React.FC<any> = ({}) => {
   const { params = {} } = useRoute()
@@ -65,8 +67,9 @@ const PrivateMessages: React.FC<any> = ({}) => {
     }
   }, [messageArr, target.avatar, target.nickname, userAvatar, userId, userName])
 
-  const sendMessage = useCallback(() => {
-    return null
+  const sendMessage = useCallback(async (content) => {
+    const success = await postPrivateMessage(id, content)
+    success && invalidateMessaqgesQueries(id)
   }, [])
 
   const onMessagePress = useCallback(() => {

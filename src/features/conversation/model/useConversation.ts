@@ -58,4 +58,22 @@ const usePrivateMessages = (id: number) => {
     fetchPrivateMessages(id, pageParam),
   )
 }
-export { useConversation, setConversationQueryCache, usePrivateMessages }
+
+const postPrivateMessage = async (id: number, content: any) => {
+  await conversationApi.postPrivateMessage(id, content).catch((error) => {
+    console.log({ error })
+    return false
+  })
+  return true
+}
+
+const invalidateMessaqgesQueries = (id: number) => {
+  queryClient.invalidateQueries(['messages', id])
+}
+export {
+  useConversation,
+  setConversationQueryCache,
+  usePrivateMessages,
+  postPrivateMessage,
+  invalidateMessaqgesQueries,
+}
