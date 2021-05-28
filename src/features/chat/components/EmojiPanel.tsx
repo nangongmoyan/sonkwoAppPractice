@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { EMOJI } from 'source/emoji/emoji'
 import { SONKWO_EMOJI } from 'source/skemoji/skemoji'
 import { ViewPagerAndroidContainer } from './ViewPagerAndroidContainer'
 const EmojiPanel: React.FC<any> = ({ emojiHeight, panelContainerHeight }) => {
@@ -44,7 +45,7 @@ const EmojiPanel: React.FC<any> = ({ emojiHeight, panelContainerHeight }) => {
       <ViewPagerAndroidContainer
         style={{ height: panelContainerHeight, width: deviceWidth }}
       >
-        <ScrollView ref={scroll}>
+        <ScrollView ref={scroll} contentContainerStyle={{ paddingBottom: 30 }}>
           {SONKWO_EMOJI.map((items, index) => {
             return (
               <View
@@ -90,6 +91,40 @@ const EmojiPanel: React.FC<any> = ({ emojiHeight, panelContainerHeight }) => {
             )
           })}
         </ScrollView>
+        <View
+          style={{
+            flexDirection: 'row',
+            position: 'absolute',
+            right: 15,
+            bottom: 50,
+            width: 90,
+            justifyContent: 'space-between',
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 30,
+              backgroundColor: 'white',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text>删除</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: 40,
+              height: 30,
+              backgroundColor: 'white',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 5,
+            }}
+          >
+            <Text>发送</Text>
+          </TouchableOpacity>
+        </View>
       </ViewPagerAndroidContainer>
     </Animated.View>
   )

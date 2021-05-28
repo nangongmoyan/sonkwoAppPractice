@@ -7,6 +7,7 @@ import React, { useRef } from 'react'
 import { TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 
 const Input: React.FC<any> = ({
+  onBlur,
   enabled,
   onFocus,
   inputRef,
@@ -20,25 +21,27 @@ const Input: React.FC<any> = ({
 }) => {
   // const input = useRef(null)
   return (
-    <TouchableOpacity activeOpacity={1} disabled={!enabled} onPress={onFocus}>
-      <TextInput
-        multiline
-        ref={inputRef}
-        editable={!enabled}
-        blurOnSubmit={false}
-        value={messageContent}
-        placeholder={placeholder}
-        onChangeText={textChange}
-        placeholderTextColor="#5f5d70"
-        underlineColorAndroid="transparent"
-        onContentSizeChange={onContentSizeChange}
-        style={[
-          styles.commentBar__input,
-          { height: Math.max(35 + inputHeightFix, inputChangeSize) },
-          inputStyle,
-        ]}
-      />
-    </TouchableOpacity>
+    // <TouchableOpacity activeOpacity={1} disabled={!enabled} onPress={onFocus}>
+    <TextInput
+      multiline
+      ref={inputRef}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      editable={!enabled}
+      blurOnSubmit={false}
+      value={messageContent}
+      placeholder={placeholder}
+      onChangeText={textChange}
+      placeholderTextColor="#5f5d70"
+      underlineColorAndroid="transparent"
+      onContentSizeChange={onContentSizeChange}
+      style={[
+        styles.commentBar__input,
+        { height: Math.max(35 + inputHeightFix, inputChangeSize) },
+        inputStyle,
+      ]}
+    />
+    // </TouchableOpacity>
   )
 }
 

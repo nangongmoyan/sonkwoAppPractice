@@ -9,6 +9,7 @@ import { Container } from './Container'
 import { Input } from './Input'
 
 const InputBar: React.FC<any> = ({
+  onBlur,
   xHeight,
   onFocus,
   inputRef,
@@ -90,9 +91,10 @@ const InputBar: React.FC<any> = ({
     <Container xHeight={xHeight} setInputHeight={setInputHeight}>
       <View style={styles.container}>
         <Input
-          inputRef={inputRef}
-          enabled={enabled}
+          onBlur={onBlur}
           onFocus={onFocus}
+          enabled={enabled}
+          inputRef={inputRef}
           textChange={textChange}
           placeholder={placeholder}
           messageContent={messageContent}

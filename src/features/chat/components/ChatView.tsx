@@ -107,13 +107,19 @@ const ChatView: React.FC<any> = ({
   )
 
   const onFocus = () => {
-    if (!isiOS) {
-      closeAll(() => {
-        inputBar.current?.focus()
-      })
+    if (panelShow) {
+      return closePanel(false)
+    }
+    if (emojiShow) {
+      return closeEmoji(false)
     }
   }
 
+  const onBlur = () => {
+    if (emojiShow) {
+      return showEmoji()
+    }
+  }
   const _changeText = useCallback((value) => {
     setMessageContent(value)
   }, [])
@@ -221,7 +227,7 @@ const ChatView: React.FC<any> = ({
     }
   }, [isiOS, panelShow, emojiShow, keyboardShow])
 
-  const isShowEmoji = useCallback(() => {
+  const isShowEmoji = () => {
     if (emojiShow) {
       return isiOS
         ? inputBar.current?.focus()
@@ -232,7 +238,6 @@ const ChatView: React.FC<any> = ({
       if (panelShow) {
         return closePanel(false, () => showEmoji())
       }
-
       if (!keyboardShow) {
         showEmoji()
       } else {
@@ -245,7 +250,7 @@ const ChatView: React.FC<any> = ({
         inputBar.current?.blur()
       }
     }
-  }, [isiOS, panelShow, emojiShow, keyboardShow])
+  }
 
   const scrollToBottom = (listHeightAndWidth) => {
     if (listHeightAndWidth !== undefined) {
@@ -334,6 +339,7 @@ const ChatView: React.FC<any> = ({
           // ref={inputBar}
           xHeight={xHeight}
           onFocus={onFocus}
+          onBlur={onBlur}
           inputHeightFix={0}
           isEmojiShow={emojiShow}
           isPanelShow={panelShow}
