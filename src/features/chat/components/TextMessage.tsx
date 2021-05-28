@@ -8,6 +8,7 @@ import React from 'react'
 import { ThemeColors } from 'ui/theme'
 
 const TextMessage: React.FC<any> = ({
+  views,
   isSelf,
   message,
   leftMessageBackground = ThemeColors.White,
@@ -37,7 +38,7 @@ const TextMessage: React.FC<any> = ({
             },
           ]}
         >
-          <Text>{message.content}</Text>
+          {views}
         </View>
       </TouchableOpacity>
       {/* <View

@@ -11,6 +11,7 @@ import {
   Text,
   Avatar,
 } from '@ui'
+import { getActualText } from '@util'
 import React, { useCallback, useMemo, useState } from 'react'
 import { MessageTime } from './MessageTime'
 import { TextMessage } from './TextMessage'
@@ -37,7 +38,13 @@ const ChatItem: React.FC<any> = ({
     const { content = {}, type = '' } = message
     switch (type) {
       case 'text':
-        return <TextMessage isSelf={isSelf} message={message} />
+        return (
+          <TextMessage
+            isSelf={isSelf}
+            message={message}
+            views={getActualText(content)}
+          />
+        )
     }
   }, [])
   return (

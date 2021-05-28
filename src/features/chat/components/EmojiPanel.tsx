@@ -13,10 +13,13 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { EMOJI } from 'source/emoji/emoji'
 import { SONKWO_EMOJI } from 'source/skemoji/skemoji'
 import { ViewPagerAndroidContainer } from './ViewPagerAndroidContainer'
-const EmojiPanel: React.FC<any> = ({ emojiHeight, panelContainerHeight }) => {
+const EmojiPanel: React.FC<any> = ({
+  emojiHeight,
+  onEmojiSelected,
+  panelContainerHeight,
+}) => {
   const scroll = useRef(null)
   const height = emojiHeight.interpolate({
     inputRange: [0, 1],
@@ -77,6 +80,7 @@ const EmojiPanel: React.FC<any> = ({ emojiHeight, panelContainerHeight }) => {
                           paddingTop: 15,
                           paddingHorizontal: 20,
                         }}
+                        onPress={() => onEmojiSelected(emoji.value)}
                       >
                         <FastImage
                           resizeMode="contain"

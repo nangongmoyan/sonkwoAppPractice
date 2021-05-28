@@ -2,7 +2,7 @@
  *
  * created by lijianpo po on 2021/05/27
  */
-
+import { unionWith } from 'lodash'
 import { EMOJI } from 'source/emoji/emoji'
 
 const first = [
@@ -50,4 +50,5 @@ const second = [
   { key: require('../skemoji/2xiexie.gif'), value: '/{2_谢谢}' },
 ]
 const SONKWO_EMOJI = [first, second, EMOJI]
-export { SONKWO_EMOJI }
+const All_EMOJI_OBJECT = unionWith(first, second, EMOJI)
+export { SONKWO_EMOJI, All_EMOJI_OBJECT }

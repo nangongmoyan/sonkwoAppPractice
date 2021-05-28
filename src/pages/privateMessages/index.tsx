@@ -68,6 +68,7 @@ const PrivateMessages: React.FC<any> = ({}) => {
 
   const sendMessage = useCallback(async (content) => {
     const success = await postPrivateMessage(id, content)
+    console.log({ content, success })
     success && invalidateMessaqgesQueries(id)
   }, [])
 

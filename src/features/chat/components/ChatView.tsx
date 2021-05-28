@@ -12,6 +12,8 @@ import { InputBar } from './InputBar'
 import { PanelContainer } from './PanelContainer'
 import useKeyboardStatus from 'hooks/useKeyboardStatus'
 
+const emojiReg = new RegExp('\\[[^\\]]+\\]', 'g')
+
 const ChatView: React.FC<any> = ({
   messageList,
   headerHeight,
@@ -27,6 +29,7 @@ const ChatView: React.FC<any> = ({
   const listHeight = useRef(deviceHeight - viewHeaderHeight)
   const isInverted = useRef(false)
   const _userHasBeenInputed = useRef(false)
+  const [cursorIndex, setCursorIndex] = useState(0)
   const [isEmojiShow, setIsEmojiShow] = useState(false)
   const [isPanelShow, setIsPanelShow] = useState(false)
   const [keyboardHeight, setKeyboardHeight] = useState(0)
@@ -284,6 +287,84 @@ const ChatView: React.FC<any> = ({
       chatList?.current?.scrollToEnd({ animated: true })
     }
   }, [])
+
+  /** 添加表情 */
+  const onEmojiSelected = (code: string) => {
+    if (code === '') return
+    let lastText = ''
+    const currentTextLength = messageContent.length
+
+    //删除按钮
+    if (code === '/{del') {
+      //当前文本长度为0直接返回
+      if (currentTextLength === 0) return
+      //光标在字符串中间
+      if (cursorIndex < currentTextLength) {
+        // 匹配到的第一个表情符位置
+        const emojiIndex = messageContent.search(emojiReg)
+        const preStr = messageContent.substring(0, cursorIndex)
+        const nextStr = messageContent.substring(cursorIndex)
+        // 没有匹配到表情符
+        if (emojiIndex === -1) {
+          lastText = preStr.substring(0, preStr.length - 1) + nextStr
+          setCursorIndex(preStr.length - 1)
+        } else {
+          // const preStr = messageContent.substring(0, cursorIndex)
+          // const nextStr = messageContent.substring(cursorIndex)
+          const lastChar = preStr.charAt(preStr.length - 1)
+          // 末尾以}结尾的
+          if (lastChar === '}') {
+            const castArray = preStr.match(emojiReg)
+            if (!castArray) {
+              const cast = castArray[castArray.length - 1]
+
+              lastText =
+                preStr.substring(0, preStr.length - cast.length) + nextStr
+              setCursorIndex(preStr.length - 1)
+            }
+          } else {
+            lastText = preStr.substring(0, preStr.length - 1) + nextStr
+            setCursorIndex(preStr.length - 1)
+          }
+        }
+      } else {
+        // 光标在字符串最后
+        const lastChar = messageContent.charAt(currentTextLength - 1)
+        // 末尾以}结尾的
+        if (lastChar === '}') {
+          const castArray = messageContent.match(emojiReg)
+          if (castArray) {
+            const cast = castArray[castArray.length - 1]
+            lastText = messageContent.substring(
+              0,
+              messageContent.length - cast.length,
+            )
+            setCursorIndex(messageContent.length - cast.length)
+          } else {
+            lastText = messageContent.substring(0, messageContent.length - 1)
+            setCursorIndex(messageContent.length - 1)
+          }
+        } else {
+          lastText = messageContent.substring(0, currentTextLength - 1)
+          setCursorIndex(currentTextLength - 1)
+        }
+      }
+    } else {
+      if (cursorIndex <= currentTextLength) {
+        lastText = messageContent + code
+        setCursorIndex(lastText.length)
+      } else {
+        const preTemp = messageContent.substring(0, cursorIndex)
+        const nextTemp = messageContent.substring(
+          cursorIndex,
+          currentTextLength,
+        )
+        lastText = preTemp + code + nextTemp
+        setCursorIndex(cursorIndex + code.length)
+      }
+    }
+    setMessageContent(lastText)
+  }
   const animatedHeight = visibleHeight.interpolate({
     inputRange: [0, 1],
     outputRange: [
@@ -316,6 +397,7 @@ const ChatView: React.FC<any> = ({
         >
           <FlatList
             ref={chatList}
+            extraData={messageList}
             data={messageList}
             inverted={inverted}
             renderItem={renderItem}
@@ -355,6 +437,7 @@ const ChatView: React.FC<any> = ({
           emojiHeight={emojiHeight}
           panelHeight={panelHeight}
           visibleHeight={visibleHeight}
+          onEmojiSelected={onEmojiSelected}
           panelContainerHeight={panelContainerHeight}
         />
       </Animated.View>

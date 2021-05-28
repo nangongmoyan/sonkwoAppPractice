@@ -26,3 +26,5 @@ export { toastMessage, toastSuccess, toastFail } from './toast'
 export { checkNullObj, debounce } from './common'
 
 export { urlToPathAndParams } from './pathUtils'
+
+export { getActualText } from './emojiTransform'

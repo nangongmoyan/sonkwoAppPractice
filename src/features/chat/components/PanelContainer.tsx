@@ -13,6 +13,7 @@ const PanelContainer: React.FC<any> = ({
   emojiHeight,
   panelHeight,
   visibleHeight,
+  onEmojiSelected,
   panelContainerHeight,
 }) => {
   const bottom = visibleHeight.interpolate({
@@ -41,6 +42,7 @@ const PanelContainer: React.FC<any> = ({
       />
       <EmojiPanel
         emojiHeight={emojiHeight}
+        onEmojiSelected={onEmojiSelected}
         panelContainerHeight={panelContainerHeight}
       />
     </Animated.View>

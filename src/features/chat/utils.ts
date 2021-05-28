@@ -2,8 +2,13 @@
  *
  * created by lijianpo on 2021/05/23
  */
-import moment from 'moment'
 
+import { Text } from 'react-native'
+import moment from 'moment'
+const emojiReg = new RegExp(
+  '\\/\\{[0-9][_][\u4e00-\u9fa5_a-zA-Z0-9]{1,14}\\}',
+  'g',
+)
 const getCurrentTime = (time = 0) => {
   const nowTime = new Date() // 当前日前对象
   const myyear = nowTime.getFullYear() // 当前年份
