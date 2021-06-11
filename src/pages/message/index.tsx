@@ -15,7 +15,7 @@ import {
   Row,
   View,
 } from '@ui'
-import { deviceWidth } from '@util'
+import { adaptiveWidth, deviceWidth } from '@util'
 import React, { useCallback, useMemo } from 'react'
 import { ConversationItem } from './components'
 
@@ -86,13 +86,24 @@ const Message: React.FC<any> = ({}) => {
       </Row>
     )
   }, [])
+  const renderRight = useCallback(() => {
+    return (
+      <MyText style={{ fontSize: 13, width: adaptiveWidth(150) }}>
+        创建聊天
+      </MyText>
+    )
+  }, [])
   const renderItem = useCallback(({ item }) => {
     return <ConversationItem {...item} />
   }, [])
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
       <MyStatusBar isDarkStyle={true} />
-      <CustomStackHeader title={t('LANG33')} />
+      <CustomStackHeader
+        title={t('LANG33')}
+        renderRight={renderRight}
+        rightWidth={adaptiveWidth(150)}
+      />
       <MyListView
         data={data?.conversations || []}
         renderItem={renderItem}
