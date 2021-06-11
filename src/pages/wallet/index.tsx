@@ -90,7 +90,9 @@ const Wallet: React.FC<any> = ({}) => {
         ITEMS.map((item, index) => (
           <NavItem
             key={index}
-            onPress={() => navigation.navigate('WalletBill')}
+            onPress={() =>
+              navigation.navigate('WalletBill', { kind: item.route })
+            }
             itemTitle={t(item.label)}
             showItemSeparator={true}
           />
