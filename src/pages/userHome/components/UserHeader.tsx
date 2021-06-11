@@ -74,14 +74,14 @@ const UserHeader: React.FC<any> = memo(({}) => {
   const renderHeaderRight = useCallback(() => {
     return (
       <Row>
-        <GHOpacity onPress={() => navigation.navigate('Setting')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
           <SvgIcon
             size={20}
             path={iconPath.setting}
             fill={[ThemeColors.White]}
             style={{ marginRight: adaptiveWidth(30) }}
           />
-        </GHOpacity>
+        </TouchableOpacity>
         <GHOpacity>
           <SvgIcon
             size={20}

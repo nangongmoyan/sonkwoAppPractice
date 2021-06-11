@@ -33,8 +33,9 @@ const WalletBill: React.FC<any> = ({}) => {
       },
     }
   }, [endDate, startDate])
-  const { data } = useWalletBill(params)
-  const billArr = data?.pages[0]?.list
+  const data = useWalletBill(params)
+  console.log({ data })
+  // const billArr = data?.pages[0]?.list
 
   const renderItem = useCallback(({ item }) => {
     const { title, date, price, color } = item
@@ -65,16 +66,20 @@ const WalletBill: React.FC<any> = ({}) => {
       </Row>
     )
   }, [])
+
   const renderSeparator = useCallback(() => {
     return <Divider height={1} color="#f5f5f5" />
   }, [])
+
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
       <CustomStackHeader title="交易明细" />
       <Divider height={1} color="#f5f5f5" />
       <MyListView
-        data={billArr || []}
+        showEmpty={true}
+        data={data?.list || []}
         renderItem={renderItem}
+        emptymessage={'一笔交易都木有呢'}
         ItemSeparatorComponent={renderSeparator}
       />
     </Column>

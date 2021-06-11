@@ -36,9 +36,16 @@ const fetchWalletBill = async (params: any, page: number) => {
 }
 
 const useWalletBill = (params: any) => {
-  return useInfiniteQuery(['walletBill', params], ({ pageParam = 1 }) =>
-    fetchWalletBill(params, pageParam),
+  const { data, ...meta } = useInfiniteQuery(
+    ['walletBill', params],
+    ({ pageParam = 1 }) => fetchWalletBill(params, pageParam),
   )
+
+  const list = data?.pages[0]?.list
+  return {
+    ...meta,
+    list,
+  }
 }
 
 export { useWalletBill }

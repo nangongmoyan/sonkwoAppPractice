@@ -5,7 +5,7 @@
 import React, { useRef, useCallback, useEffect } from 'react'
 import MyText from '../text'
 import { Row, Column } from '@ui'
-import { FlatList, FlatListProps } from 'react-native'
+import { FlatList, FlatListProps, Image } from 'react-native'
 
 export interface ListViewProps<ItemT = any> extends FlatListProps<ItemT> {
   data: ItemT[]
@@ -22,6 +22,10 @@ export interface ListViewProps<ItemT = any> extends FlatListProps<ItemT> {
 export const DefaultListEmptyComponent = ({ message = '没有数据' }) => {
   return (
     <Column style={{ flex: 1 }} align="center" justify="center">
+      <Image
+        source={require('@source/images/nogt.png')}
+        style={{ height: 80, width: 80, marginBottom: 20 }}
+      />
       <MyText color="#333">{message}</MyText>
     </Column>
   )
@@ -75,7 +79,11 @@ const ListView: React.ForwardRefRenderFunction<FlatList<any>, ListViewProps> = (
         </Row>
       )
     } else {
-      return null
+      return (
+        <MyText size={10} color="#999">
+          - THE END -
+        </MyText>
+      )
     }
   }
 
@@ -86,7 +94,10 @@ const ListView: React.ForwardRefRenderFunction<FlatList<any>, ListViewProps> = (
   if (loading || !data) {
     return (
       <Column style={{ flex: 1 }} align="center" justify="center">
-        {/* <WaveLoading /> */}
+        <Image
+          source={require('@source/images/loading.gif')}
+          style={{ width: 110, height: 110 }}
+        />
       </Column>
     )
   }
@@ -102,6 +113,7 @@ const ListView: React.ForwardRefRenderFunction<FlatList<any>, ListViewProps> = (
       onEndReached={onEndReached}
       ListEmptyComponent={renderEmpty}
       ListFooterComponent={renderFooter}
+      contentContainerStyle={{ flex: 1 }}
       showsVerticalScrollIndicator={false}
       onMomentumScrollBegin={onMomentumScrollBegin}
       {...restProps}
