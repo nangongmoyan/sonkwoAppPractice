@@ -96,7 +96,7 @@ const GuideOptions: React.FC<GuideOptionsProps> = React.memo(({}) => {
       <AgreementPolicy
         textSize={adaptiveFont(10)}
         textColor={ThemeColors.White}
-        // style={{ width: deviceWidth - 50 }}
+        style={{ marginTop: 20 }}
       />
     </Column>
   )

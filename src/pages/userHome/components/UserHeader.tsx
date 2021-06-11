@@ -24,6 +24,7 @@ import * as iconPath from '@source/svg'
 import { adaptiveWidth } from '@util'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
 import { UserFollowFans } from './UserFollowFans'
+import { useUser } from '@features/user/model'
 
 const ITEMS = [
   { label: 'LANG45', route: 'UserGroup' },
@@ -33,12 +34,14 @@ const ITEMS = [
 ]
 
 interface UserHeaderProps {}
-const UserHeader: React.FC<UserHeaderProps> = memo(({}) => {
+const UserHeader: React.FC<any> = memo(({}) => {
   const { t } = useLocale()
   const navigation = useNavigation()
   const { width } = useDimensions()
   const userInfo = useUserInfo()
-  const { avatar, nickname } = userInfo
+
+  const { id, avatar, nickname } = userInfo
+  const user = useUser(id)
 
   const routes = useMemo(() => {
     return ITEMS.map((item) => {
@@ -46,16 +49,16 @@ const UserHeader: React.FC<UserHeaderProps> = memo(({}) => {
       Object.assign(item, { label: t(label) })
       switch (route) {
         case 'UserGroup':
-          return { ...item, counts: 10 }
+          return { ...item, counts: user?.groupCount ?? 0 }
         case 'UserReviews':
-          return { ...item, counts: 20 }
+          return { ...item, counts: user?.reviewCount ?? 0 }
         case 'WishList':
           return { ...item, counts: 30 }
         case 'PointStore':
           return { ...item, counts: 50 }
       }
     })
-  }, [])
+  }, [user])
   const renderHeaderLeft = useCallback(() => {
     return (
       <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
@@ -96,7 +99,7 @@ const UserHeader: React.FC<UserHeaderProps> = memo(({}) => {
         style={userHomeStyles.userBg}
       />
       <Column
-        linear={['vertical', 'rgba(0,0,0,0.5)', '#222222']}
+        linear={['vertical', 'rgba(0,0,0,0.2)', '#222222']}
         style={userHomeStyles.userBg}
       />
       <CustomStackHeader

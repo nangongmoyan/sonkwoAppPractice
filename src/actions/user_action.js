@@ -221,6 +221,16 @@ const defaultAuthQuery = {
 }
 export const getUserInfo = () => async (dispatch) => {
   const result = await usersApi.queryAuthUserInfo(defaultAuthQuery)
+
+  const ordersCount = await Promise.all([
+    usersApi.getAuthUserInfo(),
+    usersApi.getAuthUserInfo('abroad'),
+  ])
+    .then((res) => {
+      return res[0].ordersCount + res[1].ordersCount
+    })
+    .catch((_) => 0)
+
   const {
     wallet,
     avatar,
@@ -262,6 +272,7 @@ export const getUserInfo = () => async (dispatch) => {
       configs,
       birthday,
       nickname,
+      ordersCount,
       introduction,
       showSteamReview,
       email: emailAsterisks,

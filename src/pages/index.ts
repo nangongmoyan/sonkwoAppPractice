@@ -27,6 +27,7 @@ import { Browser } from '@ui'
 import { Wallet } from './wallet'
 import { Message } from './message'
 import { PrivateMessages } from './privateMessages'
+import { WalletBill } from './walletBill'
 
 const tabSatcks = [
   /** 首页 */
@@ -99,6 +100,12 @@ const loggedStacks = [
   {
     name: 'Wallet',
     component: Wallet,
+    options: { headerShown: false },
+  },
+  /** 交易明细 */
+  {
+    name: 'WalletBill',
+    component: WalletBill,
     options: { headerShown: false },
   },
   /** 设置 */

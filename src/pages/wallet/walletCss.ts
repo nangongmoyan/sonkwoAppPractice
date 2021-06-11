@@ -11,7 +11,7 @@ const walletStyle = StyleSheet.create({
   rightText: {
     fontSize: 13,
     color: ThemeColors.White,
-    width: adaptiveWidth(124),
+    width: adaptiveWidth(150),
   },
   enabledBalance: {
     fontSize: 18,

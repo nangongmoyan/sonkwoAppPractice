@@ -17,7 +17,7 @@ const guideStyles = StyleSheet.create({
     width: adaptiveWidth(560),
     height: adaptiveHeight(72),
     backgroundColor: ThemeColors.White,
-    borderRadius: adaptiveHeight(72) / 2,
+    borderRadius: 8,
   },
   guideOptionsThird: {
     width: adaptiveWidth(80),

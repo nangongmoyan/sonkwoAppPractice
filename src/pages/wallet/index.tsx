@@ -18,19 +18,20 @@ import {
 } from '@ui'
 import { ThemeColors } from 'ui/theme'
 import { adaptiveWidth, vw } from '@util'
-import { useSelector } from '@hooks'
+import { useNavigation, useSelector } from '@hooks'
 import { walletStyle } from './walletCss'
 
 const ITEMS = [
-  { route: 'PurchaseRecord', label: 'LANG119' },
-  { route: 'ExpensesRecord', label: 'LANG120' },
-  { route: 'RefundRecord', label: 'LANG121' },
-  { route: 'PrizeRecord', label: 'LANG122' },
-  { route: 'ReturnToWallet', label: 'LANG123' },
+  { route: 'Recharge', label: 'LANG119' },
+  { route: 'Purchase', label: 'LANG120' },
+  { route: 'Refund', label: 'LANG121' },
+  { route: 'Gift', label: 'LANG122' },
+  { route: 'Store_Refund', label: 'LANG123' },
 ]
 
 const Wallet: React.FC<any> = ({}) => {
   const { t } = useLocale()
+  const navigation = useNavigation()
   const [isVisible, setIsVisible] = useState(false)
   const wallet = useSelector((state) => state.WalletReducer.wallet)
   const { status, balance } = wallet
@@ -65,7 +66,7 @@ const Wallet: React.FC<any> = ({}) => {
         title={t('LANG113')}
         renderRight={renderRight}
         tintColor={ThemeColors.White}
-        rightWidth={adaptiveWidth(124)}
+        rightWidth={adaptiveWidth(150)}
       />
       <Divider height={55} />
       <ShadowBox boxStyle={walletStyle.shadowBox}>
@@ -89,6 +90,7 @@ const Wallet: React.FC<any> = ({}) => {
         ITEMS.map((item, index) => (
           <NavItem
             key={index}
+            onPress={() => navigation.navigate('WalletBill')}
             itemTitle={t(item.label)}
             showItemSeparator={true}
           />

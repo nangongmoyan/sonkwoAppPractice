@@ -4,7 +4,7 @@
  */
 import React, { useState } from 'react'
 import { useLocale } from '@contexts/locale'
-import { useSafeArea, useDimensions } from '@hooks'
+import { useSafeArea, useDimensions, useRoute } from '@hooks'
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -17,12 +17,20 @@ import { Column, HeadTabView, MyStatusBar, MyText, Row } from '@ui'
 import {
   UserCollections,
   UserComments,
+  UserFollowFans,
   UserHeader,
   UserReplies,
   UserSubjects,
 } from './components'
+import { useUser } from '@features/user/model'
+import { useUserInfo } from '@features/user/hooks/useIsSelf'
+import { UserFollowdStackHeader } from '@features/user/components'
 
 const UserHome = ({ navigation }) => {
+  const { params = {} } = useRoute()
+  const { id: selfId } = useUserInfo()
+  const { id } = params
+  const userId = id ?? selfId
   const { t } = useLocale()
   const { top } = useSafeArea()
   const frozeTop = top + 44
@@ -73,7 +81,7 @@ const UserHome = ({ navigation }) => {
             height: frozeTop,
           }}
         >
-          <MyText>asdfsd</MyText>
+          <UserFollowdStackHeader userId={userId} />
         </Row>
       </Animated.View>
     )

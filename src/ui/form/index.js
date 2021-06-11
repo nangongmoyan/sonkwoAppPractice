@@ -156,7 +156,7 @@ const SubmitButton = ({ onSubmit, ...restProps }) => {
       linear
       onPress={onPress}
       disabled={disabled}
-      style={{ borderRadius: 30 }}
+      style={{ borderRadius: 30, width: vw(80) }}
       textStyle={{ fontSize: 15 }}
       color={ThemeColors.Default}
       {...restProps}

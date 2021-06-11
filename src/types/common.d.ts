@@ -1,7 +1,18 @@
 /**
  *
- * created by lijianpo on 2021/05/19
+ * changed by lijianpo on 2021/06/11
  */
+
+declare type Url = string
+
+declare type Html = string
+
+/** second */
+declare type Timestamp = number
+
+declare type Id = number
+
+declare type FIXME = any
 
 declare interface routeProps {
   key: string

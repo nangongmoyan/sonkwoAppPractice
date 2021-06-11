@@ -10,7 +10,7 @@ import { ThemeColors } from 'ui/theme'
 const userHomeStyles = StyleSheet.create({
   userBg: {
     width: deviceWidth,
-    height: (deviceWidth * 900) / 1080,
+    height: (deviceWidth * 405) / 375,
     position: 'absolute',
     top: 0,
     left: 0,
@@ -45,7 +45,7 @@ const userHomeStyles = StyleSheet.create({
     marginTop: 15,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    backgroundColor: 'rgba(34,34,34,0.8)',
+    backgroundColor: '#222',
   },
   followFans: {
     height: 50,

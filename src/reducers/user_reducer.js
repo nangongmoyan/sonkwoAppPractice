@@ -12,6 +12,7 @@ const defaultUserInfo = {
   gender: 2,
   credential_num: '',
   email: '',
+  ordersCount: 0,
   phone_number: '',
   set_password: true,
   show_steam_review: 'hidden',

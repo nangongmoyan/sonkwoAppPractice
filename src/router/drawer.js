@@ -64,7 +64,8 @@ function DrawerScreen(props) {
   const dispatch = useDispatch()
   const isDrawerOpen = useIsDrawerOpen()
   const { userInfo, navigation } = props
-  const { nickname, avatar, point = {} } = userInfo
+  const { nickname, avatar, point = {}, ordersCount } = userInfo
+  // console.log({ ordersCount })
   const wallet = useSelector((state) => state.WalletReducer.wallet)
 
   useEffect(() => {
@@ -100,7 +101,7 @@ function DrawerScreen(props) {
               rightTitle: wallet?.balance ?? 0,
             }
           case 'Order':
-            return { ...item }
+            return { ...item, rightTitle: ordersCount ?? 0 }
           case 'PointsMall':
             return {
               ...item,
@@ -129,7 +130,7 @@ function DrawerScreen(props) {
         }
       })
     })
-  }, [t, wallet, point])
+  }, [t, wallet, point, ordersCount])
 
   const leftIcon = useCallback((item) => {
     return (
