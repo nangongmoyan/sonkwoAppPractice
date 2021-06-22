@@ -24,8 +24,9 @@ import * as iconPath from '@source/svg'
 import { adaptiveWidth } from '@util'
 import { useUserInfo } from '@features/user/hooks/useIsSelf'
 import { UserFollowFans } from './UserFollowFans'
-import { useUser } from '@features/user/model'
-
+import { useFriends, useUser } from '@features/user/model'
+import { get } from 'lodash'
+import { FriendKind } from 'enum/user'
 const ITEMS = [
   { label: 'LANG45', route: 'UserGroup' },
   { label: 'LANG46', route: 'UserReviews' },
@@ -42,23 +43,29 @@ const UserHeader: React.FC<any> = memo(({}) => {
 
   const { id, avatar, nickname } = userInfo
   const user = useUser(id)
-
+  const { friends } = useFriends(id, FriendKind.Followers)
+  console.log({ user })
   const routes = useMemo(() => {
     return ITEMS.map((item) => {
       const { route, label } = item
       Object.assign(item, { label: t(label) })
       switch (route) {
         case 'UserGroup':
-          return { ...item, counts: user?.groupCount ?? 0 }
+          const groupCount = get(user, 'groupCount', 0)
+          return { ...item, counts: groupCount }
         case 'UserReviews':
-          return { ...item, counts: user?.reviewCount ?? 0 }
+          const reviewCount = get(user, 'reviewCount', 0)
+          return { ...item, counts: reviewCount }
         case 'WishList':
-          return { ...item, counts: 30 }
+          const wishCount = get(user, 'wishCount', 0)
+          return { ...item, counts: wishCount }
         case 'PointStore':
-          return { ...item, counts: 50 }
+          const score = get(user, 'point.score', 0)
+          const historyScore = get(user, 'point.historyScore', 0)
+          return { ...item, counts: score + historyScore }
       }
     })
-  }, [user])
+  }, [t, user])
   const renderHeaderLeft = useCallback(() => {
     return (
       <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
@@ -132,7 +139,7 @@ const UserHeader: React.FC<any> = memo(({}) => {
           </GHWithoutFeedback>
         ))}
       </Row>
-      <UserFollowFans />
+      <UserFollowFans user={user} friends={friends} />
     </Column>
   )
 })

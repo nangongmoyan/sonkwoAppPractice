@@ -88,14 +88,14 @@ export const signInWithSms = (params, cb) => async (dispatch) => {
 
 export const signInWithPass = (params, cb) => async (dispatch) => {
   const { account, password } = params
-  const data = {
-    account: {
-      email_or_phone_number_eq: account,
-      password: password,
-      remember_me: true,
-    },
-  }
-  const result = await authApi.signIn(data)
+  // const data = {
+  //   account: {
+  //     email_or_phone_number_eq: account,
+  //     password: password,
+  //     remember_me: true,
+  //   },
+  // }
+  const result = await authApi.signIn(account, password)
   if ('status' in result) {
     console.log({ result })
   } else {

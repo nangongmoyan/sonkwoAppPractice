@@ -8,6 +8,7 @@ import { ThemeColors } from 'ui/theme'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { tabSatcks } from '@pages/'
 import { useLocale } from '@contexts/locale'
+import { vw } from '@util'
 
 // 选项卡页签tab navigator 实例
 const Tab = createBottomTabNavigator()
@@ -47,7 +48,13 @@ function TabScreen() {
                 : require('@source/images/mine.png')
               break
           }
-          return <Image source={iconSource} style={{ height: 25, width: 25 }} />
+          const imageSize = focused ? vw(20) : 25
+          return (
+            <Image
+              source={iconSource}
+              style={{ height: imageSize, width: imageSize }}
+            />
+          )
         },
       })}
       tabBarOptions={{

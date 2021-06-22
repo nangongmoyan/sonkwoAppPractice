@@ -3,3 +3,4 @@
  */
 
 export * from './useUser'
+export * from './useFriends'
