@@ -118,7 +118,7 @@ const HeadTabView: React.FC<Props> = ({
 }
 
 export default React.memo(HeadTabView)
-
+export { MyTabBar }
 const styles = StyleSheet.create({
   tabviewLayout: {
     height: 100,

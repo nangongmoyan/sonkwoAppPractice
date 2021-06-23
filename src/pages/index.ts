@@ -28,6 +28,8 @@ import { Wallet } from './wallet'
 import { Message } from './message'
 import { PrivateMessages } from './privateMessages'
 import { WalletBill } from './walletBill'
+import { ActivationCode } from './activationCode'
+import { SonkwoCoupon } from './sonkwoCoupon'
 
 const tabSatcks = [
   /** 首页 */
@@ -106,6 +108,18 @@ const loggedStacks = [
   {
     name: 'WalletBill',
     component: WalletBill,
+    options: { headerShown: false },
+  },
+  /** 激活码 */
+  {
+    name: 'ActivationCode',
+    component: ActivationCode,
+    options: { headerShown: false },
+  },
+  /** 优惠券 */
+  {
+    name: 'SonkwoCoupon',
+    component: SonkwoCoupon,
     options: { headerShown: false },
   },
   /** 设置 */
