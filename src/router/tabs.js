@@ -58,7 +58,7 @@ function TabScreen() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: ThemeColors.Default,
+        activeTintColor: '#f000',
         inactiveTintColor: '#85858C',
       }}
     >
