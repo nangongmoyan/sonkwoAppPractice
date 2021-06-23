@@ -1,19 +1,21 @@
 /**
  * created by lijianpo on 2021/06/11
  */
+import React, { useCallback, useMemo, useState } from 'react'
 import { useWalletBill } from '@features/wallet/model'
 import { useRoute } from '@hooks'
 import {
   Column,
   CustomStackHeader,
   Divider,
-  MyListView,
+  Loading,
+  MyScrollView,
   MyText,
   Row,
 } from '@ui'
 import { vw } from '@util'
 import moment from 'moment'
-import React, { useCallback, useMemo, useState } from 'react'
+import { get } from 'lodash'
 
 const FORMAT = 'YYYY-MM-DD'
 
@@ -32,14 +34,69 @@ const WalletBill: React.FC<any> = ({}) => {
         created_at_start_with: startDate,
       },
     }
-  }, [endDate, startDate])
-  const data = useWalletBill(params)
-  console.log({ data })
-  // const billArr = data?.pages[0]?.list
+  }, [endDate, kind, startDate])
 
-  const renderItem = useCallback(({ item }) => {
-    const { title, date, price, color } = item
+  const {
+    data,
+    refetch,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+  } = useWalletBill(params)
+
+  const pages = get(data, 'pages', [])
+
+  const showEmpty = useMemo(() => get(pages, '[0].data.length') === 0, [pages])
+
+  const renderStickyHeader = () => {
     return (
+      <Column>
+        <CustomStackHeader title="交易明细" />
+        <Divider height={1} color="#f5f5f5" />
+      </Column>
+    )
+  }
+
+  const onEndReached = useCallback(() => {
+    hasNextPage && !isFetchingNextPage && fetchNextPage()
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
+
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <MyScrollView
+      refresh
+      showEmpty={showEmpty}
+      onRefresh={refetch}
+      hasNextPage={hasNextPage}
+      onEndReached={onEndReached}
+      emptymessage={'一笔交易都木有呢'}
+      isFetchingNextPage={isFetchingNextPage}
+      StickyHeaderComponent={renderStickyHeader}
+    >
+      {pages.map((page, i) => {
+        return (
+          <Column key={i}>
+            {page?.data?.map((bill, index) => {
+              return <BillCard {...bill} key={index} />
+            })}
+          </Column>
+        )
+      })}
+    </MyScrollView>
+  )
+}
+
+const BillCard: React.FC<any> = ({
+  title,
+  date,
+  price,
+  color,
+  unshowSeparator,
+}) => {
+  return (
+    <Column>
       <Row
         style={{
           height: 72,
@@ -64,26 +121,8 @@ const WalletBill: React.FC<any> = ({}) => {
           {price}
         </MyText>
       </Row>
-    )
-  }, [])
-
-  const renderSeparator = useCallback(() => {
-    return <Divider height={1} color="#f5f5f5" />
-  }, [])
-
-  return (
-    <Column style={{ flex: 1, backgroundColor: 'white' }}>
-      <CustomStackHeader title="交易明细" />
-      <Divider height={1} color="#f5f5f5" />
-      <MyListView
-        showEmpty={true}
-        data={data?.list || []}
-        renderItem={renderItem}
-        emptymessage={'一笔交易都木有呢'}
-        ItemSeparatorComponent={renderSeparator}
-      />
+      {unshowSeparator ? null : <Divider height={1} color="#f5f5f5" />}
     </Column>
   )
 }
-
 export { WalletBill }

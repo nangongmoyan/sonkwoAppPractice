@@ -1,17 +1,20 @@
 /**
  * created by lijianpo on 2021/06/11
  */
-
-import { walletApi } from '@sonkwo/sonkwo-api'
 import moment from 'moment'
+import { walletApi } from '@sonkwo/sonkwo-api'
 import { useInfiniteQuery } from 'react-query'
 
-const transformBill = (data) => {
+const transformBill = (data, index, res) => {
+  const { currentPage, totalPages } = res
+  const listLenght = res.list.length - 1
+  const unshowSeparator = currentPage === totalPages && index === listLenght
+
   const color = '#0288d1'
-  const { title, kind, amount, discount, created_at_timestamp } = data
+  const { title, kind, amount, discount, createdAtTimestamp } = data
   const price = `+${parseFloat(amount).toFixed(2)}`
   const discountPrice = ((amount * (100 - (discount || 0))) / 100).toFixed(2)
-  const date = moment(created_at_timestamp).format('YYYY-MM-DD')
+  const date = moment(createdAtTimestamp * 1000).format('YYYY-MM-DD')
   const billObj = {
     redeem: [title, price, color],
     gift: ['果币奖品', price, color],
@@ -25,27 +28,28 @@ const transformBill = (data) => {
     title: billObj[kind]?.[0],
     price: billObj[kind]?.[1],
     color: billObj[kind]?.[2],
+    unshowSeparator,
   }
 }
 const fetchWalletBill = async (params: any, page: number) => {
-  const { list, ...meta } = await walletApi.getRecords(params, page)
+  const result = await walletApi.getRecords(params, page)
+  const { list, ...meta } = result
+
   return {
     ...meta,
-    list: list.map(transformBill),
+    data: list.map((v, index) => transformBill(v, index, result)),
   }
 }
 
 const useWalletBill = (params: any) => {
-  const { data, ...meta } = useInfiniteQuery(
+  return useInfiniteQuery(
     ['walletBill', params],
     ({ pageParam = 1 }) => fetchWalletBill(params, pageParam),
+    {
+      getNextPageParam: (lastPage) => lastPage?.nextPage ?? false,
+      getPreviousPageParam: (firstPage) => firstPage?.prePage ?? false,
+    },
   )
-
-  const list = data?.pages[0]?.list
-  return {
-    ...meta,
-    list,
-  }
 }
 
 export { useWalletBill }
