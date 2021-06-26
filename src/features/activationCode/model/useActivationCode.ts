@@ -10,8 +10,8 @@ const useActivationCode = (area: string) => {
     ['ActivationCode ', area],
     ({ pageParam = 1 }) => fetchActivationCode(area, pageParam),
     {
-      getNextPageParam: (lastPage) => lastPage?.nextPage ?? false,
-      getPreviousPageParam: (firstPage) => firstPage?.prePage ?? false,
+      getNextPageParam: (lastPage) => lastPage?.meta?.nextPage ?? false,
+      getPreviousPageParam: (firstPage) => firstPage?.meta?.prePage ?? false,
     },
   )
 }

@@ -4,3 +4,4 @@
  */
 export * from './DateWheel'
 export * from './EditStackHeader'
+export * from './SkuKeyIcon'

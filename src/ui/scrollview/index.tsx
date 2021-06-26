@@ -2,8 +2,8 @@
  *
  * created by lijianpo on 2021/06/23
  */
-import { debounce, deviceHeight } from '@util'
 import React, { useRef, useState, useCallback } from 'react'
+
 import {
   View,
   Image,
@@ -12,10 +12,10 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from 'react-native'
-import { DefaultListEmptyComponent } from 'ui/listview/ListView'
-import MyText from 'ui/text'
+import MyText from '../text'
 import { Column, Row } from '../flex'
-import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { debounce, deviceHeight, getBottomSpace } from '@util'
+import { DefaultListEmptyComponent } from 'ui/listview/ListView'
 
 const MyScrollView: React.FC<any> = ({
   style,

@@ -4,7 +4,13 @@
  */
 
 //
-export { isiOS, isiPhoneX, statusBarHeight, titleHeight } from './fullscreen'
+export {
+  isiOS,
+  titleHeight,
+  isiPhoneX,
+  statusBarHeight,
+  getBottomSpace,
+} from './fullscreen'
 
 //
 export { default as deviceStorage } from './deviceStorage'
