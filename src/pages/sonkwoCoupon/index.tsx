@@ -2,35 +2,33 @@
  * 我的激活码
  * created by lijianpo on 2021/06/23
  */
-import React, { useCallback } from 'react'
-import { Column, CustomStackHeader, Divider, MyTabBar, MyText, Row } from '@ui'
-import { TabView, SceneMap } from 'react-native-tab-view'
-import { View, useWindowDimensions } from 'react-native'
-import { deviceWidth } from '@util'
+import React, { useCallback, useMemo } from 'react'
+import {
+  Column,
+  CustomStackHeader,
+  Divider,
+  MyTabBar,
+  MyText,
+  Row,
+  Loading,
+  MyScrollView,
+  ImageBackground,
+} from '@ui'
+import { TabView } from 'react-native-tab-view'
+import { useWindowDimensions, Platform } from 'react-native'
+import { deviceWidth, getBottomSpace } from '@util'
 import { ThemeColors } from 'ui/theme'
-
-const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
-)
-
-const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
-)
-
-const ThirdRoute = () => <View style={{ flex: 1, backgroundColor: '#675' }} />
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-  third: ThirdRoute,
-})
+import { useSonkwoCoupon } from '@features/sonkwoCoupon/model'
+import { get } from 'lodash'
+import { useDimensions } from '@hooks'
 
 const SonkwoCoupon: React.FC<any> = ({}) => {
   const layout = useWindowDimensions()
   const [index, setIndex] = React.useState(0)
   const [routes] = React.useState([
-    { key: 'first', title: '可用' },
-    { key: 'second', title: '使用记录' },
-    { key: 'third', title: '过期' },
+    { key: 'AVALIABLE', title: '可用' },
+    { key: 'HAVE_USED', title: '使用记录' },
+    { key: 'HAVE_EXPIRED', title: '过期' },
   ])
 
   const renderTabBar = useCallback((props) => {
@@ -53,6 +51,12 @@ const SonkwoCoupon: React.FC<any> = ({}) => {
       </Column>
     )
   }, [])
+
+  const renderScene = (sceneProps: any) => {
+    const { route } = sceneProps
+    return <CouponList type={route.key} />
+  }
+
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
       <CustomStackHeader title="我的优惠券" />
@@ -64,9 +68,92 @@ const SonkwoCoupon: React.FC<any> = ({}) => {
         renderTabBar={renderTabBar}
         initialLayout={{ width: layout.width }}
       />
-      <MyText>兑换优惠券</MyText>
+      <Column
+        style={{
+          paddingVertical: getBottomSpace() / 2,
+          backgroundColor: 'white',
+          shadowColor: '#E8E8F1',
+          ...Platform.select({
+            ios: {
+              // shadowColor: '#E8E8F1',
+              shadowOffset: {
+                width: 0,
+                height: -2,
+              },
+              shadowOpacity: 1,
+            },
+            android: {
+              elevation: 5,
+            },
+          }),
+        }}
+      >
+        <MyText>兑换礼物</MyText>
+      </Column>
     </Column>
   )
 }
 
+const CouponList: React.FC<any> = ({ type }) => {
+  const {
+    data,
+    refetch,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+  } = useSonkwoCoupon(type)
+
+  const pages = get(data, 'pages', [])
+
+  const showEmpty = useMemo(() => get(pages, '[0].data.length') === 0, [pages])
+
+  const onEndReached = useCallback(() => {
+    hasNextPage && !isFetchingNextPage && fetchNextPage()
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
+
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <MyScrollView
+      refresh
+      showEmpty={showEmpty}
+      onRefresh={refetch}
+      hasNextPage={hasNextPage}
+      onEndReached={onEndReached}
+      // emptymessage={'一笔交易都木有呢'}
+      isFetchingNextPage={isFetchingNextPage}
+      // StickyHeaderComponent={renderStickyHeader}
+    >
+      {pages.map((page, i) => {
+        return (
+          <Column key={i}>
+            {page?.data?.map((coupon, index) => {
+              console.log({ coupon })
+              return <CouponCard {...coupon.coupon} key={index} />
+            })}
+          </Column>
+        )
+      })}
+    </MyScrollView>
+  )
+}
+
+const CouponCard: React.FC<any> = ({ name }) => {
+  const { width } = useDimensions()
+  return (
+    <Column>
+      <ImageBackground
+        source={require('@source/images/coupon.png')}
+        style={{ width: width - 30, height: 90 }}
+      >
+        <Row>
+          <Column>
+            <MyText>{name}</MyText>
+          </Column>
+        </Row>
+      </ImageBackground>
+    </Column>
+  )
+}
 export { SonkwoCoupon }
