@@ -27,8 +27,8 @@ const ShadowBox: React.FC<ShadowBoxProps> = ({
           borderRadius: boxBorderRadius,
           backgroundColor: boxBackgroundColor,
         },
-        boxStyle,
         styles.container,
+        boxStyle,
       ]}
       {...restProps}
     >

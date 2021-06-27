@@ -13,6 +13,7 @@ import {
   Loading,
   MyScrollView,
   ImageBackground,
+  ShadowBox,
 } from '@ui'
 import { TabView } from 'react-native-tab-view'
 import { useWindowDimensions, Platform } from 'react-native'
@@ -140,10 +141,28 @@ const CouponList: React.FC<any> = ({ type }) => {
 }
 
 const CouponCard: React.FC<any> = ({ name }) => {
-  const { width } = useDimensions()
   return (
-    <Column>
-      <ImageBackground
+    <Column style={{ marginTop: 20 }}>
+      <ShadowBox boxStyle={{ paddingLeft: 0 }}>
+        <Row style={{ height: 90 }}>
+          <Column
+            style={{
+              width: 24,
+              backgroundColor: '#3178F5',
+              height: 90,
+              borderTopLeftRadius: 8,
+              borderBottomLeftRadius: 8,
+              justifyContent: 'center',
+            }}
+          >
+            <MyText color="white">国际站</MyText>
+          </Column>
+          <Column>
+            <MyText>{name}</MyText>
+          </Column>
+        </Row>
+      </ShadowBox>
+      {/* <ImageBackground
         source={require('@source/images/coupon.png')}
         style={{ width: width - 30, height: 90 }}
       >
@@ -152,7 +171,7 @@ const CouponCard: React.FC<any> = ({ name }) => {
             <MyText>{name}</MyText>
           </Column>
         </Row>
-      </ImageBackground>
+      </ImageBackground> */}
     </Column>
   )
 }
