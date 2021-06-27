@@ -14,13 +14,15 @@ import {
   Row,
   MyImage,
 } from '@ui'
+import moment from 'moment'
 import { TabView } from 'react-native-tab-view'
 import { useWindowDimensions, Platform } from 'react-native'
 import { useActivationCode } from '@features/activationCode/model/useActivationCode'
 import { get } from 'lodash'
-import { deviceWidth, getBottomSpace, vw } from '@util'
+import { getBottomSpace, vw } from '@util'
 import { SkuKeyIcon } from '@features/common/components'
 import { getSkuKeyType } from '@features/common/utils'
+import { ThemeColors } from 'ui/theme'
 
 const ActivationCode: React.FC<any> = ({}) => {
   const layout = useWindowDimensions()
@@ -90,7 +92,6 @@ const ActivationList: React.FC<any> = ({ area }) => {
     isFetchingNextPage,
   } = useActivationCode(area)
 
-  console.log({ area, data, hasNextPage })
   const pages = get(data, 'pages', [])
 
   const showEmpty = useMemo(() => get(pages, '[0].data.length') === 0, [pages])
@@ -116,6 +117,7 @@ const ActivationList: React.FC<any> = ({ area }) => {
         return (
           <Column key={i}>
             {page?.games?.map((activation, index) => {
+              console.log({ activation })
               return <ActivationCard {...activation} key={index} />
             })}
           </Column>
@@ -125,14 +127,19 @@ const ActivationList: React.FC<any> = ({ area }) => {
   )
 }
 
-const ActivationCard: React.FC<any> = ({ keyType, skuNames, skuCovers }) => {
+const ActivationCard: React.FC<any> = ({
+  keyType,
+  pubdate = 0,
+  skuNames,
+  skuCovers,
+}) => {
   const cover = get(skuCovers, 'default', '')
   const name = get(skuNames, 'default', '')
   const skuKeyType = getSkuKeyType(keyType)
-  const skuKeyName = `${get(skuKeyType, 'name', '')}激活`
-  // console.log({ cover })
+  const skuKeyName = get(skuKeyType, 'name', '')
+  const pubdateTime = moment(pubdate * 1000).format('YYYY-MM-DD')
   return (
-    <Row style={{ paddingHorizontal: 15, marginBottom: 15 }}>
+    <Row style={{ paddingHorizontal: 15, marginTop: 15 }}>
       <MyImage
         uri={cover}
         width={vw(27)}
@@ -140,17 +147,39 @@ const ActivationCard: React.FC<any> = ({ keyType, skuNames, skuCovers }) => {
         style={{ borderRadius: 8, marginRight: 15 }}
       />
       <Column
-        style={{ height: vw(16), alignItems: 'flex-start' }}
+        style={{ height: vw(16), width: vw(38) }}
         justify="space-between"
+        align="flex-start"
       >
         <MyText size={15} numberOfLines={1}>
           {name}
         </MyText>
         <Row>
+          <MyText>激活类型：</MyText>
           <SkuKeyIcon keyType={keyType} style={{ marginRight: 5 }} />
           <MyText>{skuKeyName}</MyText>
         </Row>
+        <Row>
+          <MyText>发布时间：{pubdateTime}</MyText>
+        </Row>
       </Column>
+      <Column style={{ flex: 1 }} />
+      {keyType === 'no_key' ? (
+        <MyText color={ThemeColors.Default}>免激活码</MyText>
+      ) : (
+        <MyText
+          style={{
+            borderWidth: 1,
+            borderRadius: 4,
+            borderColor: ThemeColors.Default,
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+            color: ThemeColors.Default,
+          }}
+        >
+          查看激活码
+        </MyText>
+      )}
     </Row>
   )
 }
