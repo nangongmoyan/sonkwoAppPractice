@@ -31,8 +31,6 @@ const ActivationCode: React.FC<any> = ({}) => {
     { key: 'abroad', title: '国际站' },
     { key: 'native', title: '大陆站' },
   ])
-  const xxx = getBottomSpace()
-  console.log({ xxx })
   const renderTabBar = useCallback((props) => {
     return (
       <Column align="center">
@@ -117,7 +115,6 @@ const ActivationList: React.FC<any> = ({ area }) => {
         return (
           <Column key={i}>
             {page?.games?.map((activation, index) => {
-              console.log({ activation })
               return <ActivationCard {...activation} key={index} />
             })}
           </Column>

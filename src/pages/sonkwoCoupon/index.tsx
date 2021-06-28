@@ -10,18 +10,20 @@ import {
   MyTabBar,
   MyText,
   Row,
+  Image,
   Loading,
   MyScrollView,
-  ImageBackground,
+  MyButton,
   ShadowBox,
 } from '@ui'
 import { TabView } from 'react-native-tab-view'
 import { useWindowDimensions, Platform } from 'react-native'
-import { deviceWidth, getBottomSpace } from '@util'
+import { adaptiveWidth, deviceWidth, getBottomSpace } from '@util'
 import { ThemeColors } from 'ui/theme'
 import { useSonkwoCoupon } from '@features/sonkwoCoupon/model'
 import { get } from 'lodash'
 import { useDimensions } from '@hooks'
+import moment from 'moment'
 
 const SonkwoCoupon: React.FC<any> = ({}) => {
   const layout = useWindowDimensions()
@@ -131,7 +133,7 @@ const CouponList: React.FC<any> = ({ type }) => {
           <Column key={i}>
             {page?.data?.map((coupon, index) => {
               console.log({ coupon })
-              return <CouponCard {...coupon.coupon} key={index} />
+              return <CouponCard {...coupon.coupon} key={index} type={type} />
             })}
           </Column>
         )
@@ -140,11 +142,79 @@ const CouponList: React.FC<any> = ({ type }) => {
   )
 }
 
-const CouponCard: React.FC<any> = ({ name }) => {
+const CouponCard: React.FC<any> = ({
+  name,
+  value,
+  usageInfo,
+  discountType,
+  minimumOrder,
+  validUntilTimestamp,
+  validFromTimestamp,
+}) => {
+  const price =
+    discountType === 'percentage' ? `${parseInt(value)}%off` : `¥${value}`
+  const endDate = moment(validUntilTimestamp * 1000).format('YYYY-MM-DD')
+  const startDate = moment(validFromTimestamp * 1000).format('YYYY-MM-DD')
   return (
     <Column style={{ marginTop: 20 }}>
-      <ShadowBox boxStyle={{ paddingLeft: 0 }}>
+      <ShadowBox>
         <Row style={{ height: 90 }}>
+          <Column
+            style={{
+              width: adaptiveWidth(160),
+              alignItems: 'flex-start',
+              paddingTop: 12,
+            }}
+          >
+            <MyText size={20} weight="semibold" color={ThemeColors.Default}>
+              {price}
+            </MyText>
+            <MyText size={11} weight="medium" color={ThemeColors.Default}>
+              满{minimumOrder}使用
+            </MyText>
+          </Column>
+          <Column
+            style={{
+              width: adaptiveWidth(350),
+              alignItems: 'flex-start',
+              height: 90,
+              paddingVertical: 10,
+              justifyContent: 'space-between',
+            }}
+          >
+            <MyText size={13} weight="semibold" color="black" numberOfLines={1}>
+              {name}
+            </MyText>
+            <MyText color="grey">{usageInfo}</MyText>
+            <MyText color="grey">
+              {startDate} 至 {endDate}
+            </MyText>
+          </Column>
+          <MyButton
+            title="查看使用"
+            linear={['#FF9017', '#FF6D3F']}
+            style={{ width: 65, height: 26, borderRadius: 13 }}
+            containerStyle={{ position: 'absolute', right: 10 }}
+          />
+          <Column
+            style={{
+              backgroundColor: '#3178F5',
+              paddingHorizontal: 5,
+              paddingVertical: 1,
+              position: 'absolute',
+              top: 0,
+              left: -10,
+              borderTopLeftRadius: 8,
+            }}
+          >
+            <MyText color="white">国际站</MyText>
+          </Column>
+          <Image
+            source={require('@source/images/couponOverdue.png')}
+            style={{ position: 'absolute', top: 0, right: -10 }}
+          />
+        </Row>
+        {/* <Row style={{ height: 90 }}>
           <Column
             style={{
               width: 24,
@@ -160,7 +230,7 @@ const CouponCard: React.FC<any> = ({ name }) => {
           <Column>
             <MyText>{name}</MyText>
           </Column>
-        </Row>
+        </Row> */}
       </ShadowBox>
       {/* <ImageBackground
         source={require('@source/images/coupon.png')}
