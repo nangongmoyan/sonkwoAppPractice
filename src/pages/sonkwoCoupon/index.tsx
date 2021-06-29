@@ -29,9 +29,9 @@ const SonkwoCoupon: React.FC<any> = ({}) => {
   const layout = useWindowDimensions()
   const [index, setIndex] = React.useState(0)
   const [routes] = React.useState([
-    { key: 'AVALIABLE', title: '可用' },
-    { key: 'HAVE_USED', title: '使用记录' },
-    { key: 'HAVE_EXPIRED', title: '过期' },
+    { key: 'Avalible', title: '可用' },
+    { key: 'HaveUsed', title: '使用记录' },
+    { key: 'HaveExpired', title: '过期' },
   ])
 
   const renderTabBar = useCallback((props) => {
@@ -133,7 +133,7 @@ const CouponList: React.FC<any> = ({ type }) => {
           <Column key={i}>
             {page?.data?.map((coupon, index) => {
               console.log({ coupon })
-              return <CouponCard {...coupon.coupon} key={index} type={type} />
+              return <CouponCard {...coupon} key={index} type={type} />
             })}
           </Column>
         )
@@ -143,6 +143,7 @@ const CouponList: React.FC<any> = ({ type }) => {
 }
 
 const CouponCard: React.FC<any> = ({
+  area,
   name,
   value,
   usageInfo,
@@ -155,6 +156,15 @@ const CouponCard: React.FC<any> = ({
     discountType === 'percentage' ? `${parseInt(value)}%off` : `¥${value}`
   const endDate = moment(validUntilTimestamp * 1000).format('YYYY-MM-DD')
   const startDate = moment(validFromTimestamp * 1000).format('YYYY-MM-DD')
+
+  const { areaName, areaBg } = useMemo(() => {
+    const domain = area === 'abroad'
+    return {
+      areaName: domain ? '国际站' : '大陆站',
+      areaBg: domain ? '#3178F5' : '#FFB540',
+    }
+  }, [area])
+
   return (
     <Column style={{ marginTop: 20 }}>
       <ShadowBox>
@@ -200,7 +210,7 @@ const CouponCard: React.FC<any> = ({
           />
           <Column
             style={{
-              backgroundColor: '#3178F5',
+              backgroundColor: areaBg,
               paddingHorizontal: 5,
               paddingVertical: 1,
               position: 'absolute',
@@ -209,7 +219,7 @@ const CouponCard: React.FC<any> = ({
               borderTopLeftRadius: 8,
             }}
           >
-            <MyText color="white">国际站</MyText>
+            <MyText color="white">{areaName}</MyText>
           </Column>
           <Image
             source={require('@source/images/couponOverdue.png')}

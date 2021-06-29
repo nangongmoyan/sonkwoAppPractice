@@ -24,7 +24,7 @@ const fetchSonkwoCoupon = async (type: string, pageParam: any) => {
       : await gameApi.getMyCoupons(type, 'abroad', abroadCurrentPage + 1)
 
   const coupons = [...nativeRes.coupons, ...abroadRes.coupons].sort((a, b) =>
-    a.createdAtTimestamp < b.createdAtTimestamp ? 1 : -1,
+    a.createdAt < b.createdAt ? 1 : -1,
   )
   console.log({ nativeRes, abroadRes, coupons })
 
@@ -44,10 +44,10 @@ const useSonkwoCoupon = (type: string) => {
   const xxx = useInfiniteQuery(
     ['SonkwoCoupon  ', type],
     ({ pageParam = defaultPageParams }) => fetchSonkwoCoupon(type, pageParam),
-    {
-      getNextPageParam: (lastPage) => lastPage,
-      getPreviousPageParam: (lastPage) => lastPage,
-    },
+    // {
+    //   getNextPageParam: (lastPage) => lastPage,
+    //   getPreviousPageParam: (lastPage) => lastPage,
+    // },
   )
   console.log({ xxx })
   return xxx
