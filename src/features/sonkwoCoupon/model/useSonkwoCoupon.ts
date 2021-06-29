@@ -12,7 +12,6 @@ const fetchSonkwoCoupon = async (type: string, pageParam: any) => {
   const nativeCurrentPage = get(nativeMeta, 'currentPage')
   const abroadTotalPages = get(abroadMeta, 'totalPages')
   const abroadCurrentPage = get(abroadMeta, 'currentPage')
-  console.log({ nativeCurrentPage, nativeTotalPages })
   const nativeRes =
     nativeCurrentPage >= nativeTotalPages
       ? { coupons: [], nativeMeta }
@@ -26,7 +25,6 @@ const fetchSonkwoCoupon = async (type: string, pageParam: any) => {
   const coupons = [...nativeRes.coupons, ...abroadRes.coupons].sort((a, b) =>
     a.createdAt < b.createdAt ? 1 : -1,
   )
-  console.log({ nativeRes, abroadRes, coupons })
 
   return {
     data: coupons,
@@ -41,16 +39,14 @@ const useSonkwoCoupon = (type: string) => {
     nativeMeta: { currentPage: 0, totalPages: 1 },
     abroadMeta: { currentPage: 0, totalPages: 1 },
   }
-  const xxx = useInfiniteQuery(
+  return useInfiniteQuery(
     ['SonkwoCoupon  ', type],
     ({ pageParam = defaultPageParams }) => fetchSonkwoCoupon(type, pageParam),
-    // {
-    //   getNextPageParam: (lastPage) => lastPage,
-    //   getPreviousPageParam: (lastPage) => lastPage,
-    // },
+    {
+      getNextPageParam: (lastPage) => lastPage,
+      getPreviousPageParam: (lastPage) => lastPage,
+    },
   )
-  console.log({ xxx })
-  return xxx
 }
 
 export { useSonkwoCoupon }

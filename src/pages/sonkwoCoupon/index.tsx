@@ -22,7 +22,6 @@ import { adaptiveWidth, deviceWidth, getBottomSpace } from '@util'
 import { ThemeColors } from 'ui/theme'
 import { useSonkwoCoupon } from '@features/sonkwoCoupon/model'
 import { get } from 'lodash'
-import { useDimensions } from '@hooks'
 import moment from 'moment'
 
 const SonkwoCoupon: React.FC<any> = ({}) => {
@@ -132,7 +131,6 @@ const CouponList: React.FC<any> = ({ type }) => {
         return (
           <Column key={i}>
             {page?.data?.map((coupon, index) => {
-              console.log({ coupon })
               return <CouponCard {...coupon} key={index} type={type} />
             })}
           </Column>
@@ -142,16 +140,20 @@ const CouponList: React.FC<any> = ({ type }) => {
   )
 }
 
+const DAY = 1000 * 60 * 60 * 24
+
 const CouponCard: React.FC<any> = ({
   area,
   name,
+  type,
   value,
   usageInfo,
   discountType,
   minimumOrder,
-  validUntilTimestamp,
   validFromTimestamp,
+  validUntilTimestamp,
 }) => {
+  const disabled = type !== 'Avalible'
   const price =
     discountType === 'percentage' ? `${parseInt(value)}%off` : `¥${value}`
   const endDate = moment(validUntilTimestamp * 1000).format('YYYY-MM-DD')
@@ -161,9 +163,13 @@ const CouponCard: React.FC<any> = ({
     const domain = area === 'abroad'
     return {
       areaName: domain ? '国际站' : '大陆站',
-      areaBg: domain ? '#3178F5' : '#FFB540',
+      areaBg: disabled ? ThemeColors.LightGrey : domain ? '#3178F5' : '#FFB540',
     }
-  }, [area])
+  }, [area, disabled])
+
+  const newDate = moment(new Date()).valueOf()
+  const leftDay = (validUntilTimestamp * 1000 - newDate) / DAY
+  const almostOverdue = leftDay <= 1 && leftDay > 0
 
   return (
     <Column style={{ marginTop: 20 }}>
@@ -176,10 +182,18 @@ const CouponCard: React.FC<any> = ({
               paddingTop: 12,
             }}
           >
-            <MyText size={18} weight="semibold" color={ThemeColors.Default}>
+            <MyText
+              size={18}
+              weight="semibold"
+              color={disabled ? ThemeColors.LightGrey : ThemeColors.Default}
+            >
               {price}
             </MyText>
-            <MyText size={11} weight="medium" color={ThemeColors.Default}>
+            <MyText
+              size={11}
+              weight="medium"
+              color={disabled ? ThemeColors.LightGrey : ThemeColors.Default}
+            >
               满{minimumOrder}使用
             </MyText>
           </Column>
@@ -192,19 +206,28 @@ const CouponCard: React.FC<any> = ({
               justifyContent: 'space-between',
             }}
           >
-            <MyText size={13} weight="semibold" color="black" numberOfLines={1}>
+            <MyText
+              size={13}
+              weight="semibold"
+              numberOfLines={1}
+              color={disabled ? ThemeColors.LightGrey : 'black'}
+            >
               {name}
             </MyText>
-            <MyText color="grey" numberOfLines={1}>
+            <MyText
+              numberOfLines={1}
+              color={disabled ? ThemeColors.LightGrey : 'grey'}
+            >
               {usageInfo}
             </MyText>
-            <MyText color="grey">
+            <MyText color={disabled ? ThemeColors.LightGrey : 'grey'}>
               {startDate} 至 {endDate}
             </MyText>
           </Column>
           <MyButton
             title="查看使用"
-            linear={['#FF9017', '#FF6D3F']}
+            disabled={disabled}
+            linear={disabled ? [] : ['#FF9017', '#FF6D3F']}
             style={{ width: 65, height: 26, borderRadius: 13 }}
             containerStyle={{ position: 'absolute', right: 5 }}
           />
@@ -221,39 +244,14 @@ const CouponCard: React.FC<any> = ({
           >
             <MyText color="white">{areaName}</MyText>
           </Column>
-          <Image
-            source={require('@source/images/couponOverdue.png')}
-            style={{ position: 'absolute', top: 0, right: -10 }}
-          />
+          {almostOverdue && !disabled ? (
+            <Image
+              source={require('@source/images/couponOverdue.png')}
+              style={{ position: 'absolute', top: 0, right: -10 }}
+            />
+          ) : null}
         </Row>
-        {/* <Row style={{ height: 90 }}>
-          <Column
-            style={{
-              width: 24,
-              backgroundColor: '#3178F5',
-              height: 90,
-              borderTopLeftRadius: 8,
-              borderBottomLeftRadius: 8,
-              justifyContent: 'center',
-            }}
-          >
-            <MyText color="white">国际站</MyText>
-          </Column>
-          <Column>
-            <MyText>{name}</MyText>
-          </Column>
-        </Row> */}
       </ShadowBox>
-      {/* <ImageBackground
-        source={require('@source/images/coupon.png')}
-        style={{ width: width - 30, height: 90 }}
-      >
-        <Row>
-          <Column>
-            <MyText>{name}</MyText>
-          </Column>
-        </Row>
-      </ImageBackground> */}
     </Column>
   )
 }
