@@ -166,7 +166,7 @@ const CouponCard: React.FC<any> = ({
               paddingTop: 12,
             }}
           >
-            <MyText size={20} weight="semibold" color={ThemeColors.Default}>
+            <MyText size={18} weight="semibold" color={ThemeColors.Default}>
               {price}
             </MyText>
             <MyText size={11} weight="medium" color={ThemeColors.Default}>
@@ -185,7 +185,9 @@ const CouponCard: React.FC<any> = ({
             <MyText size={13} weight="semibold" color="black" numberOfLines={1}>
               {name}
             </MyText>
-            <MyText color="grey">{usageInfo}</MyText>
+            <MyText color="grey" numberOfLines={1}>
+              {usageInfo}
+            </MyText>
             <MyText color="grey">
               {startDate} 至 {endDate}
             </MyText>
@@ -194,7 +196,7 @@ const CouponCard: React.FC<any> = ({
             title="查看使用"
             linear={['#FF9017', '#FF6D3F']}
             style={{ width: 65, height: 26, borderRadius: 13 }}
-            containerStyle={{ position: 'absolute', right: 10 }}
+            containerStyle={{ position: 'absolute', right: 5 }}
           />
           <Column
             style={{
