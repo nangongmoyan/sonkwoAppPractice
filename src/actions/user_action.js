@@ -22,7 +22,7 @@ export const updateUserInfo = (data) => ({
   data,
 })
 
-const clearUserInfo = () => ({
+export const clearUserInfo = () => ({
   type: USER.CLEAR_USER_INFO,
 })
 

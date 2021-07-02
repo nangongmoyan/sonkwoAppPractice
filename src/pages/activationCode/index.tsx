@@ -27,10 +27,9 @@ const ActivationCode: React.FC<any> = ({}) => {
       </Column>
     )
   }, [])
-  console.log({ codeKeyRef })
   const renderScene = (sceneProps: any) => {
     const { route } = sceneProps
-    return <ActivationList area={route.key} />
+    return <ActivationList area={route.key} codeKeyRef={codeKeyRef} />
   }
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>

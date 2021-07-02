@@ -1,13 +1,20 @@
 /**
  * created by lijianpo on 2021/06/30
  */
-import React, { useState, useCallback } from 'react'
+import React, {
+  useState,
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+} from 'react'
 import { CenterModal, MyText } from '@ui'
 
-const CodeKeyModal: React.FC<any> = ({}) => {
+const CodeKeyModal = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(true)
-
-  const showModal = useCallback(() => setVisible(true), [])
+  useImperativeHandle(ref, () => ({
+    showModal: () => setVisible(true),
+  }))
+  // const showModal = useCallback(() => setVisible(true), [])
 
   const closeModal = useCallback(() => setVisible(false), [])
   return (
@@ -15,6 +22,6 @@ const CodeKeyModal: React.FC<any> = ({}) => {
       <MyText>asds</MyText>
     </CenterModal>
   )
-}
+})
 
 export { CodeKeyModal }

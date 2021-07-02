@@ -7,7 +7,7 @@ import { Loading, MyScrollView, Column } from '@ui'
 import React, { useMemo, useCallback } from 'react'
 import { useActivationCode } from '@features/activationCode/model/useActivationCode'
 
-const ActivationList: React.FC<any> = ({ area }) => {
+const ActivationList: React.FC<any> = ({ area, codeKeyRef }) => {
   const {
     data,
     refetch,
@@ -42,7 +42,13 @@ const ActivationList: React.FC<any> = ({ area }) => {
         return (
           <Column key={i}>
             {page?.games?.map((activation, index) => {
-              return <ActivationCard {...activation} key={index} />
+              return (
+                <ActivationCard
+                  key={index}
+                  {...activation}
+                  codeKeyRef={codeKeyRef}
+                />
+              )
             })}
           </Column>
         )

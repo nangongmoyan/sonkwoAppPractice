@@ -16,7 +16,7 @@ import { adaptiveFont } from '@util'
 import { useLocale } from '@contexts/locale'
 
 // 登录页
-const SignIn = (props: routeAndNavigation) => {
+const SignIns = (props: routeAndNavigation) => {
   const { t } = useLocale()
   const [smsMethod, toggleMethod] = useState(true)
   const { methodText, toggleText } = useMemo(() => {
@@ -62,4 +62,4 @@ const SignIn = (props: routeAndNavigation) => {
   )
 }
 
-export { SignIn }
+export { SignIns }

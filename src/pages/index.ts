@@ -10,7 +10,6 @@ import { Game } from './game'
 import { Guide } from './guide'
 import { Mall } from './mall'
 import { UserHome } from './userHome'
-import { SignIn } from './sign'
 import { EditInfo } from './editInfo'
 import { NickName } from './nickName'
 import { Birthday } from './birthday'
@@ -30,6 +29,7 @@ import { PrivateMessages } from './privateMessages'
 import { WalletBill } from './walletBill'
 import { ActivationCode } from './activationCode'
 import { SonkwoCoupon } from './sonkwoCoupon'
+import { SignIn } from './signIn'
 
 const tabSatcks = [
   /** 首页 */
