@@ -3,7 +3,7 @@
  * created by lijianpo on 2021/04/14
  */
 
-import { authApi, config, usersApi } from '@sonkwo/sonkwo-api'
+import { authApi, config, tokenMessageApi, usersApi } from '@sonkwo/sonkwo-api'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { checkNullObj, deviceStorage, toastMessage } from '@util'
 import store from '../store'
@@ -64,17 +64,28 @@ const afterLogout = (res) => {
   // disconnect all websocket after logout
   phoenix.disconnect()
 }
-const sendToken = (type) => (params, cb) => async (dispatch) => {
-  const result = await authApi.sendValidateToken(params, type)
-  if (result) {
-    // dispatch(pushToast('sent_success'))
-    cb && cb()
-  } else {
-  }
-}
 
-export const sendSms = sendToken('Sms')
-export const sendEmail = sendToken('Email')
+export const sendSms = (message) => {
+  tokenMessageApi
+    .sendToken(message)
+    .then((_) => {
+      toastMessage('发送成功')
+    })
+    .catch((e) => {
+      console.log({ e })
+    })
+}
+// const sendToken = (type) => (params, cb) => async (dispatch) => {
+//   const result = await authApi.sendValidateToken(params, type)
+//   if (result) {
+//     // dispatch(pushToast('sent_success'))
+//     cb && cb()
+//   } else {
+//   }
+// }
+
+// export const sendSms = sendToken('Sms')
+// export const sendEmail = sendToken('Email')
 
 export const signInWithSms = (params, cb) => async (dispatch) => {
   const { phone, token } = params.data

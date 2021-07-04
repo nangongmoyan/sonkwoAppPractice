@@ -3,43 +3,57 @@
  * changed by lijianpo on 2021/04/25
  */
 
-import { Divider, Form } from '@ui'
+import { Divider } from '@ui'
 import React, { useCallback, useRef } from 'react'
 import { useLocale } from '@contexts/locale'
-import { useDispatch } from '@hooks'
+// import { useDispatch } from '@hooks'
 import { FormProvider } from '@contexts/form'
-import { sendSms, signInWithSms } from '@actions/user_action'
+import { PhoneInput, TokenInput, SubmitButton } from 'ui/form'
+import { TokenType } from '@sonkwo/sonkwo-api'
+// import { sendSms, signInWithSms } from '@actions/user_action'
 import AgreementPolicy from './AgreementPolicy'
-import SubmitLoading from '@components/SubmitLoading'
+// import SubmitLoading from '@components/SubmitLoading'
 
 const PhoneVerification: React.FC<any> = ({}) => {
   const { t } = useLocale()
-  const dispatch = useDispatch()
-  const loadingRef = useRef<any>()
-  const sendToken = useCallback(
-    (phone) => {
-      dispatch(sendSms({ kind: 'login', number: phone }))
-    },
-    [dispatch],
-  )
+  // const dispatch = useDispatch()
+  // const loadingRef = useRef<any>()
+  // const sendToken = useCallback(
+  //   (phone) => {
+  //     null
+  //     // dispatch(sendSms({ kind: 'login', number: phone }))
+  //   },
+  //   [dispatch],
+  // )
 
-  const onSubmit = (data: SignInSmsParam) => {
-    loadingRef.current.show('正在登录...')
-    dispatch(signInWithSms({ data }, () => loadingRef.current.hide()))
-  }
+  // const onSubmit = (data: SignInSmsParam) => {
+  //   loadingRef.current.show('正在登录...')
+  //   dispatch(signInWithSms({ data }, () => loadingRef.current.hide()))
+  // }
 
+  const onSubmit = () => {}
   return (
     <FormProvider>
       <>
-        <Form.PhoneInput name="phone" />
+        <PhoneInput name="phone" />
         <Divider height={20} />
-        <Form.TokenInput for="phone" sendToken={sendToken} />
+        <TokenInput type={TokenType.Sms} kind="login" for="phone" />
         <Divider height={20} />
         <AgreementPolicy style={{ marginTop: 20, marginBottom: 36 }} />
-        <Form.SubmitButton onSubmit={onSubmit} title={t('LANG20')} />
-        <SubmitLoading ref={loadingRef} />
+        <SubmitButton onSubmit={onSubmit} title={t('LANG20')} />
       </>
     </FormProvider>
+    // <FormProvider>
+    //   <>
+    //     <Form.PhoneInput name="phone" />
+    //     <Divider height={20} />
+    //     <Form.TokenInput for="phone" sendToken={sendToken} />
+    //     <Divider height={20} />
+    //     <AgreementPolicy style={{ marginTop: 20, marginBottom: 36 }} />
+    //     <Form.SubmitButton onSubmit={onSubmit} title={t('LANG20')} />
+    //     <SubmitLoading ref={loadingRef} />
+    //   </>
+    // </FormProvider>
   )
 }
 

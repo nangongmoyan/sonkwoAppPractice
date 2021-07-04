@@ -1,18 +1,24 @@
 /**
  *
- * created by lijianpo on 2021/04/14
+ * created by lijianpo on 2021/07/04
  */
-import React, { useState } from 'react'
 import { useInterval } from '@hooks'
-import { Row, MyText, GHWithoutFeedback } from '@ui'
-import { ThemeColors } from 'ui/theme'
+import React, { useState } from 'react'
 import { useLocale } from '@contexts/locale'
+import { GHWithoutFeedback, MyText } from '@ui'
+import { Row } from '../flex'
+import { ThemeColors } from '../theme'
+
+interface Props {
+  onPress: () => void
+}
+
 const TIME = 61
 
-const TokenButton = (props) => {
+const TokenButton: React.FC<Props> = ({ onPress }) => {
   const { t } = useLocale()
-  const [count, setCount] = useState(TIME)
   const [start, setStart] = useState(false)
+  const [count, setCount] = useState(TIME)
 
   useInterval(
     () => {
@@ -28,12 +34,12 @@ const TokenButton = (props) => {
 
   const isCounting = count < TIME
 
-  const onPress = () => {
-    props.onPress && props.onPress(setStart)
+  const onBtnPress = () => {
+    setStart(true)
+    onPress && onPress()
   }
-
   return (
-    <GHWithoutFeedback onPress={onPress}>
+    <GHWithoutFeedback onPress={onBtnPress}>
       <Row>
         {isCounting ? (
           <MyText size={14}>

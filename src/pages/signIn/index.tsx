@@ -53,7 +53,8 @@ const SignIn = ({}) => {
         >
           {methodText}
         </MyText>
-        {smsMethod ? <PhoneVerification /> : <PasswordVerification />}
+        <PhoneVerification />
+        {/* {smsMethod ? <PhoneVerification /> : <PasswordVerification />} */}
       </Column>
     </SignInProvider>
   )
