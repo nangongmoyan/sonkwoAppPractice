@@ -1,11 +1,11 @@
 import { useLocale } from '@contexts/locale'
 import { SignInProvider } from '@contexts/signIn'
-import PasswordVerification from '@features/auth/components/PasswordVerification'
 import { useSetToken } from '@features/auth/model'
 import { CustomStackHeader, GHWithoutFeedback, MyText, Column } from '@ui'
 import { adaptiveFont, deviceStorage } from '@util'
 import React, { useState, useMemo, useCallback } from 'react'
 import { PhoneVerification } from './components'
+import { PasswordVerification } from './components/PasswordVerification'
 
 const SignIn = ({}) => {
   const { t } = useLocale()
@@ -53,8 +53,7 @@ const SignIn = ({}) => {
         >
           {methodText}
         </MyText>
-        <PhoneVerification />
-        {/* {smsMethod ? <PhoneVerification /> : <PasswordVerification />} */}
+        {smsMethod ? <PhoneVerification /> : <PasswordVerification />}
       </Column>
     </SignInProvider>
   )

@@ -45,7 +45,6 @@ export const useAfterLogin = () => {
 /** 登出 */
 export const useSignOut = () => {
   const dispatch = useDispatch()
-  const navigation = useNavigation()
   const { id, clearToken } = useTokenStore()
 
   const afterSignOut = useCallback(() => {

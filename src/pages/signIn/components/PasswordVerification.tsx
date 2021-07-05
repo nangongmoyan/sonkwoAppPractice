@@ -1,5 +1,4 @@
 /**
- *
  * created by lijianpo on 2021/07/05
  */
 import { Divider } from '@ui'
@@ -7,14 +6,13 @@ import { useDispatch } from '@hooks'
 import React, { useRef } from 'react'
 import { useLocale } from '@contexts/locale'
 import { FormProvider } from '@contexts/form'
-import { TokenType } from '@sonkwo/sonkwo-api'
-import { signInBySms } from '@actions/user_action'
 import { useSignInContext } from '@contexts/signIn'
-import { PhoneInput, TokenInput, SubmitButton } from 'ui/form'
+import { BasicInput, PasswordInput, SubmitButton } from 'ui/form'
 import AgreementPolicy from '@features/common/components/AgreementPolicy'
 import SubmitLoading from '@components/SubmitLoading'
+import { signInByPwd } from '@actions/user_action'
 
-const PhoneVerification: React.FC<any> = ({}) => {
+const PasswordVerification: React.FC<any> = ({}) => {
   const { t } = useLocale()
   const dispatch = useDispatch()
   const loadingRef = useRef<any>()
@@ -23,7 +21,7 @@ const PhoneVerification: React.FC<any> = ({}) => {
   const onSubmit = (data: any) => {
     loadingRef.current.show('正在登录...')
     dispatch(
-      signInBySms(data, (result) => {
+      signInByPwd(data, (result) => {
         callback(result)
         loadingRef.current.hide()
       }),
@@ -33,9 +31,9 @@ const PhoneVerification: React.FC<any> = ({}) => {
   return (
     <FormProvider>
       <>
-        <PhoneInput name="phone" />
+        <BasicInput name="account" placeholder="输入邮箱或手机号" />
         <Divider height={20} />
-        <TokenInput type={TokenType.Sms} kind="login" for="phone" />
+        <PasswordInput name="password" />
         <Divider height={20} />
         <AgreementPolicy style={{ marginTop: 20, marginBottom: 36 }} />
         <SubmitButton onSubmit={onSubmit} title={t('LANG20')} />
@@ -45,4 +43,4 @@ const PhoneVerification: React.FC<any> = ({}) => {
   )
 }
 
-export { PhoneVerification }
+export { PasswordVerification }

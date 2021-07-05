@@ -24,10 +24,11 @@ import { statusBarHeight, vw } from '@util'
 import { routerStyles } from './css'
 import { ThemeColors } from 'ui/theme'
 import { useDispatch, useSelector } from '@hooks'
-import { signOut } from '@actions/user_action'
+// import { signOut } from '@actions/user_action'
 import * as iconPath from '@source/svg'
 import SubmitLoading from '@components/SubmitLoading'
 import service from './service'
+import { useSignOut } from '@features/auth'
 const firstItem = [
   { route: 'Wallet', label: 'LANG22' },
   { route: 'Order', label: 'LANG23' },
@@ -62,6 +63,7 @@ function DrawerScreen(props) {
   const { t } = useLocale()
   const loadingRef = useRef()
   const dispatch = useDispatch()
+  const signOut = useSignOut()
   const isDrawerOpen = useIsDrawerOpen()
   const { userInfo, navigation } = props
   const { nickname, avatar, point = {}, ordersCount } = userInfo
@@ -157,7 +159,8 @@ function DrawerScreen(props) {
 
   const onSignOut = () => {
     loadingRef.current.show('正在退出...')
-    dispatch(signOut(() => loadingRef.current.hide()))
+    signOut()
+    // dispatch(signOut(() => loadingRef.current.hide()))
   }
   return (
     <Column style={{ flex: 1, paddingTop: statusBarHeight }}>

@@ -4,14 +4,12 @@
  */
 
 import { authApi, config, tokenMessageApi, usersApi } from '@sonkwo/sonkwo-api'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { checkNullObj, deviceStorage, toastMessage } from '@util'
 import store from '../store'
 import { USER } from '@util/action_types'
 import { setWallet } from './wallet_action'
 import phoenix from '@util/phoenix'
 import CookieManage from '@native/CookieManage'
-import { async } from 'ramda-adjunct'
 
 export const setUserInfo = (data) => ({
   type: USER.SET_USER_INFO,
@@ -37,22 +35,6 @@ const setAvatarToken = (data) => {
 
 const setTempAvatar = (data) => {
   return { type: USER.SET_TEMP_AVATAR, data }
-}
-
-const afterLogin = (res) => {
-  const { id, region, accessToken } = res
-  /**只针对大陆用户开放 */
-  if (region && region !== 'cn') {
-    return toastMessage('仅对中国大陆开放')
-  }
-
-  CookieManage.clearAll()
-  deviceStorage.save('userInfo', res)
-  // client.jwt(res.accessToken)
-  // fetch.sendToken(res.accessToken, dispatch)
-  config.setToken(accessToken)
-  store.dispatch(getUserInfo())
-  store.dispatch(updateUserInfo(res))
 }
 
 const afterLogout = (res) => {
@@ -81,48 +63,19 @@ export const signInBySms = (params, cb) => async () => {
   const { phone, token } = params
   try {
     const result = await authApi.signInBySms(phone, token)
-    cb && cb()
+    cb && cb(result)
   } catch (e) {
     console.log({ e })
   }
 }
-// const sendToken = (type) => (params, cb) => async (dispatch) => {
-//   const result = await authApi.sendValidateToken(params, type)
-//   if (result) {
-//     // dispatch(pushToast('sent_success'))
-//     cb && cb()
-//   } else {
-//   }
-// }
 
-// export const sendSms = sendToken('Sms')
-// export const sendEmail = sendToken('Email')
-
-export const signInWithSms = (params, cb) => async (dispatch) => {
-  const { phone, token } = params.data
-  const result = await authApi.signInBySms(phone, token)
-  if ('status' in result) {
-  } else {
-    afterLogin(result)
-    cb && cb()
-  }
-}
-
-export const signInWithPass = (params, cb) => async (dispatch) => {
+export const signInByPwd = (params, cb) => async () => {
   const { account, password } = params
-  // const data = {
-  //   account: {
-  //     email_or_phone_number_eq: account,
-  //     password: password,
-  //     remember_me: true,
-  //   },
-  // }
-  const result = await authApi.signIn(account, password)
-  if ('status' in result) {
-    console.log({ result })
-  } else {
-    afterLogin(result)
-    cb && cb()
+  try {
+    const result = await authApi.signIn(account, password)
+    cb && cb(result)
+  } catch (e) {
+    console.log({ e })
   }
 }
 
