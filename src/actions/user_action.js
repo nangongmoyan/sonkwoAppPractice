@@ -3,13 +3,11 @@
  * created by lijianpo on 2021/04/14
  */
 
-import { authApi, config, tokenMessageApi, usersApi } from '@sonkwo/sonkwo-api'
+import { authApi, tokenMessageApi, usersApi } from '@sonkwo/sonkwo-api'
 import { checkNullObj, deviceStorage, toastMessage } from '@util'
 import store from '../store'
 import { USER } from '@util/action_types'
 import { setWallet } from './wallet_action'
-import phoenix from '@util/phoenix'
-import CookieManage from '@native/CookieManage'
 
 export const setUserInfo = (data) => ({
   type: USER.SET_USER_INFO,
@@ -35,17 +33,6 @@ const setAvatarToken = (data) => {
 
 const setTempAvatar = (data) => {
   return { type: USER.SET_TEMP_AVATAR, data }
-}
-
-const afterLogout = (res) => {
-  // const { id } = res
-  // client.jwt('')
-  // fetch.sendToken('', dispatch)
-  config.setToken('')
-  store.dispatch(clearUserInfo())
-
-  // disconnect all websocket after logout
-  phoenix.disconnect()
 }
 
 export const sendSms = (message) => async () => {
@@ -76,26 +63,6 @@ export const signInByPwd = (params, cb) => async () => {
     cb && cb(result)
   } catch (e) {
     console.log({ e })
-  }
-}
-
-export const signOut = (cb) => async (dispatch) => {
-  const result = await authApi.signOut()
-  if (checkNullObj(result)) {
-    afterLogout()
-    cb && cb()
-  }
-}
-
-export const refreshToken = (refresh_token) => async (dispatch) => {
-  const result = await authApi.refreshToken(refresh_token)
-  if (result && result.refreshToken) {
-    config.setToken(result.refreshToken)
-    deviceStorage.update('userInfo', result)
-    store.dispatch(updateUserInfo(result))
-    store.dispatch(getUserInfo())
-  } else {
-    store.dispatch(clearUserInfo())
   }
 }
 
