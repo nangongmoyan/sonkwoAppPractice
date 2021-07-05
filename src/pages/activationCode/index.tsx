@@ -6,14 +6,10 @@ import { TabView } from 'react-native-tab-view'
 import React, { useCallback, useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { ActivationList } from './components/ActivationList'
-import { CodeKeyModal } from './components/CodeKeyModal'
 import { RedeemGifts } from '@features/common/components'
-
 import { Column, CustomStackHeader, Divider, MyTabBar } from '@ui'
-import { useRef } from 'react'
 
 const ActivationCode: React.FC<any> = ({}) => {
-  const codeKeyRef = useRef()
   const layout = useWindowDimensions()
   const [index, setIndex] = useState(0)
   const [routes] = useState([
@@ -29,7 +25,7 @@ const ActivationCode: React.FC<any> = ({}) => {
   }, [])
   const renderScene = (sceneProps: any) => {
     const { route } = sceneProps
-    return <ActivationList area={route.key} codeKeyRef={codeKeyRef} />
+    return <ActivationList area={route.key} />
   }
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
@@ -43,7 +39,6 @@ const ActivationCode: React.FC<any> = ({}) => {
         initialLayout={{ width: layout.width }}
       />
       <RedeemGifts />
-      <CodeKeyModal ref={codeKeyRef} />
     </Column>
   )
 }

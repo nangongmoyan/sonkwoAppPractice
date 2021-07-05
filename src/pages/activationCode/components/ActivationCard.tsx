@@ -3,29 +3,32 @@
  * created by lijianpo on 2021/06/30
  */
 import { vw } from '@util'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { get } from 'lodash'
 import moment from 'moment'
 import { ThemeColors } from 'ui/theme'
 import { Row, MyImage, Column, MyText, GHWithoutFeedback } from '@ui'
 import { getSkuKeyType } from '@features/common/utils'
 import { SkuKeyIcon } from '@features/common/components'
-import { useCallback } from 'react'
+
 const ActivationCard: React.FC<any> = ({
+  id,
   keyType,
   pubdate = 0,
   skuNames,
   skuCovers,
-  codeKeyRef,
+  setActivationCode,
 }) => {
   const cover = get(skuCovers, 'default', '')
   const name = get(skuNames, 'default', '')
   const skuKeyType = getSkuKeyType(keyType)
   const skuKeyName = get(skuKeyType, 'name', '')
   const pubdateTime = moment(pubdate * 1000).format('YYYY-MM-DD')
+
   const showKey = useCallback(() => {
-    codeKeyRef?.current?.showModal()
-  }, [codeKeyRef])
+    setActivationCode({ id })
+  }, [id, setActivationCode])
+
   return (
     <Row style={{ paddingHorizontal: 15, marginTop: 15 }}>
       <MyImage

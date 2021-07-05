@@ -8,9 +8,14 @@ import React, {
   useImperativeHandle,
 } from 'react'
 import { CenterModal, MyText } from '@ui'
-
+import { useActivationKeys } from '@features/activationCode/model'
+import { get } from 'lodash'
 const CodeKeyModal = forwardRef((props, ref) => {
-  const [visible, setVisible] = useState(true)
+  const { codeInfo, area } = props
+  const keyId = get(codeInfo, 'id')
+  const [visible, setVisible] = useState(false)
+  const result = useActivationKeys(keyId, area)
+  console.log({ result })
   useImperativeHandle(ref, () => ({
     showModal: () => setVisible(true),
   }))
