@@ -6,32 +6,25 @@
 import { Divider } from '@ui'
 import React, { useCallback, useRef } from 'react'
 import { useLocale } from '@contexts/locale'
-// import { useDispatch } from '@hooks'
+import { useDispatch } from '@hooks'
 import { FormProvider } from '@contexts/form'
 import { PhoneInput, TokenInput, SubmitButton } from 'ui/form'
 import { TokenType } from '@sonkwo/sonkwo-api'
 // import { sendSms, signInWithSms } from '@actions/user_action'
 import AgreementPolicy from './AgreementPolicy'
-// import SubmitLoading from '@components/SubmitLoading'
+import SubmitLoading from '@components/SubmitLoading'
+import { signInBySms } from '@actions/user_action'
 
 const PhoneVerification: React.FC<any> = ({}) => {
   const { t } = useLocale()
-  // const dispatch = useDispatch()
-  // const loadingRef = useRef<any>()
-  // const sendToken = useCallback(
-  //   (phone) => {
-  //     null
-  //     // dispatch(sendSms({ kind: 'login', number: phone }))
-  //   },
-  //   [dispatch],
-  // )
+  const dispatch = useDispatch()
+  const loadingRef = useRef<any>()
 
-  // const onSubmit = (data: SignInSmsParam) => {
-  //   loadingRef.current.show('正在登录...')
-  //   dispatch(signInWithSms({ data }, () => loadingRef.current.hide()))
-  // }
+  const onSubmit = (data: any) => {
+    loadingRef.current.show('正在登录...')
+    dispatch(signInBySms(data, () => loadingRef.current.hide()))
+  }
 
-  const onSubmit = () => {}
   return (
     <FormProvider>
       <>
@@ -41,6 +34,7 @@ const PhoneVerification: React.FC<any> = ({}) => {
         <Divider height={20} />
         <AgreementPolicy style={{ marginTop: 20, marginBottom: 36 }} />
         <SubmitButton onSubmit={onSubmit} title={t('LANG20')} />
+        <SubmitLoading ref={loadingRef} />
       </>
     </FormProvider>
     // <FormProvider>

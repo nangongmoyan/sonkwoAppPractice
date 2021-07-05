@@ -11,6 +11,7 @@ import { USER } from '@util/action_types'
 import { setWallet } from './wallet_action'
 import phoenix from '@util/phoenix'
 import CookieManage from '@native/CookieManage'
+import { async } from 'ramda-adjunct'
 
 export const setUserInfo = (data) => ({
   type: USER.SET_USER_INFO,
@@ -65,15 +66,25 @@ const afterLogout = (res) => {
   phoenix.disconnect()
 }
 
-export const sendSms = (message) => {
-  tokenMessageApi
-    .sendToken(message)
-    .then((_) => {
-      toastMessage('发送成功')
-    })
-    .catch((e) => {
-      console.log({ e })
-    })
+export const sendSms = (message) => async () => {
+  try {
+    const result = await tokenMessageApi.sendToken(message)
+    console.log({ result })
+    toastMessage('发送成功')
+  } catch (e) {
+    console.log({ e })
+  }
+}
+
+export const signInBySms = (params, cb) => async () => {
+  console.log({ params })
+  const { phone, token } = params
+  try {
+    const result = await authApi.signInBySms(phone, token)
+    cb && cb()
+  } catch (e) {
+    console.log({ e })
+  }
 }
 // const sendToken = (type) => (params, cb) => async (dispatch) => {
 //   const result = await authApi.sendValidateToken(params, type)

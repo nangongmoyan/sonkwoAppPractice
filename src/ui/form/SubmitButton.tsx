@@ -7,7 +7,7 @@ import React, { useMemo } from 'react'
 import { ThemeColors } from '../theme'
 import { useFormContext } from 'react-hook-form'
 
-const SubmitButton: React.FC<any> = ({ onSubmit, restProps }) => {
+const SubmitButton: React.FC<any> = ({ onSubmit, ...restProps }) => {
   const {
     watch,
     getValues,

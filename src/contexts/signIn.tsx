@@ -1,7 +1,7 @@
 /**
  * created by lijianpo on 2021/07/02
  */
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
 
 const SignInContext = createContext({
   btnText: '',
@@ -18,4 +18,7 @@ const SignInProvider = ({ type, callback, children }) => {
   )
 }
 
-export { SignInProvider, SignInContext }
+const useSignInContext = () => {
+  return useContext(SignInContext)
+}
+export { SignInProvider, SignInContext, useSignInContext }
