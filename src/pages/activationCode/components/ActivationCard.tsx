@@ -26,8 +26,8 @@ const ActivationCard: React.FC<any> = ({
   const pubdateTime = moment(pubdate * 1000).format('YYYY-MM-DD')
 
   const showKey = useCallback(() => {
-    setActivationCode({ id })
-  }, [id, setActivationCode])
+    setActivationCode({ id, name, keyType, skuKeyName })
+  }, [id, name, setActivationCode, skuKeyName, keyType])
 
   return (
     <Row style={{ paddingHorizontal: 15, marginTop: 15 }}>
