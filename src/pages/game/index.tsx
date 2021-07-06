@@ -2,6 +2,7 @@
  * 游戏页
  * created by lijianpo on 2021/04/12
  */
+import { useGameList } from '@features/game/model'
 import { Column, CustomStackHeader, MyText, MyTabBar, Row } from '@ui'
 import React, { useCallback } from 'react'
 import { View, useWindowDimensions } from 'react-native'
@@ -15,6 +16,7 @@ const SecondRoute = () => (
 )
 
 const Game: React.FC<any> = ({}) => {
+  useGameList('rank')
   const layout = useWindowDimensions()
   const [routes] = React.useState([
     { key: 'first', title: '畅销' },
