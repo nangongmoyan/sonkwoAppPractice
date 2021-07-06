@@ -2,11 +2,19 @@
  * 游戏页
  * created by lijianpo on 2021/04/12
  */
-import { useGameList } from '@features/game/model'
-import { Column, CustomStackHeader, MyText, MyTabBar, Row } from '@ui'
+
+import {
+  Column,
+  CustomStackHeader,
+  MyText,
+  MyTabBar,
+  Row,
+  MyStatusBar,
+} from '@ui'
 import React, { useCallback } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import { TabView } from 'react-native-tab-view'
+import { GameList } from './components/GameList'
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
 )
@@ -16,7 +24,6 @@ const SecondRoute = () => (
 )
 
 const Game: React.FC<any> = ({}) => {
-  useGameList('rank')
   const layout = useWindowDimensions()
   const [routes] = React.useState([
     { key: 'first', title: '畅销' },
@@ -36,19 +43,11 @@ const Game: React.FC<any> = ({}) => {
   }, [])
   const renderScene = (sceneProps: any) => {
     const { route } = sceneProps
-    switch (route.key) {
-      case 'first':
-      case 'third':
-      case 'fifth':
-        return <FirstRoute />
-      case 'second':
-      case 'fourth':
-      case 'sixth':
-        return <SecondRoute />
-    }
+    return <GameList area={route.key} />
   }
   return (
     <Column style={{ flex: 1, backgroundColor: 'white' }}>
+      <MyStatusBar isDarkStyle={true} />
       <CustomStackHeader
         renderLeft={() => (
           <MyText size={18} weight="semibold">

@@ -4,10 +4,9 @@
 import { get } from 'lodash'
 import { ActivationCard } from './ActivationCard'
 import { Loading, MyScrollView, Column } from '@ui'
-import React, { useMemo, useCallback, useRef } from 'react'
+import React, { useMemo, useCallback, useRef, useState } from 'react'
 import { useActivationCode } from '@features/activationCode/model'
 import { CodeKeyModal } from './CodeKeyModal'
-import { useState } from 'react'
 const ActivationList: React.FC<any> = ({ area }) => {
   const {
     data,

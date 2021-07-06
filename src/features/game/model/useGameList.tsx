@@ -10,8 +10,13 @@ const fetchGameList = async (order: string, page: number) => {
   return res
 }
 const useGameList = (order: string) => {
-  const data = useInfiniteQuery(['gameList', order], ({ pageParam = 1 }) =>
-    fetchGameList(order, pageParam),
+  return useInfiniteQuery(
+    ['gameList', order],
+    ({ pageParam = 1 }) => fetchGameList(order, pageParam),
+    {
+      getNextPageParam: (lastPage) => lastPage?.nextPage ?? false,
+      getPreviousPageParam: (firstPage) => firstPage?.prePage ?? false,
+    },
   )
 }
 

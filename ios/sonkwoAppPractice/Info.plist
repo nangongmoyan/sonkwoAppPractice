@@ -28,8 +28,20 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>auth.sonkwotest.com</key>
+			<dict>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>www.sonkwotest.hk</key>
+			<dict>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
@@ -38,13 +50,13 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>"杉果游戏"需要获取您的权限才能拍摄并上传照片</string>
+	<string>&quot;杉果游戏&quot;需要获取您的权限才能拍摄并上传照片</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>"杉果游戏"需要通过您的地理位置信息获取您周边的相关数据</string>
+	<string>&quot;杉果游戏&quot;需要通过您的地理位置信息获取您周边的相关数据</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>"杉果游戏"需要获取您的权限才能选取/保存图片</string>
+	<string>&quot;杉果游戏&quot;需要获取您的权限才能选取/保存图片</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>"杉果游戏"需要获取您的权限才能上传图片</string>
+	<string>&quot;杉果游戏&quot;需要获取您的权限才能上传图片</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
