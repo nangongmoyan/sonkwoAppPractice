@@ -2,6 +2,7 @@
  * created by lijianpo on 2021/06/30
  */
 import React, {
+  useMemo,
   useState,
   useCallback,
   forwardRef,
@@ -45,7 +46,10 @@ const CodeKeyModal = forwardRef((props, ref) => {
   const access = get(result, 'data.messages.access[0]', null)
   const reason = get(result, 'data.messages.reason[0]', null)
   const errMessage = errorResponse[reason] || errorResponse[access] || ''
-  console.log({ result })
+  const showCopyAllKey = useMemo(() => {
+    return gameKeys.some((key) => key.gamesKeyType.title === 'Steam key')
+  }, [gameKeys])
+  console.log({ result, showCopyAllKey })
   useImperativeHandle(ref, () => ({
     showModal: () => setVisible(true),
   }))
@@ -56,6 +60,8 @@ const CodeKeyModal = forwardRef((props, ref) => {
     Clipboard.setString(code)
     toastMessage('复制成功')
   }
+
+  const copyAllKey = () => {}
 
   const renderItem = useCallback(({ item }) => {
     return (
@@ -95,8 +101,20 @@ const CodeKeyModal = forwardRef((props, ref) => {
             <MyListView
               data={gameKeys}
               renderItem={renderItem}
-              style={{ width: vw(80), height: 500 }}
+              style={[
+                styles.list,
+                gameKeys.length > 6 ? { height: 500 } : null,
+              ]}
+              contentContainerStyle={{ alignItems: 'center' }}
             />
+            {showCopyAllKey && (
+              <Button
+                color="#FF5722"
+                style={styles.button}
+                title="复制所有Steam key"
+                onPress={copyAllKey}
+              />
+            )}
           </>
         ) : null}
         {errMessage !== '' ? (
@@ -131,6 +149,14 @@ const CodeKeyModal = forwardRef((props, ref) => {
 export { CodeKeyModal }
 
 const styles = StyleSheet.create({
+  list: {
+    width: vw(80),
+    marginBottom: 20,
+  },
+  button: {
+    height: 44,
+    borderRadius: 4,
+  },
   title: {
     fontSize: 17,
     width: vw(72),
