@@ -4,6 +4,7 @@
  */
 export { default as useDate } from './useDate'
 export { useTypedSelector } from './useSelector'
+export { default as usePrice } from './usePrice'
 export { default as useInterval } from './useInterval'
 export { default as usePrevious } from './usePrevious'
 export { useNavigation, useRoute } from '@react-navigation/native'
