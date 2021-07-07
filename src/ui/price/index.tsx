@@ -48,7 +48,7 @@ const Price: React.FC<any> = ({
 const styles = StyleSheet.create({
   symbol: {},
   price: {
-    // fontFamily: 'Bebas-Regular',
+    fontFamily: 'Bebas-Regular',
   },
   sale: {
     color: '#222',

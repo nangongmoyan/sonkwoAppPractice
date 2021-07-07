@@ -59,6 +59,7 @@
 	<string>&quot;杉果游戏&quot;需要获取您的权限才能上传图片</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Bebas-Regular.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>

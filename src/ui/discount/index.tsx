@@ -48,7 +48,7 @@ const Discount: React.FC<any> = ({
 
 const styles = StyleSheet.create({
   text: {
-    // fontFamily: 'Bebas-Regular',
+    fontFamily: 'Bebas-Regular',
     color: 'white',
   },
 })
