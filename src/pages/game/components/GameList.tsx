@@ -10,25 +10,24 @@ import { GameCard } from './GameCard'
 import { IColumnsHandles } from 'react-native-waterflow-list/src/Columns'
 import WaterFlow from 'react-native-waterflow-list/src/'
 const GameList: React.FC<any> = ({}) => {
+  const WaterFlowRef = useRef<IColumnsHandles>()
   const {
-    data,
+    list,
     refresh,
     fetchNextPage,
     hasNextPage,
     isLoading,
     isFetchingNextPage,
   } = useGameList('rank')
-  const pages = get(data, 'pages', [])
   const [isRefreshing, setIsRefreshing] = useState(false)
-  const WaterFlowRef = useRef<IColumnsHandles>()
 
-  const res = flatten(pages.map((page) => page.list))
-  console.log({ data, pages, res })
+  console.log({ list })
+  // console.log({ data, pages, res })
   const renderItem = useCallback(({ item, index }) => {
     return <GameCard key={index} {...item} />
   }, [])
 
-  const showEmpty = useMemo(() => get(pages, '[0].list.length') === 0, [pages])
+  // const showEmpty = useMemo(() => get(pages, '[0].list.length') === 0, [pages])
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true)
@@ -39,23 +38,22 @@ const GameList: React.FC<any> = ({}) => {
   }, [refresh])
 
   const onEndReached = useCallback(() => {
-    hasNextPage && !isFetchingNextPage && fetchNextPage()
+    // hasNextPage && !isFetchingNextPage && fetchNextPage()
   }, [fetchNextPage, hasNextPage, isFetchingNextPage])
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <Column style={{ flex: 1, backgroundColor: '#F7F7FB' }}>
       <WaterFlow
         numColumns={2}
         ref={WaterFlowRef}
-        data={res || []}
+        data={list}
         renderItem={renderItem}
-        onEndReached={fetchNextPage()}
+        // onEndReached={fetchNextPage()}
         keyForItem={(item) => item.id}
         columnFlatListProps={{ removeClippedSubviews: false }}
         columnsFlatListProps={{
-          onEndReachedThreshold: 0.1,
+          showsVerticalScrollIndicator: false,
+          // onEndReachedThreshold: 0.1,
           // ListEmptyComponent: renderEmpty(),
           // ListFooterComponent: renderFooter(),
           style: { marginHorizontal: 10 },
@@ -72,6 +70,11 @@ const GameList: React.FC<any> = ({}) => {
       />
     </Column>
   )
+  // return isLoading ? (
+  //   <Loading />
+  // ) : (
+
+  // )
 }
 
 export { GameList }

@@ -3,14 +3,12 @@
  */
 import { skuApi } from '@sonkwo/sonkwo-api'
 import { useInfiniteQuery } from 'react-query'
-
+import { get, flatten } from 'lodash'
 const fetchGameList = async (order: string, page: number) => {
-  const res = await skuApi.searchSkusByQuery({ order, cate: 'game', page })
-  console.log({ res })
-  return res
+  return skuApi.searchSkusByQuery({ order, cate: 'game', page })
 }
 const useGameList = (order: string) => {
-  return useInfiniteQuery(
+  const res = useInfiniteQuery(
     ['gameList', order],
     ({ pageParam = 1 }) => fetchGameList(order, pageParam),
     {
@@ -18,6 +16,10 @@ const useGameList = (order: string) => {
       getPreviousPageParam: (firstPage) => firstPage?.prePage ?? false,
     },
   )
+  const pages = get(res, 'data.pages', [])
+  const list = flatten(pages.map((page) => page.list))
+  // console.log({ res, list })
+  return { list, ...res }
 }
 
 export { useGameList }

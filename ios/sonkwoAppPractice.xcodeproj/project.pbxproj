@@ -16,6 +16,7 @@
 		9F10826D2644DCA8000A9753 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2B04EF2644D394004024B7 /* DeviceInfo.m */; };
 		9F1F1E80264BD7AD00E6CD90 /* RNCClipboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1E7F264BD72300E6CD90 /* RNCClipboard.m */; };
 		9F1F1E83264BD7B500E6CD90 /* RCTHttpCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1F1E7D264BD6CE00E6CD90 /* RCTHttpCache.m */; };
+		9F4D8DBC2698503B005D4398 /* Bebas-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F4D8DBB2698503B005D4398 /* Bebas-Regular.ttf */; };
 		9FA5047F2645324300CCA021 /* RCTCookieManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FA504722645313B00CCA021 /* RCTCookieManager.m */; };
 		BB3FCDCD61F00D99573B8BE8 /* libPods-sonkwoAppPractice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95E36350B65E5D2DD83FC7C7 /* libPods-sonkwoAppPractice.a */; };
 /* End PBXBuildFile section */
@@ -68,6 +69,7 @@
 		9F1F1E7F264BD72300E6CD90 /* RNCClipboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNCClipboard.m; path = sonkwoAppPractice/RNCClipboard.m; sourceTree = "<group>"; };
 		9F2B04EE2644D394004024B7 /* DeviceInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeviceInfo.h; path = sonkwoAppPractice/DeviceInfo.h; sourceTree = "<group>"; };
 		9F2B04EF2644D394004024B7 /* DeviceInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DeviceInfo.m; path = sonkwoAppPractice/DeviceInfo.m; sourceTree = "<group>"; };
+		9F4D8DBB2698503B005D4398 /* Bebas-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bebas-Regular.ttf"; path = "resource/Bebas-Regular.ttf"; sourceTree = "<group>"; };
 		9FA504712645313B00CCA021 /* RCTCookieManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTCookieManager.h; path = sonkwoAppPractice/RCTCookieManager.h; sourceTree = "<group>"; };
 		9FA504722645313B00CCA021 /* RCTCookieManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCTCookieManager.m; path = sonkwoAppPractice/RCTCookieManager.m; sourceTree = "<group>"; };
 		B15776EEAA4F405388B113D2 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				9F4D8DBB2698503B005D4398 /* Bebas-Regular.ttf */,
 				13B07FAE1A68108700A75B9A /* sonkwoAppPractice */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* sonkwoAppPracticeTests */,
@@ -311,6 +314,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F4D8DBC2698503B005D4398 /* Bebas-Regular.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -639,7 +643,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -709,7 +713,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -772,7 +776,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -897,7 +901,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;

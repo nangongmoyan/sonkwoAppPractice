@@ -1,5 +1,5 @@
 import { useDimensions, usePrice } from '@hooks'
-import { Column, MyText, MyImage, Row } from '@ui'
+import { Column, MyText, MyImage, Row, Image } from '@ui'
 import React from 'react'
 import { get } from 'lodash'
 const GameCard: React.FC<any> = ({
@@ -9,23 +9,28 @@ const GameCard: React.FC<any> = ({
   listPrice,
 }) => {
   const { width } = useDimensions()
-  const imageWidth = Math.floor((width - 40) / 2)
+  const imageWidth = (width - 40) / 2
   const cover = get(skuCovers, 'default')
   const skuName = get(skuNames, 'default')
   const { SalePrice, ListPrice, Discount } = usePrice(salePrice, listPrice)
-  if (
-    skuName === '荒野大镖客：救赎2 steam版' ||
-    skuName === '怪物猎人：世界 - 冰原 大师版'
-  )
-    return null
-
+  // console.log({ cover })
   return (
     <Column style={{ marginTop: 15 }}>
-      <MyImage
-        uri={cover}
-        width={imageWidth}
-        style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
-      />
+      {cover ? (
+        <MyImage
+          uri={cover}
+          width={imageWidth}
+          style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
+        />
+      ) : (
+        <Column>
+          <Image
+            source={require('@source/images/unavailable.png')}
+            style={{ width: 30, height: 41 }}
+          />
+        </Column>
+      )}
+
       <Column
         style={{
           width: imageWidth,
