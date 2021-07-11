@@ -7,7 +7,7 @@ import React, { useCallback } from 'react'
 import { get } from 'lodash'
 import moment from 'moment'
 import { ThemeColors } from 'ui/theme'
-import { Row, MyImage, Column, MyText, GHWithoutFeedback } from '@ui'
+import { Row, MyImage, Column, MyText, GHWithoutFeedback, Image } from '@ui'
 import { getSkuKeyType } from '@features/common/utils'
 import { SkuKeyIcon } from '@features/common/components'
 
@@ -31,12 +31,29 @@ const ActivationCard: React.FC<any> = ({
 
   return (
     <Row style={{ paddingHorizontal: 15, marginTop: 15 }}>
-      <MyImage
-        uri={cover}
-        width={vw(27)}
-        height={vw(16)}
-        style={{ borderRadius: 8, marginRight: 15 }}
-      />
+      {cover ? (
+        <MyImage
+          uri={cover}
+          width={vw(27)}
+          height={vw(16)}
+          style={{ borderRadius: 8, marginRight: 15 }}
+        />
+      ) : (
+        <Column
+          style={{
+            width: vw(27),
+            height: vw(16),
+            borderRadius: 8,
+            marginRight: 15,
+            backgroundColor: 'red',
+          }}
+        >
+          <Image
+            source={require('@source/images/unavailable.png')}
+            style={{ width: 30, height: 41 }}
+          />
+        </Column>
+      )}
       <Column
         style={{ height: vw(16), width: vw(38) }}
         justify="space-between"
